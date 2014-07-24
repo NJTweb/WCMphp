@@ -11,7 +11,7 @@
     if (mouse.left) {
         sketchCtx.fillRect(relX, relY, $("#brushSize").val(), $("#brushSize").val());
     }
-    console.log($("#colorPicker").val());
+    //console.log($("#colorPicker").val());
 }
 
 function showSketch(sketchURL) {
@@ -50,5 +50,3 @@ document.addEventListener('mousedown', function (e) {
 document.addEventListener('mouseup', function (e) {
     mouse.left = false;
 }, false);
-
-showSketch();
