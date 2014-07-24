@@ -74,7 +74,7 @@
     <Content Include="scripts\js\checklist.js" />
     <Content Include="scripts\js\ToolRepair.js" />
     <Content Include="scripts\js\Utilities.js" />
-    <Content Include="SEWO.html" />
+    <Content Include="SAFE.html" />
     <Content Include="UCAN.html" />
     <Content Include="xml\connections.xml" />
     <Content Include="xml\ehslabels.xml" />
