@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="scripts/js/form.js"></script>
+    <script src="scripts/js/Utilities.js"></script>
+    <script>
+        blockAnythingButChrome();
+    </script>
+    <link rel="stylesheet" href="css/Normalize.css" />
+    <link rel="stylesheet" href="css/FormClasses.css" />
+    <link rel="stylesheet" href="css/h3normalize.css" />
+    <title>UCAN</title>
+</head>
+
+<body onload="(new Form('UCAN')).open();">
+    <form name="UCAN" data-name="UCAN" data-table="dev_UCANs" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
+          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+        <table>
+            <tr>
+                <td colspan="3" class="dkgrey whitetext"><h1>Unsafe Conditions And Acts Form</h1></td>
+                <td class="ltgrey"><h2>UCAN Number </h2><input id="ID" name="ID" type="text" value="" readonly /></td>
+            </tr>
+            <tr>
+                <td class="ltgrey"><h3>Type</h3></td>
+                <td class="ltgrey"><h3>Plant</h3></td>
+                <td class="ltgrey"><h3>Department</h3></td>
+                <td class="ltgrey"><h3>Description of Incident</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    <select name="UCANType" data-list='{"list": ["Unsafe Condition","Unsafe Act"]}' required>
+                        <option value="">UCAN Type</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="Plant" data-query='{"connection" : "Safety", "Query": "Plants", "Params" : []}' data-parent="data-parent" data-linksto="UCANDept" required></select>
+                </td>
+                <td>
+                    <select name="UCANDept" id="dept" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["$Plant$"]}' data-linksto="UCANZone" required></select>
+                </td>
+                <td rowspan="7"><input type="text" name="UCANDescription" placeholder="Description" required="required"/></td>
+            </tr>
+            <tr>
+                <td class="ltgrey"><h3>Reported By</h3></td>
+                <td class="ltgrey"><h3>Location/Persons</h3></td>
+                <td class="ltgrey"><h3>Zone</h3></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="UCANReportedBy" placeholder="Reported By" required="required"/></td>
+                <td rowspan="3"><input type="text" name="UCANPersons" placeholder="Location/Persons" required="required"/></td>
+                <td>
+                    <select name="UCANZone" id="zone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["$Plant$", "$UCANDept$"]}' data-linksto="UCANEquip" required></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="ltgrey"><h3>Safety Tag</h3></td>
+                <td class="ltgrey"><h3>Machine</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    <select name="IsSafetyTag" data-list='{"list": [true,false]}' data-format="bool" required>
+                        <option value="">Is Safety Tag</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="UCANEquip" id="mach" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["$Plant$", "$UCANDept$", "$UCANZone$"]}'></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="ltgrey"><h3>Completed</h3></td>
+                <td class="ltgrey"><h3>Date</h3></td>
+                <td class="ltgrey"><h3>Notes/Tag No.</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    <select name="UCANCompleted" data-list='{"list": [true,false]}' data-format="bool" required>
+                        <option value="">Completed</option>
+                    </select>
+                </td>
+                <td><input type="date" name="UCANDate" placeholder="Date Submitted" required="required"/></td>
+                <td><input type="text" name="Notes" placeholder="Notes" /></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="ltgrey"><h3>Action Plan</h3></td>
+            </tr>
+            <tr>
+                <td colspan="4" height="100px"><input type="text" name="UCANActionPlan" placeholder="Action plan" required="required"/></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <button type="button" id="update" onclick="userUpdate('UCAN');">Update</button>
+                    <button type="button" id="submit" onclick="userSubmit('UCAN');">Submit</button>
+                    <button type="button" onclick="location.reload();">Clear</button>
+                    <button type="button" onclick="userOpen('UCAN');">Open</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

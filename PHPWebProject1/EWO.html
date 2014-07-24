@@ -1,0 +1,291 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>E-SEWO</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="scripts/js/sketch.js"></script>
+    <script src="scripts/js/form.js"></script>
+    <script src="scripts/js/Utilities.js"></script>
+    <script src="scripts/js/EWO.js"></script>
+    <link rel="stylesheet" href="css/Normalize.css" />
+    <link rel="stylesheet" href="css/FormClasses.css" />
+</head>
+
+<body onload="(new Form('EWO')).open();">
+    <form name="EWO" data-name="EWO" data-table="dev_EWOs" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
+          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+        <input type="hidden" name="DateTimeOccurred" onchange="splitDateTimes()" />
+        <input type="hidden" name="DateTimeStarted" onchange="splitDateTimes()" />
+        <input type="hidden" name="DateTimeCompleted" onchange="splitDateTimes()" />
+        <table>
+            <tr>
+                <td width="25px"></td>
+                <td width="45px"></td>
+                <td width="96px"></td>
+                <td width="168px"></td>
+                <td width="168px"></td>
+                <td width="72px"></td>
+                <td width="72px"></td>
+                <td width="144px"></td>
+                <td width="36px"></td>
+                <td width="72px"></td>
+                <td width="96px"></td>
+                <td width="48px"></td>
+                <td width="48px"></td>
+            </tr>
+            <tr class="dkgrey whitetext">
+                <td colspan="13" style="text-align: center;"><h1>Emergency Work Order (EWO)</h1></td>
+            </tr>
+            <tr class="ltgrey">
+                <td colspan="3" height="10px">EWO Number</td>
+                <td>Department</td>
+                <td>Machine</td>
+                <td colspan="2">Type of Failure</td>
+                <td>Shift</td>
+                <td colspan="2">Date Occurred</td>
+                <td>Date Started</td>
+                <td colspan="2">Date Finished</td>
+            </tr>
+            <tr>
+                <td colspan="3"><input name="ID" type="text" readonly /></td>
+                <td>
+                    <select name="Department" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-parent="data-parent" data-linksto="Zone"></select>
+                </td>
+                <td>
+                    <select name="Machine" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["Merrill", "$Department$", "$Zone$"]}' data-linksto="SubSystem"></select>
+                </td>
+                <td colspan="2">
+                    <select name="FailureType" data-list='{"list" : ["Electrical","Mechanical","Both"]}'></select>
+                </td>
+                <td>
+                    <select name="Shift" data-list='{"list" : [1,2,3]}' data-format="int"></select>
+                </td>
+                <td colspan="2"><input type="date" id="dateocc" onchange="concatDateTimes()" /></td> <!-- date occurred -->
+                <td><input type="date" id="datestart" onchange="concatDateTimes()" /></td><!-- date started -->
+                <td colspan="2"><input type="date" id="datecomp" onchange="concatDateTimes()" /></td><!-- date completed -->
+            </tr>
+            <tr class="ltgrey">
+                <td colspan="3" height="10px">Maintenance Person(s)</td>
+                <td>Operation</td>
+                <td>Sub-system</td>
+                <td colspan="3">Component</td>
+                <td colspan="2">Time Occurred</td>
+                <td>Time Started</td>
+                <td colspan="2">Time Finished</td>
+            </tr>
+            <tr>
+                <td colspan="3"><input name="MaintenancePersons" type="text" /></td>
+                <td>
+                    <select name="Zone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["Merrill", "$Department$"]}' data-linksto="Machine"></select>
+                </td>
+                <td>
+                    <select name="SubSystem" data-query='{"connection" : "Safety", "Query" : "Subsystems", "Params" : ["Merrill", "$Department$", "$Zone$", "$Machine$"]}'></select>
+                </td>
+                <td colspan="3">
+                    <select name="Component"></select>
+                </td>
+                <td colspan="2"><input type="time" id="timeocc" onchange="concatDateTimes()" /></td> <!-- time occurred -->
+                <td><input type="time" id="timestart" onchange="concatDateTimes()" /></td><!-- time started -->
+                <td colspan="2"><input type="time" id="timecomp" onchange="concatDateTimes()" /></td><!-- time completed -->
+            </tr>
+            <tr>
+                <td colspan="6" rowspan="2" height="150px"><input name="ProblemDescription" type="text" placeholder="Description of failure" /><!-- Description of failure and sketch (if possible) --></td>
+                <td colspan="6"><input name="ActivitiesDescription" type="text" placeholder="Description of activities" /><!-- Description of activites --></td>
+                <td rowspan="2">
+                    <select name="TempRepair" data-list='{"list" : [true,false]}' data-format="bool" data-default="false"></select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6"><input name="SpareParts" type="text" placeholder="Spare parts used" /><!-- Spare parts used (part number if available). --></td>
+            </tr>
+            <tr class="ltgrey">
+                <td colspan="13" height="10px">Analysis of root causes</td>
+            </tr>
+            <tr class="ltgrey">
+                <td colspan="8" height="30px">5W + 1H Analysis</td>
+                <td colspan="5">List of possible causes in order you have approached</td>
+            </tr>
+            <tr>
+                <td rowspan="20" class="dkgrey whitetext">D<br />e<br />f<br />i<br />n<br />i<br />t<br />i<br />o<br />n<br /> <br />o<br />f<br /> <br />p<br />r<br />o<br />b<br />l<br />e<br />m<br /> <br />a<br />n<br />d<br /> <br />a<br />n<br />a<br />l<br />y<br />s<br />i<br />s<br /> <br />o<br />f<br /> <br />r<br />o<br />o<br />t<br /> <br />c<br />a<br />u<br />s<br />e<br />s</td>
+                <td colspan="7" height="30px"><input name="What" type="text" placeholder="What" /></td>
+                <td class="ltgrey">1</td>
+                <td colspan="4"><input name="Cause1" type="text" /></td>
+            </tr>
+            <tr>
+                <td colspan="7" height="30px"><input name="When" type="text" placeholder="When" /></td>
+                <td class="ltgrey">2</td>
+                <td colspan="4"><input name="Cause2" type="text" /></td>
+            </tr>
+            <tr>
+                <td colspan="7" height="30px"><input name="Where" type="text" placeholder="Where" /></td>
+                <td class="ltgrey">3</td>
+                <td colspan="4"><input name="Cause3" type="text" /></td>
+            </tr>
+            <tr>
+                <td colspan="7" height="30px"><input name="Who" type="text" placeholder="Who" /></td>
+                <td class="ltgrey">4</td>
+                <td colspan="4"><input name="Cause4" type="text" /></td>
+            </tr>
+            <tr>
+                <td colspan="7" height="30px"><input name="Why" type="text" placeholder="Why" /></td>
+                <td class="ltgrey">5</td>
+                <td colspan="4"><input name="Cause5" type="text" /></td>
+            </tr>
+            <tr>
+                <td colspan="7" height="30px"><input name="How" type="text" placeholder="How" /></td>
+                <td class="ltgrey">6</td>
+                <td colspan="4"><input name="Cause6" type="text" /></td>
+            </tr>
+            <tr>
+                <td colspan="6" class="ltgrey" height="30px">Check on Possible Causes (Should only be one)</td>
+                <td colspan="6" class="ltgrey">Type of Root Cause</td>
+            </tr>
+            <tr>
+                <td class="ltgrey" height="30px">1</td>
+                <td colspan="5"><input name="CheckCause1" type="text" /></td>
+                <td colspan="6">
+                    <select name="RootCause" data-query='{"connection" : "Safety", "Query" : "EWORootCauses", "Params" : []}' data-parent="data-parent" data-linksto="SecondaryRootCause"></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="ltgrey" height="30px">2</td>
+                <td colspan="5"><input name="CheckCause2" type="text" /></td>
+                <td colspan="6">
+                    <select name="SecondaryRootCause" data-query='{"connection" : "Safety", "Query" : "EWOSecondaryCauses", "Params" : ["$RootCause$"]}' data-linksto="ActionType"></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="ltgrey" height="30px">3</td>
+                <td colspan="5"><input name="CheckCause3" type="text" /></td>
+                <td colspan="6">
+                    <select name="ActionType" data-query='{"connection" : "Safety", "Query" : "EWOActions", "Params" : ["$RootCause$","$SecondaryRootCause$"]}'></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="ltgrey" height="30px">4</td>
+                <td colspan="5"><input name="CheckCause4" type="text" /></td>
+                <td colspan="6" rowspan="19">
+                    <button type="button" onclick="clearSketch()">Clear</button>
+                    <button type="button">
+                        <label for="colorPicker">Choose(Color)</label>
+                    </button>
+                    <input type="text" id="colorPicker" class="color" value="#000000" style="width: 0px; border: none;" />
+                    <label for="brushSize">Brush Size:</label>
+                    <input type="text" id="brushSize" placeholder="Size" value="2" />
+                    <canvas id="sketchArea" onmousemove="drawSketch()" onmouseout="saveSketch()" style="width: 500px; border: 1px solid grey; cursor: crosshair;">Your browser does not support this sketch box.</canvas>
+                    <input type="hidden" name="SketchURL" id="sketchUrl" onchange="showSketch($(this).val())" />
+                </td>
+            </tr>
+            <tr>
+                <td class="ltgrey" height="30px">5</td>
+                <td colspan="5"><input name="CheckCause5" type="text" /></td>
+            </tr>
+            <tr>
+                <td class="ltgrey" height="30px">6</td>
+                <td colspan="5"><input name="CheckCause6" type="text" /></td>
+            </tr>
+            <tr>
+                <td class="ltgrey" height="30px">No.</td>
+                <td colspan="5"><input name="CauseNum" type="number" placeholder="Enter Cause Number" /></td>
+            </tr>
+            <tr>
+                <td colspan="6" class="ltgrey" height="10px">5 Why Analysis</td>
+            </tr>
+            <tr>
+                <td colspan="6" height="20px"><input name="FiveWhy1" type="text" placeholder="Why" /><!-- Why 1 --></td>
+            </tr>
+            <tr>
+                <td colspan="6" height="20px"><input name="FiveWhy2" type="text" placeholder="Why" /><!-- Why 2 --></td>
+            </tr>
+            <tr>
+                <td colspan="6" height="20px"><input name="FiveWhy3" type="text" placeholder="Why" /><!-- Why 3 --></td>
+            </tr>
+            <tr>
+                <td colspan="6" height="20px"><input name="FiveWhy4" type="text" placeholder="Why" /><!-- Why 4 --></td>
+            </tr>
+            <tr>
+                <td colspan="6" height="20px"><input name="FiveWhy5" type="text" placeholder="Why" /><!-- Why 5 --></td>
+            </tr>
+            <tr>
+                <td rowspan="11" class="dkgrey whitetext">A<br />c<br />t<br />i<br />o<br />n<br />s<br /> <br />T<br />a<br />k<br />e<br />n</td>
+                <td colspan="4" class="ltgrey" height="10px">Actions Against Root Causes</td>
+                <td class="ltgrey">Who</td>
+                <td class="ltgrey">When</td>
+            </tr>
+            <tr>
+                <td height="20px" class="ltgrey">1</td>
+                <td colspan="3"><input name="ARC1" type="text" /></td>
+                <td><input name="ARCWho1" type="text" /></td>
+                <td><input name="ARCWhen1" type="date" /></td>
+            </tr>
+            <tr>
+                <td height="20px" class="ltgrey">2</td>
+                <td colspan="3"><input name="ARC2" type="text" /></td>
+                <td><input name="ARCWho2" type="text" /></td>
+                <td><input name="ARCWhen2" type="date" /></td>
+            </tr>
+            <tr>
+                <td height="20px" class="ltgrey">3</td>
+                <td colspan="3"><input name="ARC3" type="text" /></td>
+                <td><input name="ARCWho3" type="text" /></td>
+                <td><input name="ARCWhen3" type="date" /></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="ltgrey" height="10px">Actions To Sustain Equipment Conditions</td>
+                <td class="ltgrey">Who</td>
+                <td class="ltgrey">When</td>
+            </tr>
+            <tr>
+                <td height="20px" class="ltgrey">1</td>
+                <td colspan="3"><input name="ASEC1" type="text" /></td>
+                <td><input name="ASECWho1" type="text" /></td>
+                <td><input name="ASECWhen1" type="date" /></td>
+            </tr>
+            <tr>
+                <td height="20px" class="ltgrey">2</td>
+                <td colspan="3"><input name="ASEC2" type="text" /></td>
+                <td><input name="ASECWho2" type="text" /></td>
+                <td><input name="ASECWhen2" type="date" /></td>
+            </tr>
+            <tr>
+                <td height="20px" class="ltgrey">3</td>
+                <td colspan="3"><input name="ASEC3" type="text" /></td>
+                <td><input name="ASECWho3" type="text" /></td>
+                <td><input name="ASECWhen3" type="date" /></td>
+            </tr>
+            <tr>
+                <td height="20px" class="ltgrey">4</td>
+                <td colspan="3"><input name="ASEC4" type="text" /></td>
+                <td><input name="ASECWho4" type="text" /></td>
+                <td><input name="ASECWhen4" type="date" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="ltgrey" height="10px">Analysis performed by</td>
+                <td colspan="3" class="ltgrey">Results</td>
+                <td class="ltgrey">Date</td>
+                <td colspan="2" class="ltgrey">Checked by</td>
+                <td colspan="3" class="ltgrey">Signature</td>
+                <td class="ltgrey">Date</td>
+            </tr>
+            <tr>
+                <td colspan="2" height="20px"><input name="Responsible" type="text" /></td>
+                <td colspan="3"><input name="Results" type="text" /></td>
+                <td><input name="DateComplete" type="date" /></td>
+                <td colspan="2"><input name="CheckedBy" type="text" /></td>
+                <td colspan="3"><input name="Signature" type="text" /></td>
+                <td><input name="DateChecked" type="date" /></td>
+            </tr>
+            <tr>
+                <td colspan="13">
+                    <button type="button" id="update" onclick="userUpdate('EWO');">Update</button>
+                    <button type="button" id="submit" onclick="userSubmit('EWO');">Submit</button>
+                    <button type="button" onclick="location.reload();">Clear</button>
+                    <button type="button" onclick="userOpen('EWO');">Open</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

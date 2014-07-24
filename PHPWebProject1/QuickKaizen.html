@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="scripts/js/form.js"></script>
+    <script src="scripts/js/Utilities.js"></script>
+    <script>
+        blockAnythingButChrome();
+    </script>
+    <link rel="stylesheet" href="css/Normalize.css" />
+    <link rel="stylesheet" href="css/FormClasses.css" />
+    <link rel="stylesheet" href="css/h3normalize.css" />
+    <title>Quick Kaizen</title>
+</head>
+
+<body onload="(new Form('QuickKaizen')).open();">
+    <form name="QuickKaizen" data-name="Kaizen" data-table="dev_Kaizens" data-primarykey="KaizenNumber" data-id="-1" data-connection="Safety" data-email=""
+          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com"
+          oninput="var CB = Costs.value / Benefits.value; CostBenefit.value = ((isNaN(CB) ||  !isFinite(CB)) ? 0 : CB)">
+        <table>
+            <tr>
+                <td style="width: 6%;"></td>
+                <td style="width: 6%;"></td>
+                <td style="width: 11%;"></td>
+                <td style="width: 11%;"></td>
+                <td style="width: 11%;"></td>
+                <td style="width: 11%;"></td>
+                <td style="width: 11%;"></td>
+                <td style="width: 11%;"></td>
+                <td style="width: 11%;"></td>
+                <td style="width: 11%;"></td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="2"><h2><input type="text" name="KaizenNumber" readonly /></h2></td>
+                <td colspan="5" rowspan="3" class="dkgrey whitetext" style="text-align: center;"><h1>Quick Kaizen</h1></td>
+                <td class="ltgrey">Department</td>
+                <td colspan="2">
+                    <select name="Department" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-parent="data-parent" data-linksto="ZZone" required></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="ltgrey">Zone</td>
+                <td colspan="2">
+                    <select name="ZZone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["Merrill", "$Department$"]}' data-linksto="Machine" required></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="ltgrey">Pillar</td>
+                <td>
+                    <select name="Pillar" data-list='{"list" : ["SA","CD","FI","WO","AM","PM","QA","LO","PD"]}' required></select>
+                </td>
+                <td class="ltgrey">Machine</td>
+                <td colspan="2">
+                    <select name="Machine" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["Merrill", "$Department$", "$ZZone$"]}'></select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height: 100px;"><textarea name="Plan" placeholder="Plan" required></textarea></td>
+                <td colspan="4" rowspan="2"><textarea name="Do" placeholder="Do"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height: 100px;">
+                    <button type="button" onclick="clearSketch()">Clear</button>
+                    <button type="button">
+                        <label for="colorPicker">Choose(Color)</label>
+                    </button>
+                    <input type="text" id="colorPicker" class="color" value="#000000" style="width: 0px; border: none;" />
+                    <label for="brushSize">Brush Size:</label>
+                    <input type="text" id="brushSize" placeholder="Size" value="2" />
+                    <canvas id="sketchArea" onmousemove="drawSketch()" onmouseout="saveSketch()" style="width: 300px; border: 1px solid grey; cursor: crosshair;">Your browser does not support this sketch box.</canvas>
+                    <input type="hidden" name="SketchURL" id="sketchUrl" onchange="showSketch($(this).val())" />
+                </td>
+            </tr>
+            <tr style="height: 200px;">
+                <td colspan="5"><textarea name="Act" placeholder="Act"></textarea></td>
+                <td colspan="5"><textarea name="Check" placeholder="Check"></textarea></td>
+            </tr>
+            <tr class="ltgrey">
+                <td colspan="2">Originator of the improvement</td>
+                <td>Date</td>
+                <td>Resp. Implementation</td>
+                <td>Date of Implementation</td>
+                <td>Costs</td>
+                <td>Benefits</td>
+                <td>Results</td>
+                <td>Cost/Benefit</td>
+                <td>Verification</td>
+            </tr>
+            <tr style="height: 50px;">
+                <td colspan="2"><input type="text" name="Originator" required="required"/></td>
+                <td><input type="date" name="StartDate" required="required"/></td>
+                <td><input type="text" name="Responsible" required="required"/></td>
+                <td><input type="date" name="EndDate" /></td>
+                <td><input type="number" name="Costs" /></td>
+                <td><input type="number" name="Benefits" /></td>
+                <td><input type="text" name="Results" /></td>
+                <td><output name="CostBenefit" for="Costs Benefits" /></td><!-- Cost/benefit -->
+                <td><input type="text" name="Verification" /></td>
+            </tr>
+            <tr>
+                <td colspan="10">
+                    <button type="button" id="update" onclick="userUpdate('QuickKaizen');">Update</button>
+                    <button type="button" id="submit" onclick="userSubmit('QuickKaizen');">Submit</button>
+                    <button type="button" onclick="location.reload();">Clear</button>
+                    <button type="button" onclick="userOpen('QuickKaizen');">Open</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

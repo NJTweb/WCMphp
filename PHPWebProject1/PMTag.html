@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="scripts/js/form.js"></script>
+    <script src="scripts/js/Utilities.js"></script>
+    <script>
+        blockAnythingButChrome();
+    </script>
+    <link rel="stylesheet" href="css/Normalize.css" />
+    <link rel="stylesheet" href="css/FormClasses.css" />
+    <link rel="stylesheet" href="css/h3normalize.css" />
+    <title>PM Tag</title>
+</head>
+
+<body onload="(new Form('PMTag')).open();">
+    <form name="PMTag" data-name="PM Tag" data-table="dev_PMTags" data-primarykey="TagNo" data-id="-1" data-connection="Safety" data-email=""
+          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+        <table>
+            <tr>
+                <td colspan="3" class="dkgrey whitetext"><h1>PM Tag Form</h1></td>
+                <td class="ltgrey"><h2>Tag No </h2><input id="ID" name="TagNo" type="text" value="" readonly /></td>
+            </tr>
+            <tr class="ltgrey">
+                <td>Original Tag No</td>
+                <td>Date</td>
+                <td>Department</td>
+                <td>Problem</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="OldTagNo" /></td>
+                <td><input type="date" name="Date" /></td>
+                <td>
+                    <select name="Location" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-parent="data-parent" data-linksto="ZZone"></select>
+                </td>
+                <td rowspan="7">
+                    <textarea name="Problem"></textarea>
+                </td>
+            </tr>
+            <tr class="ltgrey">
+                <td>Reported By</td>
+                <td>Notes</td>
+                <td>Zone</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="SignedBy" /></td>
+                <td rowspan="5"><textarea name="Notes"></textarea></td>
+                <td>
+                    <select name="ZZone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["Merrill", "$Location$"]}' data-linksto="EquipmentID"></select>
+                </td>
+            </tr>
+            <tr class="ltgrey">
+                <td>Completed By</td>
+                <td>Machine</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="WorkCompletedBy" /></td>
+                <td>
+                    <select name="EquipmentID" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["Merrill", "$Location$", "$ZZone$"]}'></select>
+                </td>
+            </tr>
+            <tr class="ltgrey">
+                <td>Status</td>
+                <td>Date Completed</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="Status" /></td>
+                <td><input type="date" name="WorkCompletedDate" /></td>
+            </tr>
+            <tr class="ltgrey">
+                <td colspan="4">Repair Description</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <textarea name="RepairDescription"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <button type="button" id="update" onclick="userUpdate('PMTag');">Update</button>
+                    <button type="button" id="submit" onclick="userSubmit('PMTag');">Submit</button>
+                    <button type="button" onclick="location.reload();">Clear</button>
+                    <button type="button" onclick="userOpen('PMTag');">Open</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

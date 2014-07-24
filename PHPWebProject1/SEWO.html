@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>SEWO</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="scripts/js/form.js"></script>
+    <script src="scripts/js/sketch.js"></script>
+    <script src="scripts/js/Utilities.js"></script>
+    <link rel="stylesheet" href="css/Normalize.css" />
+    <link rel="stylesheet" href="css/FormClasses.css" />
+    <link rel="stylesheet" href="css/SEWO.css" />
+</head>
+
+<body onload="(new Form('SEWO')).open();">
+    <form name="SEWO" data-name="SEWO" data-table="dev_ESEWOs" data-primarykey="SEWONumber" data-id="-1" data-connection="Safety" data-email=""
+          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+        <table style="width: 100%;">
+            <tr>
+                <td colspan="4" class="dkgrey whitetext">
+                    <h1>E-SEWO Report</h1>
+                </td>
+                <td colspan="3" class="ltgrey">
+                    <h2>
+                        SEWO Number
+                        <input type="text" name="SEWONumber" value="" readonly>
+                    </h2>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="22" class="vert-text green whitetext">
+                    P<br>
+                    L<br>
+                    A<br>
+                    N
+                </td>
+                <td class="ltgrey">Accident Type</td>
+                <td>
+                    <select name="AccidentType" data-query='{"connection" : "Safety", "connection" : "Safety", "Query" : "AccidentTypes", "Params" : []}' required>
+                        <option value="">Accident Type</option>
+                    </select>
+                </td>
+                <td class="ltgrey">Sex</td>
+                <td class="ltgrey">Position Type</td>
+                <td>
+                    <select name="Plant" data-query='{"connection" : "Safety", "Query" : "Plants", "Params" : []}' data-order="1.0" required>
+                        <option value="">Plant</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="Department" id="dept" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["$Plant$"]}' data-order="1.1" required></select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="text" name="InjuredName" placeholder="Name of the injured" required />
+                </td>
+                <td>
+                    <select name="Sex" data-list='{ "list" : ["Male","Female"] }'>
+                        <option value="">Sex</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="TypeOfPosition" data-list='{ "list" : ["Permanent","Temporary"] }'>
+                        <option value="">Position Type</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="ZZone" id="zone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["$Plant$", "$Department$"]}' data-order="1.2" required></select>
+                </td>
+                <td>
+                    <select name="Machine" id="mach" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["$Plant$", "$Department$", "$ZZone$"]}' data-order="1.3"></select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="text" name="InjuredJob" placeholder="Job of the injured" />
+                </td>
+                <td>
+                    <input type="text" name="ReportedBy" placeholder="Report made by" />
+                </td>
+                <td>
+                    <select name="Shift" data-list='{ "list" : [1,2,3] }' data-format="int" required>
+                        <option value="">Shift</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="date" name="InjuryDate" placeholder="Injury Date" required />
+                </td>
+                <td>
+                    <input type="time" name="InjuryTime" placeholder="Time of incident" data-default="12:00:00" />
+                </td>
+            </tr>
+            <tr>
+                <td class="dkgreen whitetext">SW+1H Analysis(Event Description)</td>
+                <td class="ltgrey">INJURY TYPE</td>
+                <td colspan="2" class="dkgreen whitetext">BODY CHART</td>
+                <td class="dkgreen whitetext">SKETCH</td>
+                <td class="dkgreen whitetext">CORRECTIVE ACTION</td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea name="WWhat" placeholder="WHAT(Nature and body part)"></textarea>
+                </td>
+                <td>
+                    <select name="InjuryType" data-query='{"connection" : "Safety", "Query" : "InjuryTypes", "Params" : []}' required>
+                        <option value=" ">
+                            Injury Type
+                        </option>
+                    </select>
+                </td>
+                <td colspan="2" rowspan="6">
+                    <img src="res/BodyChart.png" style="width: 200px; height: 200px;" />
+                    <select name="BodyPart" data-query='{"connection" : "Safety", "Query" : "BodyParts", "Params" : []}' required>
+                        <option value="">Body Part</option>
+                    </select>
+                </td>
+                <td rowspan="6">
+                    <button type="button" onclick="clearSketch()">Clear</button>
+                    <input type="color" id="colorPicker" style="width: 20px; height: 20px;" />
+                    <label for="brushSize">Brush Size:</label>
+                    <input type="text" id="brushSize" placeholder="Size" value="2" />
+                    <canvas id="sketchArea" onmousemove="drawSketch()" onmouseout="saveSketch()" style="width: 300px; border: 1px solid grey; cursor: crosshair;">Your browser does not support this sketch box.</canvas>
+                    <input type="hidden" name="SketchURL" id="sketchUrl" onchange="showSketch($(this).val())" />
+                </td>
+                <td rowspan="6">
+                    <textarea name="ActionDescription" placeholder="Action Description"></textarea><!-- corrective action -->
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea name="WWhen" placeholder="WHEN(when did it happen)"></textarea>
+                </td>
+                <td>
+                    <select name="PPESupplied" data-list='{ "list" : ["Yes","No"] }'>
+                        <option value="">PPE Supplied?</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea name="WWhere" placeholder="WHERE(Where is the job?)"></textarea>
+                </td>
+                <td>
+                    <select name="PPEInUse" data-list='{ "list" : ["Yes","No"] }'>
+                        <option value="">PPE in use?</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea name="WWho" placeholder="WHO(Who is doing the job?)"></textarea>
+                </td>
+                <td>
+                    <select name="UsualWork" data-list='{ "list" : ["Yes","No"] }'>
+                        <option value="">Usual work?</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <textarea name="WWhich" placeholder="WHICH(Which kind of job?)"></textarea>
+                </td>
+            <tr>
+                <td colspan="2">
+                    <textarea name="HHow" placeholder="HOW(How did this injury occur?)"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="ltgreen whitetext" colspan="7">Analysis Root Cause: Write "5 Why's" for the most probable cause</td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <input type="text" name="FiveWhy1" placeholder="Why?" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <input type="text" name="FiveWhy2" placeholder="Why?" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <input type="text" name="FiveWhy3" placeholder="Why?" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <input type="text" name="FiveWhy4" placeholder="Why?" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <input type="text" name="FiveWhy5" placeholder="Why?" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <input type="text" name="FiveWhyRootCause" placeholder="Root cause" />
+                </td>
+            </tr>
+            <tr>
+                <td class="ltgreen whitetext" colspan="7">Categorize Root Cause</td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <select name="RootCause" data-query='{"connection" : "Safety", "Query" : "RootCauses", "Params" : []}' data-order="2.0" required>
+                        <option value="">Root Cause Type</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <select name="SecondaryCause" data-query='{"connection" : "Safety", "Query" : "SecondaryCauses", "Params" : ["$RootCause$"]}' data-order="2.1" required>
+                        <option value="">Secondary Root Cause</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <select name="MicroCause" data-query='{"connection" : "Safety", "Query" : "MicroCauses", "Params" : ["$RootCause$","$SecondaryCause$"]}' data-order="2.2" required>
+                        <option value="">Micro Root Cause</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <select name="Action" data-query='{"connection" : "Safety", "Query" : "Actions", "Params" : ["$RootCause$","$SecondaryCause$"]}' data-order="2.3" required>
+                        <option value="">Action</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2" class="vert-text ltblue whitetext">
+                    D<br>
+                    O
+                </td>
+                <td colspan="2" class="dkblue whitetext">Action Plan</td>
+                <td class="dkblue whitetext">RESPONSIBLE</td>
+                <td class="dkblue whitetext">DUE DATE</td>
+                <td class="dkblue whitetext">CLOSE DATE</td>
+                <td class="dkblue whitetext">NOTES</td>
+            </tr>
+            <tr>
+                <td colspan="2" height="100px">
+                    <textarea name="ActionPlan" placeholder="Action plan"></textarea><!-- action plan -->
+                </td>
+                <td>
+                    <textarea name="Responsible" placeholder="Responsible"></textarea><!-- responsible -->
+                </td>
+                <td>
+                    <textarea name="DueDate" placeholder="Due date" ></textarea><!-- due date -->
+                </td>
+                <td>
+                    <textarea name="CloseDate" placeholder="Close date" ></textarea><!-- close date -->
+                </td>
+                <td>
+                    <textarea name="Notes" placeholder="Notes"></textarea><!-- notes -->
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td rowspan="9" class="vert-text red whitetext">
+                                C<br>
+                                H<br>
+                                E<br>
+                                C<br>
+                                K
+                            </td>
+                            <td colspan="3" height="150">
+                                RESULTS ACHEIVED WEEKLY
+                                <!-- an embedded excel chart maybe, or move to dashboard -->
+                            </td>
+                            <td class="vert-text yellow">
+                                A<br>
+                                C<br>
+                                T
+                            </td>
+                            <td valign="top">
+                                <table style="width: 100%; height: 150px;">
+                                    <tr>
+                                        <td>
+                                            <select name="ExpansionPlan" data-list='{ "list" : ["Yes","No"] }'>
+                                                <option value="">Expansion Plan</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <textarea name="Location" placeholder="Location" ></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <textarea name="Act" placeholder="Act"></textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <table style="width: 100%;">
+                        <tr class="ltgrey">
+                            <td></td>
+                            <td>Employee</td>
+                            <td>Team Leader</td>
+                            <td>Supervisor</td>
+                            <td>Mgr Depart.</td>
+                            <td>Safety Mgr.</td>
+                            <td>Plant Mgr.</td>
+                        </tr>
+                        <tr>
+                            <td class="ltgrey">Name</td>
+                            <td>
+                                <input type="text" name="EmployeeName" placeholder="Employee Name" />
+                            </td>
+                            <td>
+                                <input type="text" name="TeamLeadName" placeholder="Team Lead Name" />
+                            </td>
+                            <td>
+                                <input type="text" name="SupervisorName" placeholder="Supervisor Name" />
+                            </td>
+                            <td>
+                                <input type="text" name="DeptManagerName" placeholder="Dept Mgr Name" />
+                            </td>
+                            <td>
+                                <input type="text" name="SafetyMgrName" placeholder="Safety Mgr Name" />
+                            </td>
+                            <td>
+                                <input type="text" name="PlantMgrName" placeholder="Plant Mgr Name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ltgrey">Date</td>
+                            <td>
+                                <input type="date" name="EmployeeDate" placeholder="Employee Date" />
+                            </td>
+                            <td>
+                                <input type="date" name="TeamLeadDate" placeholder="Team Lead Date" />
+                            </td>
+                            <td>
+                                <input type="date" name="SupervisorDate" placeholder="Supervisor Date" />
+                            </td>
+                            <td>
+                                <input type="date" name="DeptManagerDate" placeholder="Dept Mgr Date" />
+                            </td>
+                            <td>
+                                <input type="date" name="SafetyMgrDate" placeholder="Safety Mgr Date" />
+                            </td>
+                            <td>
+                                <input type="date" name="PlantMgrDate" placeholder="Plant Mgr Date" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ltgrey">Signature</td>
+                            <td>
+                                <input type="text" name="EmployeeSignature" placeholder="Employee Signature" />
+                            </td>
+                            <td>
+                                <input type="text" name="TeamLeadSignature" placeholder="Team Lead Signature" />
+                            </td>
+                            <td>
+                                <input type="text" name="SupervisorSignature" placeholder="Supervisor Signature" />
+                            </td>
+                            <td>
+                                <input type="text" name="DeptManagerSignature" placeholder="Dept Mgr Signature" />
+                            </td>
+                            <td>
+                                <input type="text" name="SafetyMgrSignature" placeholder="Safety Mgr Signature" />
+                            </td>
+                            <td>
+                                <input type="text" name="PlantMgrSignature" placeholder="Plant Mgr Signature" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <h3>Injured Statement</h3>
+                </td>
+                <td colspan="2">
+                    <h3>Witness Statement</h3>
+                </td>
+            </tr>
+            <tr style="height: 300px;">
+                <td colspan="5">
+                    <textarea name="InjuredStatement" placeholder="Statement"></textarea>
+                </td>
+                <td colspan="2">
+                    <textarea name="WitnessStatement" placeholder="Statement"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <input type="text" name="InjuredSignature" placeholder="Signature">
+                </td>
+                <td colspan="2">
+                    <input type="date" name="InjuredDate" placeholder="Injured Date">
+                </td>
+                <td>
+                    <input type="text" name="WitnessSignature" placeholder="Signature">
+                </td>
+                <td>
+                    <input type="date" name="WitnessDate" placeholder="Witness Date">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <button type="button" id="update" onclick="userUpdate('SEWO');">Update</button>
+                    <button type="button" id="submit" onclick="userSubmit('SEWO');">Submit</button>
+                    <button type="button" onclick="location.reload();">Clear</button>
+                    <button type="button" onclick="userOpen('SEWO');">Open</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

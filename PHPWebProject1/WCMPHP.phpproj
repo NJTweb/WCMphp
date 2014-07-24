@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>WCMPHP</Name>
+    <ProjectGuid>cf57f6f4-fea3-45d1-8296-49bbfb9d4259</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PHPWebProject1</RootNamespace>
+    <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
+    <AssemblyName>PHPWebProject1</AssemblyName>
+    <ProjectHome />
+    <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+    <Server>PHPDev</Server>
+    <PublishEvent>None</PublishEvent>
+    <PHPDevAutoPort>True</PHPDevAutoPort>
+    <PHPDevPort>57840</PHPDevPort>
+    <PHPDevHostName>localhost</PHPDevHostName>
+    <IISProjectUrl>http://localhost:57840/</IISProjectUrl>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <IncludeDebugInformation>false</IncludeDebugInformation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="EHS.php" />
+    <Compile Include="scripts\php\ConInfo.php" />
+    <Compile Include="scripts\php\getMaxID.php" />
+    <Compile Include="scripts\php\Open.php" />
+    <Compile Include="scripts\php\Query.php" />
+    <Compile Include="scripts\php\smtp\class.phpmailer.php" />
+    <Compile Include="scripts\php\smtp\PHPMailerAutoload.php" />
+    <Compile Include="scripts\php\smtp\class.smtp.php" />
+    <Compile Include="scripts\php\Update.php" />
+    <Compile Include="scripts\php\Submit.php" />
+    <Compile Include="scripts\php\Utilities.php" />
+    <Compile Include="ToolRepair.html" />
+    <Compile Include="WCC.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="css\" />
+    <Folder Include="scripts\php\smtp\" />
+    <Folder Include="xml\" />
+    <Folder Include="res\" />
+    <Folder Include="scripts\" />
+    <Folder Include="scripts\js\" />
+    <Folder Include="scripts\php\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BlueTag.html" />
+    <Content Include="css\Checklist.css" />
+    <Content Include="css\EHS.css" />
+    <Content Include="css\FormClasses.css" />
+    <Content Include="css\h3normalize.css" />
+    <Content Include="css\Media.css" />
+    <Content Include="css\normalize.css" />
+    <Content Include="css\SEWO.css" />
+    <Content Include="css\WCC.css" />
+    <Content Include="EWO.html" />
+    <Content Include="PMTag.html" />
+    <Content Include="QuickKaizen.html" />
+    <Content Include="res\bodychart.bmp" />
+    <Content Include="res\BodyChart.png" />
+    <Content Include="res\download.png" />
+    <Content Include="res\downloadgreen.png" />
+    <Content Include="res\upload.png" />
+    <Content Include="res\uploadgreen.png" />
+    <Content Include="scripts\js\EWO.js" />
+    <Content Include="scripts\js\form.js" />
+    <Content Include="scripts\js\images.js" />
+    <Content Include="scripts\js\Media.js" />
+    <Content Include="scripts\js\sketch.js" />
+    <Content Include="scripts\js\checklist.js" />
+    <Content Include="scripts\js\ToolRepair.js" />
+    <Content Include="scripts\js\Utilities.js" />
+    <Content Include="SEWO.html" />
+    <Content Include="UCAN.html" />
+    <Content Include="xml\connections.xml" />
+    <Content Include="xml\ehslabels.xml" />
+    <Content Include="xml\queries.xml" />
+    <Content Include="xml\wcclabels.xml" />
+  </ItemGroup>
+</Project>

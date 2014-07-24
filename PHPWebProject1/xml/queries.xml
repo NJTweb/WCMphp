@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<queries>
+  <query name="Plants">
+    <qstring>SELECT DISTINCT Plant FROM PlantLayout</qstring>
+  </query>
+  <query name="Departments">
+    <qstring>SELECT DISTINCT Department FROM PlantLayout WHERE Plant=?</qstring>
+  </query>
+  <query name="Zones">
+    <qstring>SELECT DISTINCT Zone FROM PlantLayout WHERE Plant=? AND Department=?</qstring>
+  </query>
+  <query name="WorkCells">
+    <qstring>SELECT DISTINCT WorkCell FROM PlantLayout WHERE Plant=? AND Department=?</qstring>
+  </query>
+  <query name="Machines">
+    <qstring>SELECT DISTINCT Machine FROM PlantLayout WHERE Plant=? AND Department=? AND Zone=?</qstring>
+  </query>
+  <query name="Subsystems">
+    <qstring>SELECT DISTINCT Part FROM PlantLayout WHERE Plant=? AND Department=? AND Zone=? AND Machine=?</qstring>
+  </query>
+  <query name="Auditors">
+    <qstring>SELECT DISTINCT AuditorName FROM Auditor</qstring>
+  </query>
+  <query name="Supervisors">
+    <qstring>SELECT DISTINCT SupervisorName FROM Supervisor</qstring>
+  </query>
+  <query name="AccidentTypes">
+    <qstring>SELECT DISTINCT AccidentType FROM AccidentTypes</qstring>
+  </query>
+  <query name="InjuryTypes">
+    <qstring>SELECT DISTINCT InjuryType FROM InjuryTypes</qstring>
+  </query>
+  <query name="BodyParts">
+    <qstring>SELECT DISTINCT BodyPart FROM BodyParts</qstring>
+  </query>
+  <query name="Tools">
+    <qstring>SELECT DISTINCT MoldID FROM MoldIDs</qstring>
+  </query>
+  <query name="RootCauses">
+    <qstring>SELECT DISTINCT RootCause FROM vRootCause</qstring>
+  </query>
+  <query name="SecondaryCauses">
+    <qstring>SELECT DISTINCT SecondaryRootCause FROM vRootCause WHERE RootCause=?</qstring>
+  </query>
+  <query name="MicroCauses">
+    <qstring>SELECT DISTINCT MicroRootCause FROM vRootCause WHERE RootCause=? AND SecondaryRootCause=?</qstring>
+  </query>
+  <query name="Actions">
+    <qstring>SELECT DISTINCT Action FROM vRootCause WHERE RootCause=? AND SecondaryRootCause=?</qstring>
+  </query>
+  <query name="EWORootCauses">
+    <qstring>SELECT DISTINCT RootCause FROM vEWO_RootCause</qstring>
+  </query>
+  <query name="EWOSecondaryCauses">
+    <qstring>SELECT DISTINCT SecondaryRootCause FROM vEWO_RootCause WHERE RootCause=?</qstring>
+  </query>
+  <query name="EWOActions">
+    <qstring>SELECT DISTINCT Action FROM vEWO_RootCause WHERE RootCause=? AND SecondaryRootCause=?</qstring>
+  </query>
+</queries>
