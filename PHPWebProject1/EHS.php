@@ -44,24 +44,24 @@
                     </div>
                     <div class="inputPlusLabel">
                         <strong>Plant</strong>
-                        <select name="Plant" data-query='{"connection" : "Safety", "Query": "Plants", "Params" : []}' data-parent="data-parent" data-linksto="Department" required>
+                        <select name="Plant" data-query='{"connection" : "Safety", "Query": "Plants", "Params" : []}' data-order="1.0" required>
                         </select>
                     </div>
                     <div class="inputPlusLabel">
                         <strong>Department</strong>
-                        <select name="Department" id="dept" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["$Plant$"]}' data-linksto="Zone WorkCell" required></select>
+                        <select name="Department" id="dept" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["$Plant$"]}' data-order="1.1" required></select>
                     </div>
                     <div class="inputPlusLabel">
                         <strong>Zone</strong>
-                        <select name="Zone" id="zone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["$Plant$", "$Department$"]}' data-linksto="MachID" required></select>
+                        <select name="Zone" id="zone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["$Plant$", "$Department$"]}' data-order="1.2" required></select>
                     </div>
                     <div class="inputPlusLabel">
                         <strong>Machine</strong>
-                        <select name="MachID" id="mach" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["$Plant$", "$Department$", "$Zone$"]}' ></select>
+                        <select name="MachID" id="mach" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["$Plant$", "$Department$", "$Zone$"]}' data-order="1.3" ></select>
                     </div>
                     <div class="inputPlusLabel">
                         <strong>Work Cell</strong>
-                        <select name="WorkCell" id="workcell" data-query='{"connection" : "Safety", "Query" : "WorkCells", "Params" : ["$Plant$", "$Department$"]}' required>
+                        <select name="WorkCell" id="workcell" data-query='{"connection" : "Safety", "Query" : "WorkCells", "Params" : ["$Plant$", "$Department$"]}' data-order="1.2" required>
                             <!-- code to update at end of file -->
                         </select>
                     </div>

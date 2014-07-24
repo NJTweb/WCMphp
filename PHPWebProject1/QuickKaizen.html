@@ -67,7 +67,7 @@
                     <input type="color" id="colorPicker" value="#000000" style="width: 30px; height: 25px;" />
                     <label for="brushSize">Brush Size:</label>
                     <input type="text" id="brushSize" placeholder="Size" value="2" />
-                    <canvas id="sketchArea" onmousemove="drawSketch()" onmouseout="saveSketch()" style="width: 300px; border: 1px solid grey; cursor: crosshair;">Your browser does not support this sketch box.</canvas>
+                    <canvas id="sketchArea" onmousemove="drawSketch()" onmouseout="saveSketch()" style="border: 1px solid grey; cursor: crosshair;">Your browser does not support this sketch box.</canvas>
                     <input type="hidden" name="SketchURL" id="sketchUrl" onchange="showSketch($(this).val())" />
                 </td>
             </tr>

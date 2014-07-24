@@ -52,12 +52,12 @@
                     </select>
                 </td>
                 <td>
-                    <select name="Department" id="dept" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-parent="data-parent" data-linksto="Zone">
+                    <select name="Department" id="dept" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-order="1.0">
                         <option value="">Department</option>
                     </select>
                 </td>
                 <td>
-                    <select name="Zone" id="zone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["Merrill", "$Department$"]}' data-linksto="Machine">
+                    <select name="Zone" id="zone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["Merrill", "$Department$"]}' data-order="1.1">
                         <option value="">Zone</option>
                     </select>
                 </td>
@@ -70,7 +70,7 @@
             </tr>
             <tr>
                 <td>
-                    <select name="Machine" id="mach" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["Merrill", "$Department$", "$ZZone$"]}'>
+                    <select name="Machine" id="mach" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["Merrill", "$Department$", "$ZZone$"]}' data-order="1.2">
                         <option value="">Machine</option>
                     </select>
                 </td>
