@@ -6,9 +6,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="scripts/js/form.js"></script>
     <script src="scripts/js/Utilities.js"></script>
-    <script>
-        blockAnythingButChrome();
-    </script>
+    <script src="scripts/js/sketch.js"></script>
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/FormClasses.css" />
     <link rel="stylesheet" href="css/h3normalize.css" />
@@ -33,17 +31,17 @@
                 <td style="width: 11%;"></td>
             </tr>
             <tr>
-                <td colspan="2" rowspan="2"><h2><input type="text" name="KaizenNumber" readonly /></h2></td>
+                <td colspan="2" rowspan="2"><h2><input type="text" name="KaizenNumber" style="width: auto; background-color: inherit;" readonly /></h2></td>
                 <td colspan="5" rowspan="3" class="dkgrey whitetext" style="text-align: center;"><h1>Quick Kaizen</h1></td>
                 <td class="ltgrey">Department</td>
                 <td colspan="2">
-                    <select name="Department" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-parent="data-parent" data-linksto="ZZone" required></select>
+                    <select name="Department" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-order="1.0" required></select>
                 </td>
             </tr>
             <tr>
                 <td class="ltgrey">Zone</td>
                 <td colspan="2">
-                    <select name="ZZone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["Merrill", "$Department$"]}' data-linksto="Machine" required></select>
+                    <select name="ZZone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["Merrill", "$Department$"]}' data-order="1.1" required></select>
                 </td>
             </tr>
             <tr>
@@ -53,7 +51,7 @@
                 </td>
                 <td class="ltgrey">Machine</td>
                 <td colspan="2">
-                    <select name="Machine" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["Merrill", "$Department$", "$ZZone$"]}'></select>
+                    <select name="Machine" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["Merrill", "$Department$", "$ZZone$"]}' data-order="1.2"></select>
                 </td>
             </tr>
             <tr>
@@ -66,7 +64,7 @@
                     <button type="button">
                         <label for="colorPicker">Choose(Color)</label>
                     </button>
-                    <input type="text" id="colorPicker" class="color" value="#000000" style="width: 0px; border: none;" />
+                    <input type="color" id="colorPicker" value="#000000" style="width: 30px; height: 25px;" />
                     <label for="brushSize">Brush Size:</label>
                     <input type="text" id="brushSize" placeholder="Size" value="2" />
                     <canvas id="sketchArea" onmousemove="drawSketch()" onmouseout="saveSketch()" style="width: 300px; border: 1px solid grey; cursor: crosshair;">Your browser does not support this sketch box.</canvas>

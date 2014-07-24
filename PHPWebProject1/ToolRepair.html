@@ -25,7 +25,7 @@
             </tr>
             <tr>
                 <td colspan="3" class="dkgrey whitetext"><h1>Tool Repair Form</h1></td>
-                <td class="dkgrey whitetext"><h2>Tool Repair # </h2><input class="dkgrey" id="ID" name="ID" type="text" value="" readonly /></td>
+                <td class="dkgrey whitetext"><h2>Tool Repair # </h2><input class="dkgrey" id="ID" name="ID" type="text" value="" style="width: auto; background-color: inherit;" readonly /></td>
             </tr>
             <tr>
                 <td rowspan="16" class="red">T<br />o<br />o<br />l<br /> <br />R<br />e<br />p<br />a<br />i<br />r</td>
@@ -49,7 +49,7 @@
             </tr>
             <tr>
                 <td>
-                    <select name="Department" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-parent="data-parent" data-linksto="Zone" required></select>
+                    <select name="Department" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-order="1.0" required></select>
                 </td>
             </tr>
             <tr>
@@ -57,7 +57,7 @@
             </tr>
             <tr>
                 <td>
-                    <select name="Zone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["Merrill", "$Department$"]}' data-linksto="Machine" onchange="updateEmailContacts()" required></select>
+                    <select name="Zone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["Merrill", "$Department$"]}' data-order="1.1" onchange="updateEmailContacts()" required></select>
                 </td>
             </tr>
             <tr>
@@ -65,7 +65,7 @@
             </tr>
             <tr>
                 <td>
-                    <select name="Machine" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["Merrill", "$Department$", "$Zone$"]}'></select>
+                    <select name="Machine" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["Merrill", "$Department$", "$Zone$"]}' data-order="1.2"></select>
                 </td>
             </tr>
             <tr>

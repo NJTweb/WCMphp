@@ -6,9 +6,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="scripts/js/form.js"></script>
     <script src="scripts/js/Utilities.js"></script>
-    <script>
-        blockAnythingButChrome();
-    </script>
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/FormClasses.css" />
     <link rel="stylesheet" href="css/h3normalize.css" />
@@ -21,7 +18,7 @@
         <table>
             <tr>
                 <td colspan="3" class="dkgrey whitetext"><h1>PM Tag Form</h1></td>
-                <td class="ltgrey"><h2>Tag No </h2><input id="ID" name="TagNo" type="text" value="" readonly /></td>
+                <td class="ltgrey"><h2>Tag No <input id="ID" name="TagNo" type="text" value="" style="width: auto; background-color: inherit;" readonly /></h2></td>
             </tr>
             <tr class="ltgrey">
                 <td>Original Tag No</td>
@@ -33,7 +30,7 @@
                 <td><input type="text" name="OldTagNo" /></td>
                 <td><input type="date" name="Date" /></td>
                 <td>
-                    <select name="Location" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-parent="data-parent" data-linksto="ZZone"></select>
+                    <select name="Location" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-order="1.0"></select>
                 </td>
                 <td rowspan="7">
                     <textarea name="Problem"></textarea>
@@ -48,7 +45,7 @@
                 <td><input type="text" name="SignedBy" /></td>
                 <td rowspan="5"><textarea name="Notes"></textarea></td>
                 <td>
-                    <select name="ZZone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["Merrill", "$Location$"]}' data-linksto="EquipmentID"></select>
+                    <select name="ZZone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["Merrill", "$Location$"]}' data-order="1.1"></select>
                 </td>
             </tr>
             <tr class="ltgrey">
@@ -58,7 +55,7 @@
             <tr>
                 <td><input type="text" name="WorkCompletedBy" /></td>
                 <td>
-                    <select name="EquipmentID" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["Merrill", "$Location$", "$ZZone$"]}'></select>
+                    <select name="EquipmentID" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["Merrill", "$Location$", "$ZZone$"]}' data-order="1.2"></select>
                 </td>
             </tr>
             <tr class="ltgrey">
@@ -66,7 +63,7 @@
                 <td>Date Completed</td>
             </tr>
             <tr>
-                <td><input type="text" name="Status" /></td>
+                <td><select name="Status" data-list='{"list" : ["Open","Closed"]}' data-default="Open"></select></td>
                 <td><input type="date" name="WorkCompletedDate" /></td>
             </tr>
             <tr class="ltgrey">

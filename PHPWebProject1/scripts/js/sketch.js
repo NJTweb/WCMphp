@@ -12,6 +12,7 @@
         sketchCtx.fillRect(relX, relY, $("#brushSize").val(), $("#brushSize").val());
     }
     //console.log($("#colorPicker").val());
+    console.log("X: " + relX + ", Y: " + relY);
 }
 
 function showSketch(sketchURL) {
@@ -39,8 +40,8 @@ function saveSketch() {
 var mouse = { x: 0, y: 0, left: false };
 
 document.addEventListener('mousemove', function (e) {
-    mouse.x = e.clientX || e.pageX;
-    mouse.y = e.clientY || e.pageY;
+    mouse.x = e.pageX || e.clientX;
+    mouse.y = e.pageY || e.clientY;
 }, false);
 
 document.addEventListener('mousedown', function (e) {

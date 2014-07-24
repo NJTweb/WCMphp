@@ -21,7 +21,7 @@
           data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
         <table>
             <tr>
-                <td colspan="4"><h1>Work Cell Observation Checklist No. <input id="ID" type="text" name="ID" value="" readonly></h1></td>
+                <td colspan="4"><h1>Work Cell Observation Checklist No. <input id="ID" type="text" name="ID" value="" style="width: auto; background-color: inherit;" readonly></h1></td>
             </tr>
             <tr>
                 <td colspan="4">

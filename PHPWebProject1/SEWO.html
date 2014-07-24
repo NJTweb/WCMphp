@@ -22,7 +22,7 @@
                 <td colspan="3" class="ltgrey">
                     <h2>
                         SEWO Number
-                        <input type="text" name="SEWONumber" value="" readonly>
+                        <input type="text" name="SEWONumber" value="" style="width: auto; background-color: inherit;" readonly>
                     </h2>
                 </td>
             </tr>
@@ -116,10 +116,10 @@
                 </td>
                 <td rowspan="6">
                     <button type="button" onclick="clearSketch()">Clear</button>
-                    <input type="color" id="colorPicker" style="width: 20px; height: 20px;" />
+                    <input type="color" id="colorPicker" style="width: 30px; height: 20px;" />
                     <label for="brushSize">Brush Size:</label>
                     <input type="text" id="brushSize" placeholder="Size" value="2" />
-                    <canvas id="sketchArea" onmousemove="drawSketch()" onmouseout="saveSketch()" style="width: 300px; border: 1px solid grey; cursor: crosshair;">Your browser does not support this sketch box.</canvas>
+                    <canvas id="sketchArea" onmousemove="drawSketch()" onmouseout="saveSketch()" style="border: 1px solid grey; cursor: crosshair;">Your browser does not support this sketch box.</canvas>
                     <input type="hidden" name="SketchURL" id="sketchUrl" onchange="showSketch($(this).val())" />
                 </td>
                 <td rowspan="6">
@@ -378,7 +378,7 @@
                     </table>
                 </td>
             </tr>
-            <tr>
+            <tr class="ltgrey">
                 <td colspan="5">
                     <h3>Injured Statement</h3>
                 </td>
