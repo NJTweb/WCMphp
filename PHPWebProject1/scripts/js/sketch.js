@@ -1,4 +1,9 @@
-﻿function drawSketch() {
+﻿/*
+This doesn't work correctly if the sketch area has a size set manually
+i.e. in CSS or some other attribute
+*/
+
+function drawSketch() {
     var sketchArea = $("#sketchArea");
     var sketchCtx = sketchArea[0].getContext("2d");
 

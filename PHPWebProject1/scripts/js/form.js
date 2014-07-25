@@ -4,8 +4,9 @@
 * allows updating and submitting of form
 * models an html form, adds functionality
 * uses an array of Field objects to make changes
-* initialized with form name (used for emails), table,
-* primary key field name, and the id of the current record
+* initialized with form name. everything else
+* comes from data-* properties set on the
+* html form tag
 */
 function Form(name) {
     this.rawObj = {};
@@ -15,9 +16,10 @@ function Form(name) {
     this.primaryKey = getByName(name).attr("data-primaryKey");
     this.ID = getByName(name).attr("data-id");
     this.connection = getByName(name).attr("data-connection");
-    this.initializeFields();
     this.emailBody = getByName(name).attr("data-email");
     this.contacts = getByName(name).attr("data-contacts");
+
+    this.initializeFields();
 }
 
 Form.prototype.initializeFields = function () {
@@ -29,20 +31,6 @@ Form.prototype.initializeFields = function () {
 
 Form.prototype.open = function () {
     ajaxPostJSONjQuery("scripts/php/Open.php", this, "setData", true);
-};
-
-Form.prototype.setData = function (data) {
-    this.rawObj = data;
-    this.rawObjToFields();
-    this.updateFields();
-    if (this.rawObj.length == 0) {
-        $("#update").hide();
-        $("#submit").show();
-        this.getMaxID();
-    } else {
-        $("#submit").hide();
-        $("#update").show();
-    }
 };
 
 Form.prototype.update = function () {
@@ -61,6 +49,20 @@ Form.prototype.setMaxID = function (data) {
     getByName(this.primaryKey).val(++data[0]);
 };
 
+Form.prototype.setData = function (data) {
+    this.rawObj = data;
+    this.rawObjToFields();
+    this.updateFields();
+    if (this.rawObj.length == 0) {
+        $("#update").hide();
+        $("#submit").show();
+        this.getMaxID();
+    } else {
+        $("#submit").hide();
+        $("#update").show();
+    }
+};
+
 Form.prototype.rawObjToFields = function () {
     for (col in this.rawObj[0]) {
         for (var i = 0, l = this.fields.length; i < l; ++i) {
@@ -74,6 +76,7 @@ Form.prototype.rawObjToFields = function () {
 };
 
 Form.prototype.updateFields = function () {
+    //sort the fields in the correct order before updating them
     this.fields.sort(function (a, b) { return a.order - b.order; });
     //console.log(this.fields);
     for (var i = 0, l = this.fields.length; i < l; ++i) {
@@ -90,56 +93,30 @@ Form.prototype.updateFields = function () {
 */
 function Field(name, value) {
     this.name = name;
+    this.value = value;
     this.format = getByName(name).attr("data-format") || getByName(name).attr("type") || "text";
     this.default = getByName(name).attr("data-default");
     this.order = parseFloat(getByName(name).attr("data-order")) || Number.MAX_VALUE;
     this.type = getByName(name).prop("tagName");
-    this.value = value;
-    this.connection = "";
     this.query = getByName(name).attr("data-query");
     this.list = getByName(name).attr("data-list");
+    this.connection = "";
     this.childNames = $("[data-order='" + (this.order + 0.1).toFixed(1) + "']").map(function () { return $(this).attr("name"); }).get();
+
     this.setChangeEvent();
     if (this.type == "SELECT") {
         this.getOptions();
     }
-    //this.formatValue();
+    //this.formatValue(); no longer formats value on initialization
 }
 
 Field.prototype.formatValue = function () {
     //console.log("Original Value: " + this.value);
     var valid = true;
+
     if (this.value != undefined && this.value != null) {
         try {
-            switch (this.format) {
-                case "date":
-                    this.value = (new Date(Date.parse(this.value + ""))).toISOString().split("T")[0];
-                    break;
-                case "time":
-                    this.value = (new Date(Date.parse(this.value + ""))).toISOString().split("T")[1].replace("Z", "");
-                    break;
-                case "datetime":
-                case "datetime-local":
-                    this.value = (new Date(Date.parse(this.value + ""))).toISOString();
-                    break;
-                case "number":
-                case "range":
-                    this.value = parseFloat(this.value);
-                    break;
-                case "int":
-                    this.value = parseInt(this.value);
-                    break;
-                case "float":
-                    this.value = parseFloat(this.value);
-                    break;
-                case "bool":
-                    this.value = Boolean(parseInt(this.value));
-                    break;
-                case "text":
-                case "password":
-                default:
-                    break;
-            }
+            this.value = conversions[this.format](this.value);
         } catch (e) {
             valid = false;
             console.log(e.message + ", format: " + this.format + ", value: " + this.value);
@@ -170,12 +147,15 @@ Field.prototype.getOptions = function () {
         this.appendOptions(list);
     } else if (this.query != undefined) {
         //console.log(this.query);
+        // check if the query has been parsed to a string yet
         if (typeof (this.query) == "string") {
             this.query = $.parseJSON(this.query);
         }
         for (var i = 0, l = this.query.Params.length; i < l; ++i) {
+            //if the parameter is a reference (contains $)
             if (String(this.query.Params[i]).indexOf("$") != -1) {
                 var thisParam = this.query.Params[i];
+                //remove the $ from each side of the string
                 var refName = thisParam.substring(1, thisParam.length - 1);
                 //console.log(refName);
                 var refVal = $("[name='" + refName + "']").val();
@@ -183,6 +163,9 @@ Field.prototype.getOptions = function () {
             }
         }
         //console.log(this.query.Params);
+        // the object passed to these functions must have a connection
+        // property defined, so we set it to the connection specified 
+        // in the query object
         this.connection = this.query.connection;
         ajaxPostJSONjQuery("scripts/php/Query.php", this, "appendOptions", false);
     }
@@ -196,9 +179,13 @@ Field.prototype.appendOptions = function (list) {
     }
 }
 
+// set the change event so that any dependent elements (+0.1 in the order)
+// will update when this elements value changes
+// i.e. if an element with data-order 1.0 is changed
+// all elements with data-order 1.1 will update their values
 Field.prototype.setChangeEvent = function () {
     if (this.childNames != undefined) {
-        for(var i = 0, l = this.childNames.length; i < l; ++i){
+        for (var i = 0, l = this.childNames.length; i < l; ++i) {
             getByName(this.name).change(
                 { jqEl: getByName(this.childNames[i]) },
                 function (event) {
@@ -206,9 +193,6 @@ Field.prototype.setChangeEvent = function () {
                     (new Field(el.attr("name"), el.attr("value"))).getOptions();
                 }
             );
-            // set the change event so that any dependent elements (+0.1 in the order)
-            // will update when this elements value changes
-            // i.e. if element with data-order 1.0 
         }
     }
 };
@@ -222,7 +206,7 @@ Field.prototype.setChangeEvent = function () {
 // element is added to an objects properties
 // an object with circular references cannot be
 // parsed into JSON
-function getByName (name) {
+function getByName(name) {
     return $("[name='" + name + "']");
 }
 
@@ -234,12 +218,12 @@ function userOpen(formName) {
     thisForm.open();
 }
 
-function userUpdate(formName){
+function userUpdate(formName) {
     var thisForm = new Form(formName);
     thisForm.update();
 }
 
-function userSubmit(formName){
+function userSubmit(formName) {
     var thisForm = new Form(formName);
     thisForm.submit();
 }
@@ -261,10 +245,11 @@ function ajaxPostjQuery(url, obj, successFunc, async, returnType) {
         data: { Object: JSON.stringify(obj) },
         success: function (data, status, xhr) {
             if (status == "success" && xhr.readyState == 4) {
+                // calls function obj.successFunc(data)
+                // this means that the successFunc (string) 
+                // must always be implemented
+                // as a function of obj
                 obj[successFunc](data);
-                //calls function obj.successFunc(data)
-                // this means that the success function must always be implemented
-                // as a function of tthe passed boject
             }
         },
         error: function (xhr, status, error) {
@@ -285,4 +270,23 @@ function ajaxPostJSONjQuery(url, obj, successFunc, async) {
 function render(data) {
     //console.log(data);
     window.document.body.innerHTML = data;
+};
+
+function ISODate(dateStr) {
+    return (new Date(Date.parse(dateStr))).toISOString();
+}
+
+var conversions = {
+    "date": function (val) { return ISODate(val).split("T")[0]; },
+    "time": function (val) { return ISODate(val).split("T")[1].replace("Z", ""); },
+    "datetime": function (val) { return ISODate(val); },
+    "datetime-local": function (val) { return ISODate(val); },
+    "number": function (val) { return parseFloat(val); },
+    "range": function (val) { return parseFloat(val); },
+    "int": function (val) { return parseInt(val); },
+    "float": function (val) { return parseFloat(val); },
+    "bool": function (val) { Boolean(parseInt(this.value)); },
+    "text": function (val) { return val; },
+    "password": function (val) { return val; },
+    "hidden": function (val) { return val; }
 };
