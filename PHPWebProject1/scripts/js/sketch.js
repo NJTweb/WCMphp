@@ -12,7 +12,7 @@
         sketchCtx.fillRect(relX, relY, $("#brushSize").val(), $("#brushSize").val());
     }
     //console.log($("#colorPicker").val());
-    console.log("X: " + relX + ", Y: " + relY);
+    //console.log("X: " + relX + ", Y: " + relY);
 }
 
 function showSketch(sketchURL) {

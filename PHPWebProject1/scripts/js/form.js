@@ -73,11 +73,6 @@ Form.prototype.rawObjToFields = function () {
     }
 };
 
-Form.prototype.render = function (data) {
-    //console.log(data);
-    window.document.body.innerHTML = data;
-};
-
 Form.prototype.updateFields = function () {
     this.fields.sort(function (a, b) { return a.order - b.order; });
     //console.log(this.fields);
@@ -204,11 +199,16 @@ Field.prototype.appendOptions = function (list) {
 Field.prototype.setChangeEvent = function () {
     if (this.childNames != undefined) {
         for(var i = 0, l = this.childNames.length; i < l; ++i){
-            getByName(this.name).change({ jqEl:  getByName(this.childNames[i]) },
+            getByName(this.name).change(
+                { jqEl: getByName(this.childNames[i]) },
                 function (event) {
                     var el = event.data.jqEl;
                     (new Field(el.attr("name"), el.attr("value"))).getOptions();
-                });
+                }
+            );
+            // set the change event so that any dependent elements (+0.1 in the order)
+            // will update when this elements value changes
+            // i.e. if element with data-order 1.0 
         }
     }
 };
@@ -282,29 +282,7 @@ function ajaxPostJSONjQuery(url, obj, successFunc, async) {
     ajaxPostjQuery(url, obj, successFunc, async, "json");
 }
 
-
-/* CONFIGURE */
-/*
-$(function () {
-    if (!Modernizr.inputtypes.date) {
-        $.datepicker.setDefaults({
-            dateFormat: "yy-mm-dd"
-        });
-        $("input[type='date']").each(function () {
-            $(this).datepicker();
-        });
-    }
-    if (!Modernizr.inputtypes.color) {
-        $("input[type='color']").each(function () {
-            $(this).jPicker(
-            {
-                window:
-                {
-                    expandable: true
-                }
-            });
-        });
-    }
-});*/
-
-/* JUST USE OPERA */
+function render(data) {
+    //console.log(data);
+    window.document.body.innerHTML = data;
+};
