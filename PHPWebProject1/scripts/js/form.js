@@ -13,7 +13,7 @@ function Form(name) {
     this.fields = [];
     this.name = name;
     this.table = getByName(name).attr("data-table");
-    this.primaryKey = getByName(name).attr("data-primaryKey");
+    this.primaryKey = getByName(name).attr("data-primarykey");
     this.ID = getByName(name).attr("data-id");
     this.connection = getByName(name).attr("data-connection");
     this.emailBody = getByName(name).attr("data-email");
@@ -277,16 +277,16 @@ function ISODate(dateStr) {
 }
 
 var conversions = {
-    "date": function (val) { return ISODate(val).split("T")[0]; },
-    "time": function (val) { return ISODate(val).split("T")[1].replace("Z", ""); },
-    "datetime": function (val) { return ISODate(val); },
-    "datetime-local": function (val) { return ISODate(val); },
-    "number": function (val) { return parseFloat(val); },
-    "range": function (val) { return parseFloat(val); },
-    "int": function (val) { return parseInt(val); },
-    "float": function (val) { return parseFloat(val); },
-    "bool": function (val) { Boolean(parseInt(this.value)); },
-    "text": function (val) { return val; },
-    "password": function (val) { return val; },
-    "hidden": function (val) { return val; }
+    "date":             function (val) { return ISODate(val).split("T")[0]; },
+    "time":             function (val) { return ISODate(val).split("T")[1].replace("Z", ""); },
+    "datetime":         function (val) { return ISODate(val); },
+    "datetime-local":   function (val) { return ISODate(val); },
+    "number":           function (val) { return parseFloat(val); },
+    "range":            function (val) { return parseFloat(val); },
+    "int":              function (val) { return parseInt(val); },
+    "float":            function (val) { return parseFloat(val); },
+    "bool":             function (val) { return Boolean(parseInt(this.value)); },
+    "text":             function (val) { return val; },
+    "password":         function (val) { return val; },
+    "hidden":           function (val) { return val; }
 };
