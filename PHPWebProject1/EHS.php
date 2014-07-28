@@ -4,18 +4,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="scripts/js/wcm.js"></script>
     <script src="scripts/js/form.js"></script>
     <script src="scripts/js/Utilities.js"></script>
-    <script>
-        blockAnythingButChrome();
-    </script>
     <script src="scripts/js/checklist.js"></script>
     <script src="scripts/js/images.js"></script>
+    
+    <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/Checklist.css" />
     <link rel="stylesheet" href="css/EHS.css" />
+
     <title>EHS Checklist</title>
 </head>
 

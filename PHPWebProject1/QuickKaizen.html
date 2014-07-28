@@ -3,18 +3,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="scripts/js/wcm.js"></script>
     <script src="scripts/js/form.js"></script>
     <script src="scripts/js/Utilities.js"></script>
     <script src="scripts/js/sketch.js"></script>
+
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/FormClasses.css" />
     <link rel="stylesheet" href="css/h3normalize.css" />
+
     <title>Quick Kaizen</title>
 </head>
 
 <body onload="(new Form('QuickKaizen')).open();">
-    <form name="QuickKaizen" data-name="Kaizen" data-table="dev_Kaizens" data-primarykey="KaizenNumber" data-id="-1" data-connection="Safety" data-email=""
+    <form name="QuickKaizen" data-name="Kaizen" data-table="Kaizens" data-primarykey="KaizenNumber" data-id="-1" data-connection="Safety" data-email=""
           data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com"
           oninput="var CB = Costs.value / Benefits.value; CostBenefit.value = ((isNaN(CB) ||  !isFinite(CB)) ? 0 : CB)">
         <table>

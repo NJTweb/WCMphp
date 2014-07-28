@@ -53,7 +53,7 @@ function buildQuery($fields, $table){
     $values = "";
     $query = "INSERT INTO ".$table;
     foreach($fields as $name => $value):
-        $columns .= $name.", ";
+        $columns .= "[".$name."], ";
         $values .= ":".$name.", ";
     endforeach;
     $columns = substr($columns, 0, -2);

@@ -2,17 +2,18 @@
 <html>
 <head>
     <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="scripts/js/wcm.js"></script>
     <script src="scripts/js/form.js"></script>
     <script src="scripts/js/Utilities.js"></script>
-    <script>
-        blockAnythingButChrome();
-    </script>
     <script src="scripts/js/checklist.js"></script>
     <script src="scripts/js/images.js"></script>
+
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/Checklist.css" />
     <link rel="stylesheet" href="css/WCC.css" />
+
     <title>WCM Safety Checklist</title>
 </head>
 

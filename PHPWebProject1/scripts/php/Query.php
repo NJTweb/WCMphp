@@ -9,11 +9,18 @@ foreach($xml->query as $query):
         $queryStr = $query->qstring;  
     endif;
 endforeach;
+
+
+if(isset($obj->fetchType)):
+    $fetchType = (($obj->fetchType == "ASSOC") ? PDO::FETCH_ASSOC : PDO::FETCH_NUM);
+else:
+    $fetchType = PDO::FETCH_NUM;
+endif;
     
 $stmt = $conn->prepare($queryStr);
 
 if($stmt->execute($obj->query->Params)):
-    echo json_encode($stmt->fetchAll(PDO::FETCH_NUM));
+    echo json_encode($stmt->fetchAll($fetchType));
 endif;
 
 ?>

@@ -57,4 +57,16 @@
   <query name="EWOActions">
     <qstring>SELECT DISTINCT Action FROM vEWO_RootCause WHERE RootCause=? AND SecondaryRootCause=?</qstring>
   </query>
+  <query name="CloseIssue">
+    <qstring>INSERT INTO ClosedIssues (FormName, FormNum, LineNum, ActionTaken) VALUES (?, ?, ?, ?)</qstring>
+  </query>
+  <query name="OpenIssue">
+    <qstring>DELETE FROM ClosedIssues WHERE FormName=? AND FormNum=? AND LineNum=?</qstring>
+  </query>
+  <query name="GetOpenIssues">
+    <qstring>SELECT * FROM OpenIssues</qstring>
+  </query>
+  <query name="GetClosedIssues">
+    <qstring>SELECT * FROM ClosedIssueDetails</qstring>
+  </query>
 </queries>

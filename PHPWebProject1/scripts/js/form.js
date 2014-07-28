@@ -11,7 +11,7 @@
 function Form(name) {
     this.rawObj = {};
     this.fields = [];
-    this.name = name;
+    this.name = getByName(name).attr("data-name");
     this.table = getByName(name).attr("data-table");
     this.primaryKey = getByName(name).attr("data-primarykey");
     this.ID = getByName(name).attr("data-id");
@@ -84,6 +84,11 @@ Form.prototype.updateFields = function () {
     }
 };
 
+Form.prototype.render = function (data) {
+    //console.log(data);
+    window.document.body.innerHTML = data;
+};
+
 //========================================================
 
 /*
@@ -92,22 +97,28 @@ Form.prototype.updateFields = function () {
 * formats and updates the input value when its value is set
 */
 function Field(name, value) {
-    this.name = name;
-    this.value = value;
-    this.format = getByName(name).attr("data-format") || getByName(name).attr("type") || "text";
-    this.default = getByName(name).attr("data-default");
-    this.order = parseFloat(getByName(name).attr("data-order")) || Number.MAX_VALUE;
-    this.type = getByName(name).prop("tagName");
-    this.query = getByName(name).attr("data-query");
-    this.list = getByName(name).attr("data-list");
-    this.connection = "";
-    this.childNames = $("[data-order='" + (this.order + 0.1).toFixed(1) + "']").map(function () { return $(this).attr("name"); }).get();
+    try{
+        this.name = name;
+        this.value = value;
+        this.format = getByName(name).attr("data-format") || getByName(name).attr("type") || "text";
+        this.default = getByName(name).attr("data-default");
+        this.order = parseFloat(getByName(name).attr("data-order")) || Number.MAX_VALUE;
+        this.type = getByName(name).prop("tagName");
+        this.query = getByName(name).attr("data-query");
+        this.list = getByName(name).attr("data-list");
+        this.connection = "";
+        this.childNames = $("[data-order='" + (this.order + 0.1).toFixed(1) + "']").map(function () { return $(this).attr("name"); }).get();
 
-    this.setChangeEvent();
-    if (this.type == "SELECT") {
-        this.getOptions();
+        this.setChangeEvent();
+        if (this.type == "SELECT") {
+            this.getOptions();
+        }
+        //this.formatValue(); no longer formats value on initialization
+    }catch(e){
+        console.log(e.message);
+        console.log("Error initializing " + name);
+        console.log(getByName(name));
     }
-    //this.formatValue(); no longer formats value on initialization
 }
 
 Field.prototype.formatValue = function () {
@@ -116,7 +127,7 @@ Field.prototype.formatValue = function () {
 
     if (this.value != undefined && this.value != null) {
         try {
-            this.value = conversions[this.format](this.value);
+            this.value = String(conversions[this.format](this.value));
         } catch (e) {
             valid = false;
             console.log(e.message + ", format: " + this.format + ", value: " + this.value);
@@ -177,7 +188,7 @@ Field.prototype.appendOptions = function (list) {
     for (var i = 0, l = list.length; i < l; ++i) {
         getByName(this.name).append("<option value='" + list[i] + "'>" + list[i] + "</option>");
     }
-}
+};
 
 // set the change event so that any dependent elements (+0.1 in the order)
 // will update when this elements value changes
@@ -227,50 +238,6 @@ function userSubmit(formName) {
     var thisForm = new Form(formName);
     thisForm.submit();
 }
-
-/*
-You'll notice that quite a few of my
-comments are below the code they describe.
-It's my personal preference to do something
-and then explain why
-*/
-
-function ajaxPostjQuery(url, obj, successFunc, async, returnType) {
-    $.ajax({
-        url: url,
-        async: async,
-        type: "POST",
-        dataType: returnType,
-        //contentType: "application/json; charset=utf-8",
-        data: { Object: JSON.stringify(obj) },
-        success: function (data, status, xhr) {
-            if (status == "success" && xhr.readyState == 4) {
-                // calls function obj.successFunc(data)
-                // this means that the successFunc (string) 
-                // must always be implemented
-                // as a function of obj
-                obj[successFunc](data);
-            }
-        },
-        error: function (xhr, status, error) {
-            console.log(status + " : " + error);
-        }
-        //timeout: 2000
-    });
-}
-
-function ajaxPostHTMLjQuery(url, obj, successFunc, async) {
-    ajaxPostjQuery(url, obj, successFunc, async, "html");
-}
-
-function ajaxPostJSONjQuery(url, obj, successFunc, async) {
-    ajaxPostjQuery(url, obj, successFunc, async, "json");
-}
-
-function render(data) {
-    //console.log(data);
-    window.document.body.innerHTML = data;
-};
 
 function ISODate(dateStr) {
     return (new Date(Date.parse(dateStr))).toISOString();

@@ -56,7 +56,7 @@ function buildQuery($fields, $table, $id, $pk){
     $values = "";
     $query = "UPDATE ".$table." SET ";
     foreach($fields as $name => $value):
-        $query .= $name."=:".$name.", ";//$value.", ";
+        $query .= "[".$name."]=:".$name.", ";//$value.", ";
     endforeach;
     $query = substr($query, 0, -2);
     $query .= " WHERE {$pk}={$id}";
