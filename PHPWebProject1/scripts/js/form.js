@@ -252,7 +252,7 @@ var conversions = {
     "range":            function (val) { return parseFloat(val); },
     "int":              function (val) { return parseInt(val); },
     "float":            function (val) { return parseFloat(val); },
-    "bool":             function (val) { return Boolean(parseInt(this.value)); },
+    "bool":             function (val) { return Boolean(parseInt(val)); },
     "text":             function (val) { return val; },
     "password":         function (val) { return val; },
     "hidden":           function (val) { return val; }
