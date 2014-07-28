@@ -73,7 +73,7 @@
 				        </td>
 					    <td>Shift:</td>
                         <td>
-					        <select name="shifts"  data-list='{ "list" : [1,2,3] }' data-format="int">
+					        <select name="shifts" data-list='{ "list" : [1,2,3] }' data-format="int">
 					        </select>
                         </td>
                     </tr>
