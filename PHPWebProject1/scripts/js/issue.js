@@ -1,5 +1,10 @@
 ﻿function Issue(json) {
-    var rawObj = $.parseJSON(json);
+    try{
+        var rawObj = $.parseJSON(json);
+    } catch (e) {
+        console.log(e.message);
+        console.log(json);
+    }
     for (var key in rawObj) {
         this[key] = rawObj[key];
     }
@@ -25,7 +30,7 @@ Issue.prototype.close = function (action) {
 Issue.prototype.toHTML = function (jqEl) {
     var thisHTML = "<div class='issue' data-json='" + JSON.stringify(this) + "' onclick='ViewIssue($(this))'>";
     thisHTML += this.describe();
-    thisHTML += " <button onclick='closeIssue($(this))' style='float: right;'>X</button>";
+    thisHTML += " <button onclick='closeIssue($(this).parent())' style='float: right;'>X</button>";
     thisHTML += "</div>";
     jqEl.append(thisHTML);
 };
@@ -67,7 +72,7 @@ Issue.prototype.getissues = function () {
 };
 
 function getAllIssues() {
-    console.log("Getting issues");
+    //console.log("Getting issues");
 
     var openIssuesQuery = {
         connection: "Safety",
@@ -114,7 +119,8 @@ function dataToIssues(data, jqEl) {
     for (var i = 0, l = data.length; i < l; ++i) {
         (new Issue(JSON.stringify(data[i]))).toHTML(jqEl);
     }
-    console.log(data);
+    //console.log(data);
+    //console.log("You now have a lot of issues");
 }
 
 function filterIssues(data) {
@@ -123,7 +129,7 @@ function filterIssues(data) {
     for (var i = 0, l = data.length; i < l; ++i) {
         var goodData = true;
         for (var key in filter) {
-            goodData = goodData && (filter[key] == data[i][key] || filter[key] == undefined || filter[key] == "" || data[i][key] == undefined);
+            goodData = goodData && (filter[key] == data[i][key] || filter[key] == undefined || filter[key] == "");
         }
         if (goodData) {
             result.push(data[i]);
@@ -153,9 +159,10 @@ function getFilter() {
         Zone: getByName("zones").val(),
         Machine: getByName("machines").val(),
         Supervisor: getByName("supervisors").val(),
-        Shift: getByName("shifts").val(),
+        Shift: parseInt(getByName("shifts").val()) || "",
         Severity: getByName("severities").val()
     }
+    console.log(filter);
     return filter;
 }
 
