@@ -217,9 +217,6 @@ Field.prototype.setChangeEvent = function () {
 // element is added to an objects properties
 // an object with circular references cannot be
 // parsed into JSON
-function getByName(name) {
-    return $("[name='" + name + "']");
-}
 
 function userOpen(formName) {
     var ID = prompt("Enter a form number");
@@ -239,10 +236,6 @@ function userSubmit(formName) {
     thisForm.submit();
 }
 
-function ISODate(dateStr) {
-    return (new Date(Date.parse(dateStr))).toISOString();
-}
-
 var conversions = {
     "date":             function (val) { return ISODate(val).split("T")[0]; },
     "time":             function (val) { return ISODate(val).split("T")[1].replace("Z", ""); },
@@ -252,7 +245,7 @@ var conversions = {
     "range":            function (val) { return parseFloat(val); },
     "int":              function (val) { return parseInt(val); },
     "float":            function (val) { return parseFloat(val); },
-    "bool":             function (val) { return Boolean(parseInt(val)); },
+    "bool":             function (val) { return Boolean(parseInt(this.value)); },
     "text":             function (val) { return val; },
     "password":         function (val) { return val; },
     "hidden":           function (val) { return val; }

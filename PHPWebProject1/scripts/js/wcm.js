@@ -29,3 +29,11 @@ function ajaxPostHTMLjQuery(url, obj, successFunc, async) {
 function ajaxPostJSONjQuery(url, obj, successFunc, async) {
     ajaxPostjQuery(url, obj, successFunc, async, "json");
 }
+
+function getByName(name) {
+    return $("[name='" + name + "']");
+}
+
+function ISODate(dateStr) {
+    return (new Date(Date.parse(dateStr))).toISOString();
+}
