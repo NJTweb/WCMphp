@@ -78,10 +78,19 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Severity:</td>
+                        <td>
+                            <select name="severities" data-list='{ "list" : ["Low","Medium","High"]}'></select>
+                        </td>
+                    </tr>
+                    <tr>
                         <td><button type="button" onclick="getAllIssues()">Apply</button></td>
+                        <td><button type="reset" onclick="getAllIssues()">Clear</button></td>
                     </tr>
                 </table>
 			</form>
+        </div>
+        <div id="current_issue">
         </div>
         <div id="issues">
 			<div id="open_issues">
@@ -93,9 +102,6 @@
 				<div id="closed_issues_div"></div>
 			</div>
 		</div>
-	</div>
-	<div id="details" onmouseleave="hideDetails()">
-		<!-- used by js to render floating details -->
 	</div>
 </body>
 </html>

@@ -130,9 +130,10 @@ input[name=formSearch]{
     color: black;
 }
 
-#issues, form{
+#issues, form, #current_issue{
     float: left;
     margin: 2%;
+    clear: right;
 }
 #open_issues .issue{
     background-color: rgba(150,150,220,0.5);
@@ -180,7 +181,7 @@ input[type=checkbox]{
     #left_nav{
         width: 20%;
     }
-    #issues{
+    #issues, form, #current_issue{
         width: 76%;
     }
 }
@@ -189,7 +190,7 @@ input[type=checkbox]{
     #left_nav{
         display: none;
     } 
-    #issues{
+    #issues, form, #current_issue{
         width: 96%;
     }
     #menubutton{
@@ -208,7 +209,7 @@ input[type=checkbox]{
 }
 
 @media (max-width: 400px), handheld{
-    #issues{
+    #issues, form, #current_issue{
         width: 96%;
     }
     #menubutton{

@@ -23,10 +23,32 @@ Issue.prototype.close = function (action) {
 };
 
 Issue.prototype.toHTML = function (jqEl) {
-    var thisHTML = "<div class='issue' data-json='" + JSON.stringify(this) + "' onclick='closeIssue($(this))'>";
-    thisHTML += this["Name"] + " number " + this["ID"] + " on line " + this["LineNum"] + " of type " + this["Compliancy"] + " with severity level " + this["Severity"];
+    var thisHTML = "<div class='issue' data-json='" + JSON.stringify(this) + "' onclick='ViewIssue($(this))'>";
+    thisHTML += this.describe();
+    thisHTML += " <button onclick='closeIssue($(this))' style='float: right;'>X</button>";
     thisHTML += "</div>";
     jqEl.append(thisHTML);
+};
+
+Issue.prototype.describe = function(){
+    return this["Name"] + " number " + this["ID"] + " on line " + this["LineNum"] + " of type " + this["Compliancy"] + " with severity level " + this["Severity"];
+};
+
+Issue.prototype.display = function (jqEl) {
+    var thisHTML = "<div>";
+    thisHTML += "<br>";
+    thisHTML += "<strong>";
+    thisHTML += this["OpenDate"];
+    thisHTML += "</strong>";
+    thisHTML += "<br>";
+    thisHTML += this.describe();
+    thisHTML += "<br>";
+    thisHTML += this["Department"] + ", " + this["Zone"] + ", " + this["Machine"];
+    thisHTML += "<br>";
+    thisHTML += this["Details"];
+    thisHTML += "<br>";
+    thisHTML += "</div>";
+    jqEl.html(thisHTML);
 };
 
 Issue.prototype.render = function (data) {
@@ -107,10 +129,11 @@ function filterIssues(data) {
 function sortIssues(data) {
     data.sort(
         function (a, b) {
-            var nameSort = (a.Name < b.Name) ? -4 : (a.Name > b.Name) ? 4 : 0;
-            var idSort = (a.ID - b.ID) < 0 ? -2 : (a.ID - b.ID) > 0 ? 2 : 0;
-            var lineSort = (a.LineNum - b.LineNum) < 0 ? -1 : (a.LineNum - b.LineNum) > 0 ? 1 : 0;
-            return nameSort + idSort + lineSort;
+            var severitySort = (a.Severity < b.Severity) ? -(1 << 3) : (a.Severity > b.Severity) ? (1 << 3) : 0;
+            var nameSort = (a.Name < b.Name) ? -(1 << 2) : (a.Name > b.Name) ? (1 << 2) : 0;
+            var idSort = (a.ID - b.ID) < 0 ? -(1 << 1) : (a.ID - b.ID) > 0 ? (1 << 1) : 0;
+            var lineSort = (a.LineNum - b.LineNum) < 0 ? -(1 << 0) : (a.LineNum - b.LineNum) > 0 ? (1 << 0) : 0;
+            return severitySort + nameSort + idSort + lineSort;
         }
     );
     return data;
@@ -119,11 +142,13 @@ function sortIssues(data) {
 function getFilter() {
     var filter = {
         Name: getByName("formname").val(),
+        Plant: getByName("plants").val(),
         Department: getByName("departments").val(),
         Zone: getByName("zones").val(),
         Machine: getByName("machines").val(),
         Supervisor: getByName("supervisors").val(),
-        Shift: getByName("shifts").val()
+        Shift: getByName("shifts").val(),
+        Severity: getByName("severities").val()
     }
     return filter;
 }
@@ -151,4 +176,9 @@ function filterForm(jqEl, form) {
     );
     jqEl.attr("class", "activated");
     getAllIssues();
+}
+
+function ViewIssue(jqEl) {
+    var issue = new Issue(jqEl.attr("data-json"));
+    issue.display($("#current_issue"));
 }
