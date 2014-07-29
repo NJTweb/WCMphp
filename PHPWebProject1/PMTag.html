@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script src="scripts/js/wcm.js"></script>
-    <script src="scripts/js/form.js"></script>
-    <script src="scripts/js/Utilities.js"></script>
+    <script src="scripts/js/wcm/wcm.js"></script>
+    <script src="scripts/js/wcm/form.js"></script>
+    
 
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/FormClasses.css" />
@@ -17,7 +17,7 @@
 </head>
 
 <body onload="(new Form('PMTag')).open();">
-    <form name="PMTag" data-name="PM Tag" data-table="dev_PMTags" data-primarykey="TagNo" data-id="-1" data-connection="Safety" data-email=""
+    <form name="PMTag" data-name="PM Tag" data-table="PMTags" data-primarykey="TagNo" data-id="-1" data-connection="Safety" data-email=""
           data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
         <table>
             <tr>
@@ -31,7 +31,7 @@
                 <td>Problem</td>
             </tr>
             <tr>
-                <td><input type="text" name="OldTagNo" /></td>
+                <td><input type="number" name="OldTagNo" /></td>
                 <td><input type="date" name="Date" /></td>
                 <td>
                     <select name="Location" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["Merrill"]}' data-order="1.0"></select>

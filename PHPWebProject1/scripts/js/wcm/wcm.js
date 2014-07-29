@@ -12,7 +12,8 @@
                 // this means that the successFunc (string) 
                 // must always be implemented
                 // as a function of obj
-                obj[successFunc](data);
+                //obj[successFunc](data);
+                successFunc(data);
             }
         },
         error: function (xhr, status, error) {
@@ -37,3 +38,10 @@ function getByName(name) {
 function ISODate(dateStr) {
     return (new Date(Date.parse(dateStr))).toISOString();
 }
+
+function render(data) {
+    //console.log(data);
+    window.document.body.innerHTML = data;
+}
+
+var DEV_MODE = false;

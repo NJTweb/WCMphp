@@ -13,6 +13,9 @@ function Form(name) {
     this.fields = [];
     this.name = getByName(name).attr("data-name");
     this.table = getByName(name).attr("data-table");
+    if (DEV_MODE) {
+        this.table = "dev_" + this.table;
+    }
     this.primaryKey = getByName(name).attr("data-primarykey");
     this.ID = getByName(name).attr("data-id");
     this.connection = getByName(name).attr("data-connection");
@@ -26,23 +29,24 @@ Form.prototype.initializeFields = function () {
     var fieldNames = $("select, textarea, input").map(function () { return $(this).attr("name"); }).get();
     for (var i = 0, l = fieldNames.length; i < l; ++i) {
         this.fields.push(new Field(fieldNames[i], $("[name='" + fieldNames[i] + "']").val()));
+        this.fields[i].formatValue();
     }
 };
 
 Form.prototype.open = function () {
-    ajaxPostJSONjQuery("scripts/php/Open.php", this, "setData", true);
+    ajaxPostJSONjQuery("scripts/php/Open.php", this, this.setData.bind(this), true);
 };
 
 Form.prototype.update = function () {
-    ajaxPostHTMLjQuery("scripts/php/Update.php", this, "render", true);
+    ajaxPostHTMLjQuery("scripts/php/Update.php", this, render, true);
 };
 
 Form.prototype.submit = function () {
-    ajaxPostHTMLjQuery("scripts/php/Submit.php", this, "render", true);
+    ajaxPostHTMLjQuery("scripts/php/Submit.php", this, render, true);
 };
 
 Form.prototype.getMaxID = function () {
-    ajaxPostJSONjQuery("scripts/php/getMaxID.php", this, "setMaxID", true);
+    ajaxPostJSONjQuery("scripts/php/getMaxID.php", this, this.setMaxID.bind(this), true);
 };
 
 Form.prototype.setMaxID = function (data) {
@@ -84,11 +88,6 @@ Form.prototype.updateFields = function () {
     }
 };
 
-Form.prototype.render = function (data) {
-    //console.log(data);
-    window.document.body.innerHTML = data;
-};
-
 //========================================================
 
 /*
@@ -125,7 +124,7 @@ Field.prototype.formatValue = function () {
     //console.log("Original Value: " + this.value);
     var valid = true;
 
-    if (this.value != undefined && this.value != null) {
+    if (this.value != undefined && this.value != null && this.value != "") {
         try {
             this.value = String(conversions[this.format](this.value));
         } catch (e) {
@@ -136,8 +135,10 @@ Field.prototype.formatValue = function () {
         valid = false;
     }
     if (!valid) {
-        console.log(this.value + " is not a valid value for the format " + this.format);
+        //console.log(this.value + " is not a valid value for the format " + this.format);
+        //console.log(this.name + " default is " + getByName(this.name).attr("data-default"));
         if (this.default != undefined) {
+            //console.log("Set to default: " + this.default);
             this.value = this.default;
         } else {
             this.value = "";
@@ -178,7 +179,7 @@ Field.prototype.getOptions = function () {
         // property defined, so we set it to the connection specified 
         // in the query object
         this.connection = this.query.connection;
-        ajaxPostJSONjQuery("scripts/php/Query.php", this, "appendOptions", false);
+        ajaxPostJSONjQuery("scripts/php/Query.php", this, this.appendOptions.bind(this), false);
     }
 };
 

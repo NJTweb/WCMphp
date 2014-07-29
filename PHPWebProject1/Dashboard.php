@@ -2,9 +2,10 @@
 <html>
 <head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script src="scripts/js/wcm.js" type="text/javascript"></script>
-	<script src="scripts/js/form.js" type="text/javascript"></script>
-    <script src="scripts/js/issue.js" type="text/javascript"></script>
+    <script src="scripts/js/wcm/wcm.js" type="text/javascript"></script>
+	<script src="scripts/js/wcm/form.js" type="text/javascript"></script>
+    <script src="scripts/js/wcm/query.js" type="text/javascript"></script>
+    <script src="scripts/js/wcm/issue.js" type="text/javascript"></script>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">

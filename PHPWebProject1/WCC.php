@@ -4,11 +4,11 @@
     <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script src="scripts/js/wcm.js"></script>
-    <script src="scripts/js/form.js"></script>
-    <script src="scripts/js/Utilities.js"></script>
-    <script src="scripts/js/checklist.js"></script>
-    <script src="scripts/js/images.js"></script>
+    <script src="scripts/js/wcm/wcm.js"></script>
+    <script src="scripts/js/wcm/form.js"></script>
+    
+    <script src="scripts/js/forms/checklist.js"></script>
+    <script src="scripts/js/wcm/images.js"></script>
 
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/Checklist.css" />
@@ -18,7 +18,7 @@
 </head>
 
 <body onload="(new Form('WCC')).open();">
-    <form name="WCC" id="WCC" data-name="SEWO" data-table="dev_WCC" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email="" 
+    <form name="WCC" id="WCC" data-name="SEWO" data-table="WCC" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email="" 
           data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
         <table>
             <tr>
@@ -87,14 +87,14 @@
                     foreach($groupValues as $type => $text):
                         if($type == "header"):
             ?>
-            <tr class="header"><td colspan="3"><h3><?php echo $text; ?></h3></td></tr>
+            <tr class="header"><td colspan="4"><h3><?php echo $text; ?></h3></td></tr>
             <?php
                         else:
                             $i+=1;
             ?>
             <tr>
                 <td>
-                    <span><?php echo $text; ?></span>
+                    <span><?php echo $i.". ".$text; ?></span>
                 </td>
                 <td>
                     <label for="file<?php echo $i; ?>">

@@ -1,14 +1,16 @@
 ﻿function Query(name, params, fetchType, connection) {
     this.results = {};
-    this.name = name;
-    this.params = params;
+    this.query = {
+        Query: name,
+        Params: params
+    };
     this.connection = connection;
     this.fetchType = fetchType;
     //fetchType can be "ASSOC" or "NUM"
 }
 
 Query.prototype.execute = function () {
-    ajaxPostJSONjQuery("scripts/php/Query.php", this, "storeResult", true);
+    ajaxPostJSONjQuery("scripts/php/Query.php", this, this.storeResult.bind(this), true);
 };
 
 Query.prototype.toString = function (func) {

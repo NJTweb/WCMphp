@@ -7,18 +7,18 @@
     <title>EWO</title>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script src="scripts/js/sketch.js"></script>
-    <script src="scripts/js/wcm.js"></script>
-    <script src="scripts/js/form.js"></script>
-    <script src="scripts/js/Utilities.js"></script>
-    <script src="scripts/js/EWO.js"></script>
+    <script src="scripts/js/wcm/sketch.js"></script>
+    <script src="scripts/js/wcm/wcm.js"></script>
+    <script src="scripts/js/wcm/form.js"></script>
+    
+    <script src="scripts/js/forms/EWO.js"></script>
 
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/FormClasses.css" />
 </head>
 
 <body onload="(new Form('EWO')).open();">
-    <form name="EWO" data-name="EWO" data-table="dev_EWOs" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
+    <form name="EWO" data-name="EWO" data-table="EWOs" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
           data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
         <input type="hidden" name="DateTimeOccurred" onchange="splitDateTimes()" />
         <input type="hidden" name="DateTimeStarted" onchange="splitDateTimes()" />
@@ -95,14 +95,14 @@
                 <td colspan="2"><input type="time" id="timecomp" onchange="concatDateTimes()" /></td><!-- time completed -->
             </tr>
             <tr>
-                <td colspan="6" rowspan="2" height="150px"><input name="ProblemDescription" type="text" placeholder="Description of failure" /><!-- Description of failure and sketch (if possible) --></td>
-                <td colspan="6"><input name="ActivitiesDescription" type="text" placeholder="Description of activities" /><!-- Description of activites --></td>
+                <td colspan="6" rowspan="2" height="150px"><textarea name="ProblemDescription" placeholder="Description of failure"></textarea><!-- Description of failure and sketch (if possible) --></td>
+                <td colspan="6"><textarea name="ActivitiesDescription" placeholder="Description of activities"></textarea><!-- Description of activites --></td>
                 <td rowspan="2">
                     <select name="TempRepair" data-list='{"list" : [true,false]}' data-format="bool" data-default="false"></select>
                 </td>
             </tr>
             <tr>
-                <td colspan="6"><input name="SpareParts" type="text" placeholder="Spare parts used" /><!-- Spare parts used (part number if available). --></td>
+                <td colspan="6"><textarea name="SpareParts" placeholder="Spare parts used"></textarea><!-- Spare parts used (part number if available). --></td>
             </tr>
             <tr class="ltgrey">
                 <td colspan="13" height="10px">Analysis of root causes</td>

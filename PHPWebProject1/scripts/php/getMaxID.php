@@ -2,6 +2,9 @@
 
 require_once("ConInfo.php");
 
+$obj = getObject($_POST["Object"]);
+$conn = getPDO($obj->connection);
+
 $query = "SELECT MAX({$obj->primaryKey}) FROM {$obj->table}";
 
 $stmt = $conn->prepare($query);

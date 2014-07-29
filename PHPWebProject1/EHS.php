@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script src="scripts/js/wcm.js"></script>
-    <script src="scripts/js/form.js"></script>
-    <script src="scripts/js/Utilities.js"></script>
-    <script src="scripts/js/checklist.js"></script>
-    <script src="scripts/js/images.js"></script>
+    <script src="scripts/js/wcm/wcm.js"></script>
+    <script src="scripts/js/wcm/form.js"></script>
+    
+    <script src="scripts/js/forms/checklist.js"></script>
+    <script src="scripts/js/wcm/images.js"></script>
     
     <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/Normalize.css" />
@@ -21,7 +21,7 @@
 </head>
 
 <body onload="(new Form('EHS')).open();">
-    <form name="EHS" id="EHS" data-name="EHS" data-table="dev_EHS" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email="" 
+    <form name="EHS" id="EHS" data-name="EHS" data-table="EHS" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email="" 
           data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
         <table>
             <tr>
@@ -97,7 +97,7 @@
             ?>
             <tr>
                 <td>
-                    <span><?php echo $text; ?></span>
+                    <span><?php echo $i.". ".$text; ?></span>
                 </td>
                 <td>
                     <label for="file<?php echo $i; ?>">

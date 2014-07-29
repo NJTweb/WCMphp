@@ -16,7 +16,7 @@ Issue.prototype.open = function () {
         Query: "OpenIssue",
         Params: [this["Name"], this["ID"], this["LineNum"]]
     };
-    ajaxPostHTMLjQuery("scripts/php/Query.php", this, "getissues", true);
+    ajaxPostHTMLjQuery("scripts/php/Query.php", this, getAllIssues, true);
 };
 
 Issue.prototype.close = function (action) {
@@ -24,7 +24,7 @@ Issue.prototype.close = function (action) {
         Query: "CloseIssue",
         Params: [this["Name"], this["ID"], this["LineNum"], action]
     };
-    ajaxPostHTMLjQuery("scripts/php/Query.php", this, "getissues", true);
+    ajaxPostHTMLjQuery("scripts/php/Query.php", this, getAllIssues, true);
 };
 
 Issue.prototype.toHTML = function (jqEl) {
@@ -67,10 +67,6 @@ Issue.prototype.render = function (data) {
     //window.document.body.innerHTML = data;
 };
 
-Issue.prototype.getissues = function () {
-    getAllIssues();
-};
-
 function getAllIssues() {
     //console.log("Getting issues");
 
@@ -80,12 +76,9 @@ function getAllIssues() {
             Query: "GetOpenIssues",
             Params: []
         },
-        fetchType: "ASSOC",
-        dtoi: function (data) {
-            dataToOpenIssues(data);
-        }
+        fetchType: "ASSOC"
     }
-    ajaxPostJSONjQuery("scripts/php/Query.php", openIssuesQuery, "dtoi", true);
+    ajaxPostJSONjQuery("scripts/php/Query.php", openIssuesQuery, dataToOpenIssues, true);
 
     var closedIssuesQuery = {
         connection: "Safety",
@@ -93,12 +86,9 @@ function getAllIssues() {
             Query: "GetClosedIssues",
             Params: []
         },
-        fetchType: "ASSOC",
-        dtoi: function (data) {
-            dataToClosedIssues(data);
-        }
+        fetchType: "ASSOC"
     }
-    ajaxPostJSONjQuery("scripts/php/Query.php", closedIssuesQuery, "dtoi", true);
+    ajaxPostJSONjQuery("scripts/php/Query.php", closedIssuesQuery, dataToClosedIssues, true);
 }
 
 function dataToOpenIssues(data) {

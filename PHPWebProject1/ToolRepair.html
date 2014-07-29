@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script src="scripts/js/wcm.js"></script>
-    <script src="scripts/js/form.js"></script>
-    <script src="scripts/js/Utilities.js"></script>
-    <script src="scripts/js/ToolRepair.js"></script>
+    <script src="scripts/js/wcm/wcm.js"></script>
+    <script src="scripts/js/wcm/form.js"></script>
+    
+    <script src="scripts/js/forms/ToolRepair.js"></script>
 
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/FormClasses.css" />
@@ -17,7 +17,7 @@
 </head>
 
 <body onload="(new Form('ToolRepair')).open();">
-    <form name="ToolRepair" data-name="Tool Repair" data-table="dev_ToolIssues" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
+    <form name="ToolRepair" data-name="Tool Repair" data-table="ToolIssues" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
           data-contacts="jmurphy@venturecorporation.net; pillars@ventureglobalengineering.com; thomason@mayco-mi.com; dharper@mayco-mi.com; hooks@njt-na.com; mbommarito@mayco-mi.com"
           onsubmit="return updateEmailBody()">
         <table id="repairTable">

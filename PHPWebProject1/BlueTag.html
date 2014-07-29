@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script src="scripts/js/wcm.js"></script>
-    <script src="scripts/js/form.js"></script>
-    <script src="scripts/js/Utilities.js"></script>
+    <script src="scripts/js/wcm/wcm.js"></script>
+    <script src="scripts/js/wcm/form.js"></script>
+    
 
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/FormClasses.css" />
@@ -17,7 +17,7 @@
 </head>
 
 <body onload="(new Form('BlueTag')).open();">
-    <form name="BlueTag" data-name="Blue Tag" data-table="dev_BlueTags" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
+    <form name="BlueTag" data-name="Blue Tag" data-table="BlueTags" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
           data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
         <table>
             <tr>
@@ -30,8 +30,8 @@
                 <td class="ltgrey">Name</td>
             </tr>
             <tr>
-                <td><input type="text" name="TagNo" placeholder="Tag Number" value="" required="required"/></td>
-                <td><input type="text" name="WONo" value="" /></td>
+                <td><input type="number" name="TagNo" placeholder="Tag Number" value="" required="required"/></td>
+                <td><input type="number" name="WONo" value="" /></td>
                 <td>
                     <select name="TagType" data-list='{ "list" : ["AM","WO"] }'>
                         <option value="">Tag Type</option>

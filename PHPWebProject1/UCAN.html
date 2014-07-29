@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-    <script src="scripts/js/wcm.js"></script>
-    <script src="scripts/js/form.js"></script>
-    <script src="scripts/js/Utilities.js"></script>
+    <script src="scripts/js/wcm/wcm.js"></script>
+    <script src="scripts/js/wcm/form.js"></script>
+    
 
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/FormClasses.css" />
@@ -17,7 +17,7 @@
 </head>
 
 <body onload="(new Form('UCAN')).open();">
-    <form name="UCAN" data-name="UCAN" data-table="dev_UCANs" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
+    <form name="UCAN" data-name="UCAN" data-table="UCANs" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
           data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
         <table>
             <tr>
@@ -42,7 +42,7 @@
                 <td>
                     <select name="UCANDept" id="dept" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["$Plant$"]}' data-order="1.1" required></select>
                 </td>
-                <td rowspan="7"><input type="text" name="UCANDescription" placeholder="Description" required="required"/></td>
+                <td rowspan="7"><textarea name="UCANDescription" placeholder="Description" required="required"></textarea></td>
             </tr>
             <tr>
                 <td class="ltgrey"><h3>Reported By</h3></td>
@@ -51,7 +51,7 @@
             </tr>
             <tr>
                 <td><input type="text" name="UCANReportedBy" placeholder="Reported By" required="required"/></td>
-                <td rowspan="3"><input type="text" name="UCANPersons" placeholder="Location/Persons" required="required"/></td>
+                <td rowspan="3"><textarea name="UCANPersons" placeholder="Location/Persons" required="required"></textarea></td>
                 <td>
                     <select name="UCANZone" id="zone" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["$Plant$", "$UCANDept$"]}' data-order="1.2" required></select>
                 </td>
@@ -88,7 +88,7 @@
                 <td colspan="4" class="ltgrey"><h3>Action Plan</h3></td>
             </tr>
             <tr>
-                <td colspan="4" height="100px"><input type="text" name="UCANActionPlan" placeholder="Action plan" required="required"/></td>
+                <td colspan="4" height="100px"><textarea name="UCANActionPlan" placeholder="Action plan" required="required"></textarea></td>
             </tr>
             <tr>
                 <td colspan="4">

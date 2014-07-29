@@ -3,6 +3,9 @@
 require_once("ConInfo.php");
 require_once("Utilities.php");
 
+$obj = getObject($_POST["Object"]);
+$conn = getPDO($obj->connection);
+
 $values = array();
 foreach($obj->fields as $field){
     $values[$field->name] = $field->value;
