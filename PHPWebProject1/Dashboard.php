@@ -42,19 +42,19 @@
                     <tr>
                         <td>Plant:</td>
                         <td>
-					        <select name="plants" data-query='{"connection" : "Safety", "Query" : "Plants", "Params" : []}' data-order="1.0">
+					        <select name="plants" data-query='{ "Query" : "Plants", "Params" : []}' data-order="1.0">
 						        <option value=""></option>
 					        </select>
 				        </td>
 				        <td>Department:</td>
                         <td>
-					        <select name="departments" data-query='{"connection" : "Safety", "Query" : "Departments", "Params" : ["$plants$"]}' data-order="1.1">
+					        <select name="departments" data-query='{ "Query" : "Departments", "Params" : ["$plants$"]}' data-order="1.1">
 						        <option value=""></option>
 					        </select>
 				        </td>
                         <td>Zone:</td>
                         <td>
-					        <select name="zones" data-query='{"connection" : "Safety", "Query" : "Zones", "Params" : ["$plants$", "$departments$"]}' data-order="1.2">
+					        <select name="zones" data-query='{ "Query" : "Zones", "Params" : ["$plants$", "$departments$"]}' data-order="1.2">
 						        <option value=""></option>
 					        </select>
                         </td>
@@ -62,13 +62,13 @@
                     <tr>
 					    <td>Machine:</td>
 					    <td>
-                            <select name="machines" data-query='{"connection" : "Safety", "Query" : "Machines", "Params" : ["$plants$", "$departments$", "$zones$"]}' data-order="1.3">
+                            <select name="machines" data-query='{ "Query" : "Machines", "Params" : ["$plants$", "$departments$", "$zones$"]}' data-order="1.3">
 						        <option value=""></option>
 					        </select>
                         </td>
 				        <td>Supervisor:</td>
                         <td>
-					        <select name="supervisors" data-query='{"connection" : "Safety", "Query" : "Supervisors", "Params" : []}'>
+					        <select name="supervisors" data-query='{ "Query" : "Supervisors", "Params" : []}'>
 						        <option value=""></option>
 					        </select>
 				        </td>

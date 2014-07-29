@@ -43,11 +43,8 @@ endif;
 <?php
 /**
  * Builds a SELECT or INSERT query using the POST-ed values
- * @param array $postVars The POST-ed values, without the FormData array
- * @param string $form The name of table in the database
- * @param int $id The ID of the record being searched for
- * @param string $pk The name of the primary key column in the table
- * @param bool $recExists Whether or not this record is already in the table
+ * @param array $fields An array of Field objects
+ * @param string $table The name of table in the database
  * @return string The parameterized query
  */
 function buildQuery($fields, $table){

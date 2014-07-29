@@ -44,4 +44,6 @@ function render(data) {
     window.document.body.innerHTML = data;
 }
 
-var DEV_MODE = false;
+var DEV_MODE = true;
+
+console.log("DEV MODE IS " + (DEV_MODE ? "On" : "Off"));

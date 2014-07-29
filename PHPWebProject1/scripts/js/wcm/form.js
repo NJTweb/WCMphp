@@ -11,6 +11,7 @@
 function Form(name) {
     this.rawObj = {};
     this.fields = [];
+    this.DOMName = name;
     this.name = getByName(name).attr("data-name");
     this.table = getByName(name).attr("data-table");
     if (DEV_MODE) {
@@ -50,7 +51,9 @@ Form.prototype.getMaxID = function () {
 };
 
 Form.prototype.setMaxID = function (data) {
-    getByName(this.primaryKey).val(++data[0]);
+    ++data[0];
+    getByName(this.primaryKey).val(data[0]);
+    getByName(this.DOMName).attr("data-id", data[0]);
 };
 
 Form.prototype.setData = function (data) {
