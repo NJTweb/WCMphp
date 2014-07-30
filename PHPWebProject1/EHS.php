@@ -68,7 +68,7 @@
                     </div>
                     <div class="inputPlusLabel">
                         <strong>Tool No.</strong>
-                        <select name="PartNum" id="tool" data-query='{"connection" : "Mattec", "Query" : "Tools", "Params" : []}' data-con="Mattec" data-format="text">
+                        <select name="PartNum" id="tool" data-query='{ "Query" : "Tools", "Params" : []}' data-con="Mattec" data-format="text">
                         </select>
                     </div>
                     <div class="inputPlusLabel">

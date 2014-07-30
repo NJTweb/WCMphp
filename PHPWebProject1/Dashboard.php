@@ -31,7 +31,7 @@
 		<nav id="buttons">
 			<ul>
 				<a id="newForm" target="_blank" href="#"><li>+ New Form</li></a>
-				<a id="viewCharts" target="_blank" href="#"><li>O View Charts</li></a>
+				<a id="viewCharts" target="_blank" href="Chart.html"><li>O View Charts</li></a>
 			</ul>
 		</nav>
 	</header>

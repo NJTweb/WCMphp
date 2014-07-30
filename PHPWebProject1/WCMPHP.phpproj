@@ -74,7 +74,6 @@
     <Content Include="res\upload.png" />
     <Content Include="res\uploadgreen.png" />
     <Content Include="res\x.png" />
-    <Content Include="scripts\js\chart\Chart.js" />
     <Content Include="scripts\js\chart\chartFuncs.js" />
     <Content Include="scripts\js\forms\EWO.js" />
     <Content Include="scripts\js\wcm\form.js" />
