@@ -22,10 +22,10 @@
           data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
         <table>
             <tr>
-                <td colspan="4"><h1>Work Cell Observation Checklist No. <input id="ID" type="text" name="ID" value="" style="width: auto; background-color: inherit;" readonly></h1></td>
+                <td colspan="3"><h1>Work Cell Observation Checklist No. <input id="ID" type="text" name="ID" value="" style="width: auto; background-color: inherit;" readonly></h1></td>
             </tr>
             <tr>
-                <td colspan="4">
+                <td colspan="3">
                     <div class="inputPlusLabel">
                         <strong>Date</strong>
                         <input type="date" name="WCDate" placeholder="Date created" required>
@@ -78,7 +78,6 @@
             <tr>
                 <td colspan="2"><h2>Requirement</h2></td>
                 <td><h2>Select</h2></td>
-                <td><h2>Severity</h2></td>
             </tr>
             <?php
                 $xml = simplexml_load_file("xml/wcclabels.xml");
@@ -87,7 +86,7 @@
                     foreach($groupValues as $type => $text):
                         if($type == "header"):
             ?>
-            <tr class="header"><td colspan="4"><h3><?php echo $text; ?></h3></td></tr>
+            <tr class="header"><td colspan="3"><h3><?php echo $text; ?></h3></td></tr>
             <?php
                         else:
                             $i+=1;
@@ -106,9 +105,6 @@
                 <td>
                     <select name="Compliant<?php echo $i; ?>" data-list='{"list" : ["Satisfactory","Unsafe Condition","Unsafe Act","Both"]}' data-default="Satisfactory" required></select>
                 </td>
-                <td>
-                    <select name="Severity<?php echo $i; ?>" data-list='{"list" : ["Low","Medium","High"]}' data-default="Low" ></select>
-                </td>
             </tr>
             <?php
                         endif;
@@ -117,11 +113,11 @@
             ?>
 
             <tr>
-                <td colspan="4"><h3>Comments</h3></td>
+                <td colspan="3"><h3>Comments</h3></td>
             </tr>
             <tr></tr> <!-- makes sure the next (last) row is blue, becaue of the nth-of-type rule-->
             <tr>
-                <td colspan="3">
+                <td colspan="2">
                     <textarea maxlength="1000" name="Comments" rows="6" cols="50" form="WCC" placeholder="Comments"></textarea><br />
                 </td>
                 <td>

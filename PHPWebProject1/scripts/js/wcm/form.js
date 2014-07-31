@@ -40,10 +40,12 @@ Form.prototype.open = function () {
 
 Form.prototype.update = function () {
     ajaxPostHTMLjQuery("scripts/php/Update.php", this, render, true);
+    //console.log("Updating form #" + this.ID);
 };
 
 Form.prototype.submit = function () {
     ajaxPostHTMLjQuery("scripts/php/Submit.php", this, render, true);
+    //console.log("Submitting form #" + this.ID);
 };
 
 Form.prototype.getMaxID = function () {
@@ -52,8 +54,12 @@ Form.prototype.getMaxID = function () {
 
 Form.prototype.setMaxID = function (data) {
     ++data[0];
-    getByName(this.primaryKey).val(data[0]);
-    getByName(this.DOMName).attr("data-id", data[0]);
+    this.setID(data[0]);
+};
+
+Form.prototype.setID = function (id){
+    getByName(this.primaryKey).val(id);
+    getByName(this.DOMName).attr("data-id", id);
 };
 
 Form.prototype.setData = function (data) {
@@ -67,6 +73,7 @@ Form.prototype.setData = function (data) {
     } else {
         $("#submit").hide();
         $("#update").show();
+        this.setID(data[0][this.primaryKey]);
     }
 };
 
@@ -213,14 +220,7 @@ Field.prototype.setChangeEvent = function () {
 };
 
 
-// GLOBAL FUNCTIONS
-
-// get by name function must be implemented 
-// (as opposed to an element property) to avoid
-// circular references which are created when a DOM
-// element is added to an objects properties
-// an object with circular references cannot be
-// parsed into JSON
+// GLOBAL
 
 function userOpen(formName) {
     var ID = prompt("Enter a form number");

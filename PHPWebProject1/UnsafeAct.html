@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="scripts/js/wcm/wcm.js"></script>
+    <script src="scripts/js/wcm/form.js"></script>
+
+
+    <link rel="stylesheet" href="css/Normalize.css" />
+    <link rel="stylesheet" href="css/FormClasses.css" />
+    <link rel="stylesheet" href="css/h3normalize.css" />
+
+    <title>UCAN</title>
+</head>
+
+<body onload="(new Form('UA')).open();">
+    <form name="UA" data-name="Unsafe Act" data-table="UnsafeActs" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
+          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+        <table>
+            <tr>
+                <td colspan="3" class="dkgrey whitetext"><h1>Unsafe Act Form</h1></td>
+                <td class="ltgrey"><h2>UA Number </h2><input id="ID" name="ID" type="text" value="" style="width: auto; background-color: inherit;" readonly /></td>
+            </tr>
+            <tr class="ltgrey">
+                <td><h3>Plant</h3></td>
+                <td><h3>Department</h3></td>
+                <td><h3>Zone</h3></td>
+                <td><h3>Shift</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    <select name="Plant" data-query='{ "Query" : "Plants", "Params" : []}' data-order="1.0" required></select>
+                </td>
+                <td>
+                    <select name="Department" data-query='{ "Query" : "Departments", "Params" : ["$Plant$"]}' data-order="1.1" required></select>
+                </td>
+                <td>
+                    <select name="Zone" data-query='{ "Query" : "Zones", "Params" : ["$Plant$", "$Department$"]}' data-order="1.2" required></select>
+                </td>
+                <td>
+                    <select name="Shift" data-list='{ "list" : [1,2,3] }'></select>
+                </td>
+            </tr>
+            <tr class="ltgrey">
+                <td><h3>Type</h3></td>
+                <td><h3>Micro Type</h3></td>
+                <td><h3>Reviewed</h3></td>
+                <td><h3></h3></td>
+            </tr>
+            <tr>
+                <td>
+                    <select name="UAType" data-query='{ "Query" : "UATypes", "Params" : []}' data-order="2.0"></select>
+                </td>
+                <td>
+                    <select name="UATypeMicro" data-query='{ "Query" : "UAMicroTypes", "Params" : ["$UAType$"]}' data-order="2.1"></select>
+                </td>
+                <td>
+                    <select name="Reviewed" data-list='{ "list" : [true,false] }' data-default="false" data-format="bool"></select>
+                </td>
+                <td class="ltgrey"></td>
+            </tr>
+            <tr class="ltgrey">
+                <td colspan="4">Comments</td>
+            </tr>
+            <tr style="height: 200px;">
+                <td colspan="4">
+                    <textarea name="Comments"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <button type="button" id="update" onclick="userUpdate('UA');">Update</button>
+                    <button type="button" id="submit" onclick="userSubmit('UA');">Submit</button>
+                    <button type="button" onclick="location.reload();">Clear</button>
+                    <button type="button" onclick="userOpen('UA');">Open</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>

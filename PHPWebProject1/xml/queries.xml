@@ -92,6 +92,14 @@
     <connection>Safety</connection>
     <qstring>SELECT * FROM ClosedIssueDetails</qstring>
   </query>
+  <query name="UATypes">
+    <connection>Safety</connection>
+    <qstring>SELECT DISTINCT UAType FROM vUATypes</qstring>
+  </query>
+  <query name="UAMicroTypes">
+    <connection>Safety</connection>
+    <qstring>SELECT DISTINCT UAMicroType FROM vUATypes WHERE UAType=?</qstring>
+  </query>
   <!-- Chart Queries -->
   <query name="MachMTBF">
     <connection>Mattec</connection>

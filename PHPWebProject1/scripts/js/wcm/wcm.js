@@ -8,11 +8,6 @@
         data: { Object: JSON.stringify(obj) },
         success: function (data, status, xhr) {
             if (status == "success" && xhr.readyState == 4) {
-                // calls function obj.successFunc(data)
-                // this means that the successFunc (string) 
-                // must always be implemented
-                // as a function of obj
-                //obj[successFunc](data);
                 successFunc(data);
             }
         },
@@ -31,10 +26,15 @@ function ajaxPostJSONjQuery(url, obj, successFunc, async) {
     ajaxPostjQuery(url, obj, successFunc, async, "json");
 }
 
+// get by name function must be implemented 
+// (as opposed to an element property) to avoid
+// circular references which are created when a DOM
+// element is added to an objects properties
+// an object with circular references cannot be
+// parsed into JSON
 function getByName(name) {
     return $("[name='" + name + "']");
 }
-
 function ISODate(dateStr) {
     return (new Date(Date.parse(dateStr))).toISOString();
 }
