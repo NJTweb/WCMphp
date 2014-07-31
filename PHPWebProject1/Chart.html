@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Bar Chart</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+        <script src="scripts/js/wcm/wcm.js"></script>
+        <script src="scripts/js/wcm/query.js"></script>
+        <script src="scripts/js/chart/chartFuncs.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            google.load("visualization", "1", { packages: ["corechart"] });
+        </script>
+	</head>
+	<body>
+        <select name="Query" onchange="getParams($(this).val())">
+            <option value=""></option>
+            <option value="MachMTBF">MTBF by Machine</option>
+            <option value="MachMTTR">MTTR by Machine</option>
+            <option value="MachDowntime">Downtime Reasons by Machine</option>
+            <option value="MachScrap">Machine Scrap</option>
+            <option value="MachOEE">Machine OEE</option>
+            <option value="MoldOEE">Tool OEE</option>
+            <option value="PMDue">PM Due per Tool</option>
+        </select>
+        <div id="ParamDiv"></div>
+        <button onclick="chartData()">Chart</button>
+        <input type="hidden" name="Data" value="" />
+        <button onclick="render(getByName('Data').val())">Export Data</button>
+		<div id="chartDiv" style="width: 100%; height: 500px;">
+		</div>
+	</body>
+</html>
