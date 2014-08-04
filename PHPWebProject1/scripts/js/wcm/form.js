@@ -7,8 +7,33 @@ function initializeFields() {
             setChangeEvent($(this));
             getOptions($(this));
         });
+    getByName("file[]").change(function () {
+
+        if (checkTotalFileSize() > 7884800) {
+            alert("Files are too large.");
+            resetFormElement(this);
+        }
+
+    });
 }
 
+var totalSize = 0;
+function checkTotalFileSize() {
+    totalSize = 0;
+    getByName("file[]").each(function () {
+        if (this.files[0] != undefined) {
+            totalSize += (this.files[0].size);
+        }
+    });
+    //console.log(totalSize);
+    return totalSize;
+}
+
+function resetFormElement(e) {
+    $(e).wrap('<form>').closest('form').get(0).reset();
+    $(e).unwrap();
+    //console.log(e.files[0]);
+}
 function open() {
     var con = getFormData("Connection").val();
     var table = getFormData("Table").val();
