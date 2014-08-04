@@ -16,9 +16,15 @@
     <title>Unsafe Act</title>
 </head>
 
-<body onload="(new Form('UA')).open();">
-    <form name="UA" data-name="Unsafe Act" data-table="UnsafeActs" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
-          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+<body onload="open()">
+    <form name="UA" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="FormData[Name]" value="Unsafe Act" />
+        <input type="hidden" name="FormData[Table]" value="UnsafeActs" />
+        <input type="hidden" name="FormData[PrimaryKey]" value="ID" />
+        <input type="hidden" name="FormData[ID]" value="-1" />
+        <input type="hidden" name="FormData[Connection]" value="Safety" />
+        <input type="hidden" name="FormData[Contacts]" value="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com" />
+        <input type="hidden" name="FormData[EmailBody]" value="" />
         <table>
             <tr>
                 <td colspan="3" class="dkgrey whitetext"><h1>Unsafe Act Form</h1></td>
@@ -72,10 +78,9 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <button type="button" id="update" onclick="userUpdate('UA');">Update</button>
-                    <button type="button" id="submit" onclick="userSubmit('UA');">Submit</button>
+                    <button type="submit" id="submit">Submit</button>
                     <button type="button" onclick="location.reload();">Clear</button>
-                    <button type="button" onclick="userOpen('UA');">Open</button>
+                    <button type="button" onclick="userOpen();">Open</button>
                 </td>
             </tr>
         </table>

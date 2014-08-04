@@ -16,9 +16,15 @@
     <title>UCAN</title>
 </head>
 
-<body onload="(new Form('UCAN')).open();">
-    <form name="UCAN" data-name="UCAN" data-table="UCANs" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
-          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+<body onload="open()">
+    <form name="UCAN" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="FormData[Name]" value="UCAN" />
+        <input type="hidden" name="FormData[Table]" value="UCANs" />
+        <input type="hidden" name="FormData[PrimaryKey]" value="ID" />
+        <input type="hidden" name="FormData[ID]" value="-1" />
+        <input type="hidden" name="FormData[Connection]" value="Safety" />
+        <input type="hidden" name="FormData[Contacts]" value="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com" />
+        <input type="hidden" name="FormData[EmailBody]" value="" />
         <table>
             <tr>
                 <td colspan="3" class="dkgrey whitetext"><h1>Unsafe Conditions And Acts Form</h1></td>
@@ -50,7 +56,7 @@
                 <td class="ltgrey"><h3>Zone</h3></td>
             </tr>
             <tr>
-                <td><input type="text" name="UCANReportedBy" placeholder="Reported By" required="required"/></td>
+                <td><input type="text" name="UCANReportedBy" placeholder="Reported By" required="required" /></td>
                 <td rowspan="3"><textarea name="UCANPersons" placeholder="Location/Persons" required="required"></textarea></td>
                 <td>
                     <select name="UCANZone" id="zone" data-query='{ "Query" : "Zones", "Params" : ["$Plant$", "$UCANDept$"]}' data-order="1.2" required></select>
@@ -81,7 +87,7 @@
                         <option value="">Completed</option>
                     </select>
                 </td>
-                <td><input type="date" name="UCANDate" placeholder="Date Submitted" required="required"/></td>
+                <td><input type="date" name="UCANDate" placeholder="Date Submitted" required="required" /></td>
                 <td><input type="text" name="Notes" placeholder="Notes" /></td>
             </tr>
             <tr>
@@ -92,10 +98,9 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <button type="button" id="update" onclick="userUpdate('UCAN');">Update</button>
-                    <button type="button" id="submit" onclick="userSubmit('UCAN');">Submit</button>
+                    <button type="submit" id="submit">Submit</button>
                     <button type="button" onclick="location.reload();">Clear</button>
-                    <button type="button" onclick="userOpen('UCAN');">Open</button>
+                    <button type="button" onclick="userOpen();">Open</button>
                 </td>
             </tr>
         </table>

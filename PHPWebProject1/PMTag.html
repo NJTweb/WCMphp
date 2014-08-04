@@ -16,9 +16,15 @@
     <title>PM Tag</title>
 </head>
 
-<body onload="(new Form('PMTag')).open();">
-    <form name="PMTag" data-name="PM Tag" data-table="PMTags" data-primarykey="TagNo" data-id="-1" data-connection="Safety" data-email=""
-          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+<body onload="open()">
+    <form name="PMTag" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="FormData[Name]" value="PM Tag" />
+        <input type="hidden" name="FormData[Table]" value="PMTags" />
+        <input type="hidden" name="FormData[PrimaryKey]" value="TagNo" />
+        <input type="hidden" name="FormData[ID]" value="-1" />
+        <input type="hidden" name="FormData[Connection]" value="Safety" />
+        <input type="hidden" name="FormData[Contacts]" value="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com" />
+        <input type="hidden" name="FormData[EmailBody]" value="" />
         <table>
             <tr>
                 <td colspan="3" class="dkgrey whitetext"><h1>PM Tag Form</h1></td>
@@ -80,10 +86,9 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <button type="button" id="update" onclick="userUpdate('PMTag');">Update</button>
-                    <button type="button" id="submit" onclick="userSubmit('PMTag');">Submit</button>
+                    <button type="submit" id="submit">Submit</button>
                     <button type="button" onclick="location.reload();">Clear</button>
-                    <button type="button" onclick="userOpen('PMTag');">Open</button>
+                    <button type="button" onclick="userOpen();">Open</button>
                 </td>
             </tr>
         </table>

@@ -17,10 +17,15 @@
     <title>Quick Kaizen</title>
 </head>
 
-<body onload="(new Form('QuickKaizen')).open();">
-    <form name="QuickKaizen" data-name="Kaizen" data-table="Kaizens" data-primarykey="KaizenNumber" data-id="-1" data-connection="Safety" data-email=""
-          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com"
-          oninput="var CB = Costs.value / Benefits.value; CostBenefit.value = ((isNaN(CB) ||  !isFinite(CB)) ? 0 : CB)">
+<body onload="open()">
+    <form name="QuickKaizen" enctype="multipart/form-data" method="post" oninput="var CB = Costs.value / Benefits.value; CostBenefit.value = ((isNaN(CB) ||  !isFinite(CB)) ? 0 : CB)">
+        <input type="hidden" name="FormData[Name]" value="Kaizen" />
+        <input type="hidden" name="FormData[Table]" value="Kaizens" />
+        <input type="hidden" name="FormData[PrimaryKey]" value="KaizenNumber" />
+        <input type="hidden" name="FormData[ID]" value="-1" />
+        <input type="hidden" name="FormData[Connection]" value="Safety" />
+        <input type="hidden" name="FormData[Contacts]" value="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com" />
+        <input type="hidden" name="FormData[EmailBody]" value="" />
         <table>
             <tr>
                 <td style="width: 6%;"></td>
@@ -91,9 +96,9 @@
                 <td>Verification</td>
             </tr>
             <tr style="height: 50px;">
-                <td colspan="2"><input type="text" name="Originator" required="required"/></td>
-                <td><input type="date" name="StartDate" required="required"/></td>
-                <td><input type="text" name="Responsible" required="required"/></td>
+                <td colspan="2"><input type="text" name="Originator" required="required" /></td>
+                <td><input type="date" name="StartDate" required="required" /></td>
+                <td><input type="text" name="Responsible" required="required" /></td>
                 <td><input type="date" name="EndDate" /></td>
                 <td><input type="number" name="Costs" /></td>
                 <td><input type="number" name="Benefits" /></td>
@@ -103,10 +108,9 @@
             </tr>
             <tr>
                 <td colspan="10">
-                    <button type="button" id="update" onclick="userUpdate('QuickKaizen');">Update</button>
-                    <button type="button" id="submit" onclick="userSubmit('QuickKaizen');">Submit</button>
+                    <button type="submit" id="submit">Submit</button>
                     <button type="button" onclick="location.reload();">Clear</button>
-                    <button type="button" onclick="userOpen('QuickKaizen');">Open</button>
+                    <button type="button" onclick="userOpen();">Open</button>
                 </td>
             </tr>
         </table>

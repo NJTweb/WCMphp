@@ -26,7 +26,7 @@
   <ItemGroup>
     <Compile Include="Dashboard.php" />
     <Compile Include="EHS.php" />
-    <Compile Include="scripts\php\ConInfo.php" />
+    <Compile Include="Form.php" />
     <Compile Include="scripts\php\getMaxID.php" />
     <Compile Include="scripts\php\getParams.php" />
     <Compile Include="scripts\php\Open.php" />
@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="css\" />
+    <Folder Include="uploads\" />
     <Folder Include="scripts\js\chart\" />
     <Folder Include="scripts\js\forms\" />
     <Folder Include="scripts\js\wcm\" />
@@ -79,8 +80,6 @@
     <Content Include="scripts\js\wcm\form.js" />
     <Content Include="scripts\js\wcm\images.js" />
     <Content Include="scripts\js\wcm\issue.js" />
-    <Content Include="scripts\js\wcm\Media.js" />
-    <Content Include="scripts\js\wcm\query.js" />
     <Content Include="scripts\js\wcm\sketch.js" />
     <Content Include="scripts\js\forms\checklist.js" />
     <Content Include="scripts\js\forms\ToolRepair.js" />

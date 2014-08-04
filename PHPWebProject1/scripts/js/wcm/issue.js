@@ -16,7 +16,18 @@ Issue.prototype.open = function () {
         Query: "OpenIssue",
         Params: [this["Name"], this["ID"], this["LineNum"]]
     };
-    ajaxPostHTMLjQuery("scripts/php/Query.php", this, getAllIssues, true);
+    $.ajax({
+        url: "scripts/php/Query.php",
+        type: "POST",
+        dataType: "json",
+        data: { Object: JSON.stringify(this) },
+        success: function (data, status, xhr) {
+            if (status == "success" && xhr.readyState == 4) {
+                getAllIssues(data);
+            }
+        },
+        error: logError
+    });
 };
 
 Issue.prototype.close = function (action) {
@@ -24,7 +35,18 @@ Issue.prototype.close = function (action) {
         Query: "CloseIssue",
         Params: [this["Name"], this["ID"], this["LineNum"], action]
     };
-    ajaxPostHTMLjQuery("scripts/php/Query.php", this, getAllIssues, true);
+    $.ajax({
+        url: "scripts/php/Query.php",
+        type: "POST",
+        dataType: "json",
+        data: { Object: JSON.stringify(this) },
+        success: function (data, status, xhr) {
+            if (status == "success" && xhr.readyState == 4) {
+                getAllIssues(data);
+            }
+        },
+        error: logError
+    });
 };
 
 Issue.prototype.toHTML = function (jqEl) {
@@ -71,24 +93,48 @@ function getAllIssues() {
     //console.log("Getting issues");
 
     var openIssuesQuery = {
-        connection: "Safety",
-        query: {
+        Connection: "Safety",
+        Query: {
             Query: "GetOpenIssues",
             Params: []
         },
         fetchType: "ASSOC"
     }
-    ajaxPostJSONjQuery("scripts/php/Query.php", openIssuesQuery, dataToOpenIssues, true);
+
+    $.ajax({
+        url: "scripts/php/Query.php",
+        type: "POST",
+        dataType: "json",
+        data: { Object: JSON.stringify(openIssuesQuery) },
+        success: function (data, status, xhr) {
+            if (status == "success" && xhr.readyState == 4) {
+                dataToOpenIssues(data);
+            }
+        },
+        error: logError
+    });
 
     var closedIssuesQuery = {
-        connection: "Safety",
-        query: {
+        Connection: "Safety",
+        Query: {
             Query: "GetClosedIssues",
             Params: []
         },
         fetchType: "ASSOC"
     }
-    ajaxPostJSONjQuery("scripts/php/Query.php", closedIssuesQuery, dataToClosedIssues, true);
+
+    $.ajax({
+        url: "scripts/php/Query.php",
+        type: "POST",
+        dataType: "json",
+        data: { Object: JSON.stringify(closedIssuesQuery) },
+        success: function (data, status, xhr) {
+            if (status == "success" && xhr.readyState == 4) {
+                dataToClosedIssues(data);
+            }
+        },
+        error: logError
+    });
 }
 
 function dataToOpenIssues(data) {
@@ -184,4 +230,7 @@ function filterForm(jqEl, form) {
 function ViewIssue(jqEl) {
     var issue = new Issue(jqEl.attr("data-json"));
     issue.display($("#current_issue"));
+}
+function logError(xhr, status, error) {
+    console.log(status + " : " + error);
 }

@@ -1,16 +1,32 @@
 <?php
+if(isset($_POST)){
 
-require_once("ConInfo.php");
+require_once("Utilities.php");
 
-$obj = getObject($_POST["Object"]);
-$conn = getPDO($obj->connection);
+//$t_POST = array("Connection" => "Safety", "PrimaryKey" => "ID", "Table" => "DevForm");
 
-$query = "SELECT MAX({$obj->primaryKey}) FROM {$obj->table}";
+$conn = get_connection($_POST["Connection"]);
 
-$stmt = $conn->prepare($query);
+$query = "SELECT MAX({$_POST["PrimaryKey"]}) FROM {$_POST["Table"]}";
+$query = ms_escape_string($query);
+
+if($conn){
+    $stmt = $conn->prepare($query);
+}else{
+    echo -1;
+    exit();
+}
 
 if($stmt->execute()){
-    echo json_encode($stmt->fetchAll(PDO::FETCH_NUM));
+    if($row = $stmt->fetch(PDO::FETCH_NUM)){
+        echo $row[0];
+    }else{
+        echo -1;
+    }
+}else{
+    echo -1;
+}
+
 }
 
 ?>

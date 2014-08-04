@@ -17,9 +17,16 @@
     <link rel="stylesheet" href="css/FormClasses.css" />
 </head>
 
-<body onload="(new Form('EWO')).open();">
-    <form name="EWO" data-name="EWO" data-table="EWOs" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
-          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+<body onload="open()">
+    <form name="EWO" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="FormData[Name]" value="EWO" />
+        <input type="hidden" name="FormData[Table]" value="EWOs" />
+        <input type="hidden" name="FormData[PrimaryKey]" value="ID" />
+        <input type="hidden" name="FormData[ID]" value="-1" />
+        <input type="hidden" name="FormData[Connection]" value="Safety" />
+        <input type="hidden" name="FormData[Contacts]" value="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com" />
+        <input type="hidden" name="FormData[EmailBody]" value="" />
+
         <input type="hidden" name="DateTimeOccurred" onchange="splitDateTimes()" />
         <input type="hidden" name="DateTimeStarted" onchange="splitDateTimes()" />
         <input type="hidden" name="DateTimeCompleted" onchange="splitDateTimes()" />
@@ -280,10 +287,9 @@
             </tr>
             <tr>
                 <td colspan="13">
-                    <button type="button" id="update" onclick="userUpdate('EWO');">Update</button>
-                    <button type="button" id="submit" onclick="userSubmit('EWO');">Submit</button>
+                    <button type="submit" id="submit">Submit</button>
                     <button type="button" onclick="location.reload();">Clear</button>
-                    <button type="button" onclick="userOpen('EWO');">Open</button>
+                    <button type="button" onclick="userOpen();">Open</button>
                 </td>
             </tr>
         </table>

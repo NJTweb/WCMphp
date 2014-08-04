@@ -16,9 +16,15 @@
     <title>Blue Tag</title>
 </head>
 
-<body onload="(new Form('BlueTag')).open();">
-    <form name="BlueTag" data-name="Blue Tag" data-table="BlueTags" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
-          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+<body onload="open()">
+    <form name="BlueTag" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="FormData[Name]" value="Blue Tag" />
+        <input type="hidden" name="FormData[Table]" value="BlueTags" />
+        <input type="hidden" name="FormData[PrimaryKey]" value="ID" />
+        <input type="hidden" name="FormData[ID]" value="-1" />
+        <input type="hidden" name="FormData[Connection]" value="Safety" />
+        <input type="hidden" name="FormData[Contacts]" value="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com" />
+        <input type="hidden" name="FormData[EmailBody]" value="" />
         <table>
             <tr>
                 <td colspan="5" class="dkblue whitetext"><h1>Blue Tag Number </h1><input id="ID" name="ID" type="text" value="" style="width: auto; background-color: inherit;" readonly /></td>
@@ -30,7 +36,7 @@
                 <td class="ltgrey">Name</td>
             </tr>
             <tr>
-                <td><input type="number" name="TagNo" placeholder="Tag Number" value="" required="required"/></td>
+                <td><input type="number" name="TagNo" placeholder="Tag Number" value="" required="required" /></td>
                 <td><input type="number" name="WONo" value="" /></td>
                 <td>
                     <select name="TagType" data-list='{ "list" : ["AM","WO"] }'>
@@ -46,7 +52,7 @@
                 <td class="ltgrey">Zone</td>
             </tr>
             <tr>
-                <td><input type="date" name="OpenDate" placeholder="Open Date" value="" required="required"/></td>
+                <td><input type="date" name="OpenDate" placeholder="Open Date" value="" required="required" /></td>
                 <td>
                     <select name="Shift" data-list='{ "list" : [1,2,3] }' data-format="int">
                         <option value="">Shift</option>
@@ -91,10 +97,9 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <button type="button" id="update" onclick="userUpdate('BlueTag');">Update</button>
-                    <button type="button" id="submit" onclick="userSubmit('BlueTag');">Submit</button>
+                    <button type="submit" id="submit">Submit</button>
                     <button type="button" onclick="location.reload();">Clear</button>
-                    <button type="button" onclick="userOpen('BlueTag');">Open</button>
+                    <button type="button" onclick="userOpen();">Open</button>
                 </td>
             </tr>
         </table>

@@ -14,9 +14,15 @@
     <link rel="stylesheet" href="css/SEWO.css" />
 </head>
 
-<body onload="(new Form('SAFE')).open();">
-    <form name="SAFE" data-name="SAFE" data-table="ESEWOs" data-primarykey="SEWONumber" data-id="-1" data-connection="Safety" data-email=""
-          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+<body onload="open()">
+    <form name="SAFE" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="FormData[Name]" value="SAFE" />
+        <input type="hidden" name="FormData[Table]" value="ESEWOs" />
+        <input type="hidden" name="FormData[PrimaryKey]" value="SEWONumber" />
+        <input type="hidden" name="FormData[ID]" value="-1" />
+        <input type="hidden" name="FormData[Connection]" value="Safety" />
+        <input type="hidden" name="FormData[Contacts]" value="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com" />
+        <input type="hidden" name="FormData[EmailBody]" value="" />
         <table style="width: 100%;">
             <tr>
                 <td colspan="4" class="dkgrey whitetext">
@@ -30,7 +36,7 @@
                 </td>
             </tr>
             <tr>
-                <td rowspan="22" class="vert-text green whitetext">
+                <td rowspan="23" class="vert-text green whitetext">
                     P<br>
                     L<br>
                     A<br>
@@ -258,10 +264,10 @@
                     <textarea name="Responsible" placeholder="Responsible"></textarea><!-- responsible -->
                 </td>
                 <td>
-                    <textarea name="DueDate" placeholder="Due date" ></textarea><!-- due date -->
+                    <textarea name="DueDate" placeholder="Due date"></textarea><!-- due date -->
                 </td>
                 <td>
-                    <textarea name="CloseDate" placeholder="Close date" ></textarea><!-- close date -->
+                    <textarea name="CloseDate" placeholder="Close date"></textarea><!-- close date -->
                 </td>
                 <td>
                     <textarea name="Notes" placeholder="Notes"></textarea><!-- notes -->
@@ -296,7 +302,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <textarea name="Location" placeholder="Location" ></textarea>
+                                            <textarea name="Location" placeholder="Location"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -420,10 +426,9 @@
             </tr>
             <tr>
                 <td colspan="7">
-                    <button type="button" id="update" onclick="userUpdate('SAFE');">Update</button>
-                    <button type="button" id="submit" onclick="userSubmit('SAFE');">Submit</button>
+                    <button type="submit" id="submit">Submit</button>
                     <button type="button" onclick="location.reload();">Clear</button>
-                    <button type="button" onclick="userOpen('SAFE');">Open</button>
+                    <button type="button" onclick="userOpen();">Open</button>
                 </td>
             </tr>
         </table>

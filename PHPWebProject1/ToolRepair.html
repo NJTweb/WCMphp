@@ -16,10 +16,15 @@
     <title>Tool Repair Form</title>
 </head>
 
-<body onload="(new Form('ToolRepair')).open();">
-    <form name="ToolRepair" data-name="Tool Repair" data-table="ToolIssues" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email=""
-          data-contacts="jmurphy@venturecorporation.net; pillars@ventureglobalengineering.com; thomason@mayco-mi.com; dharper@mayco-mi.com; hooks@njt-na.com; mbommarito@mayco-mi.com"
-          onsubmit="return updateEmailBody()">
+<body onload="open()">
+    <form name="ToolRepair" enctype="multipart/form-data" method="post" onsubmit="return updateEmailBody()">
+        <input type="hidden" name="FormData[Name]" value="Tool Repair" />
+        <input type="hidden" name="FormData[Table]" value="ToolIssues" />
+        <input type="hidden" name="FormData[PrimaryKey]" value="ID" />
+        <input type="hidden" name="FormData[ID]" value="-1" />
+        <input type="hidden" name="FormData[Connection]" value="Safety" />
+        <input type="hidden" name="FormData[Contacts]" value="" />
+        <input type="hidden" name="FormData[EmailBody]" value="" />
         <table id="repairTable">
             <tr>
                 <td width="30px"></td>
@@ -143,10 +148,9 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <button type="button" id="update" onclick="userUpdate('ToolRepair');">Update</button>
-                    <button type="button" id="submit" onclick="userSubmit('ToolRepair');">Submit</button>
+                    <button type="submit" id="submit">Submit</button>
                     <button type="button" onclick="location.reload();">Clear</button>
-                    <button type="button" onclick="userOpen('ToolRepair');">Open</button>
+                    <button type="button" onclick="userOpen();">Open</button>
                 </td>
             </tr>
         </table>

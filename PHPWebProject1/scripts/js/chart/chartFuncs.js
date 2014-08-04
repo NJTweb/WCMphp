@@ -1,5 +1,16 @@
 function getParams(query) {
-    ajaxPostJSONjQuery("scripts/php/getParams.php", { query: query }, renderParamInputs, true);
+    $.ajax({
+        url: "scripts/php/getParams.php",
+        type: "POST",
+        dataType: "json",
+        data: { query: query },
+        success: function (data, status, xhr) {
+            if (status == "success" && xhr.readyState == 4) {
+                renderParamInputs(data);
+            }
+        },
+        error: logError
+    });
 }
 
 function renderParamInputs(data) {
@@ -21,9 +32,23 @@ function chartData() {
     });
     var query = $("[name='Query']").val();
 
-    var qry = new Query(query, params, "ASSOC", "Safety");
+    // var qry = new Query(query, params, "ASSOC", "Safety");
+    // build your own query. query obj removed
 
-    ajaxPostJSONjQuery("scripts/php/Query.php", qry, renderChartData, true);
+    //ajaxPostJSONjQuery("scripts/php/Query.php", qry, renderChartData, true);
+
+    $.ajax({
+        url: "scripts/php/Query.php",
+        type: "POST",
+        dataType: "json",
+        data: query,
+        success: function (data, status, xhr) {
+            if (status == "success" && xhr.readyState == 4) {
+                renderChartData(data);
+            }
+        },
+        error: logError
+    });
 }
 
 function randomRGB(){
@@ -214,4 +239,8 @@ function arrIsAN(arr){
         });
     var numeric = (arr.length == tempArr.length);
     return numeric;
+}
+
+function logError(xhr, status, error) {
+    console.log(status + " : " + error);
 }

@@ -20,9 +20,15 @@
     <title>EHS Checklist</title>
 </head>
 
-<body onload="(new Form('EHS')).open();">
-    <form name="EHS" id="EHS" data-name="EHS" data-table="EHS" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email="" 
-          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+<body onload="open()">
+    <form name="EHS" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="FormData[Name]" value="EHS" />
+        <input type="hidden" name="FormData[Table]" value="EHS" />
+        <input type="hidden" name="FormData[PrimaryKey]" value="ID" />
+        <input type="hidden" name="FormData[ID]" value="-1" />
+        <input type="hidden" name="FormData[Connection]" value="Safety" />
+        <input type="hidden" name="FormData[Contacts]" value="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com" />
+        <input type="hidden" name="FormData[EmailBody]" value="" />
         <table>
             <tr>
                 <td colspan="3"><h1>EHS No. <input id="ID" type="text" name="ID" value="" style="width: auto; background-color: inherit;" readonly></h1></td>
@@ -123,10 +129,9 @@
                     <textarea maxlength="1000" name="Comments" rows="6" cols="50" form="EHS" placeholder="Comments."></textarea><br />
                 </td>
                 <td>
-                    <button type="button" id="update" onclick="userUpdate('EHS');">Update</button>
-                    <button type="button" id="submit" onclick="userSubmit('EHS');">Submit</button>
-                    <button type="button" onclick="location.reload();">Clear</button>
-                    <button type="button" onclick="userOpen('EHS');">Open</button>
+                    <button type="submit" id="submit">Submit</button>
+                <button type="button" onclick="location.reload();">Clear</button>
+                <button type="button" onclick="userOpen();">Open</button>
                 </td>
             </tr>
         </table>

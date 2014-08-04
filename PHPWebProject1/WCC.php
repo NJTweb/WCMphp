@@ -8,7 +8,7 @@
     <script src="scripts/js/wcm/form.js"></script>
     
     <script src="scripts/js/forms/checklist.js"></script>
-    <script src="scripts/js/wcm/images.js"></script>
+    <!-- <script src="scripts/js/wcm/images.js"></script> -->
 
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/Checklist.css" />
@@ -17,9 +17,15 @@
     <title>WCM Safety Checklist</title>
 </head>
 
-<body onload="(new Form('WCC')).open();">
-    <form name="WCC" id="WCC" data-name="SEWO" data-table="WCC" data-primarykey="ID" data-id="-1" data-connection="Safety" data-email="" 
-          data-contacts="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com">
+<body onload="open()"">
+    <form name="WCC" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="FormData[Name]" value="WCC" />
+        <input type="hidden" name="FormData[Table]" value="WCC" />
+        <input type="hidden" name="FormData[PrimaryKey]" value="ID" />
+        <input type="hidden" name="FormData[ID]" value="-1" />
+        <input type="hidden" name="FormData[Connection]" value="Safety" />
+        <input type="hidden" name="FormData[Contacts]" value="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com" />
+        <input type="hidden" name="FormData[EmailBody]" value="" />
         <table>
             <tr>
                 <td colspan="3"><h1>Work Cell Observation Checklist No. <input id="ID" type="text" name="ID" value="" style="width: auto; background-color: inherit;" readonly></h1></td>
@@ -99,8 +105,8 @@
                     <label for="file<?php echo $i; ?>">
                         <img id="uploadimg<?php echo $i; ?>" src="res/upload.png" alt="Upload">
                     </label>
-                    <input type="file" id="file<?php echo $i; ?>" onchange="changeImage($(this), $('#uploadimg<?php echo $i; ?>')); readImage(this, <?php echo "'FileURL".$i."'"; ?>);">
-                    <input type="hidden" name="FileURL<?php echo $i; ?>" value="" />
+                    <input type="file" name="file[]" id="file<?php echo $i; ?>" onchange="changeImage($(this), $('#uploadimg<?php echo $i; ?>')); ">
+                    <!-- <input type="hidden" id="FileURL<?php //echo $i; ?>" value="" /> -->
                 </td>
                 <td>
                     <select name="Compliant<?php echo $i; ?>" data-list='{"list" : ["Satisfactory","Unsafe Condition","Unsafe Act","Both"]}' data-default="Satisfactory" required></select>
@@ -121,10 +127,9 @@
                     <textarea maxlength="1000" name="Comments" rows="6" cols="50" form="WCC" placeholder="Comments"></textarea><br />
                 </td>
                 <td>
-                    <button type="button" id="update" onclick="userUpdate('WCC');">Update</button>
-                    <button type="button" id="submit" onclick="userSubmit('WCC');">Submit</button>
-                    <button type="button" onclick="location.reload();">Clear</button>
-                    <button type="button" onclick="userOpen('WCC');">Open</button>
+                    <button type="submit" id="submit">Submit</button>
+                <button type="button" onclick="location.reload();">Clear</button>
+                <button type="button" onclick="userOpen();">Open</button>
                 </td>
             </tr>
         </table>

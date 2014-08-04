@@ -1,256 +1,236 @@
-﻿/*
-* FORM CLASS
-* opens form into form element
-* allows updating and submitting of form
-* models an html form, adds functionality
-* uses an array of Field objects to make changes
-* initialized with form name. everything else
-* comes from data-* properties set on the
-* html form tag
-*/
-function Form(name) {
-    this.rawObj = {};
-    this.fields = [];
-    this.DOMName = name;
-    this.name = getByName(name).attr("data-name");
-    this.table = getByName(name).attr("data-table");
-    if (DEV_MODE) {
-        this.table = "dev_" + this.table;
-    }
-    this.primaryKey = getByName(name).attr("data-primarykey");
-    this.ID = getByName(name).attr("data-id");
-    this.connection = getByName(name).attr("data-connection");
-    this.emailBody = getByName(name).attr("data-email");
-    this.contacts = getByName(name).attr("data-contacts");
+﻿$(document).ready(initializeFields);
 
-    this.initializeFields();
+function initializeFields() {
+    var inputs = getOrderedInputs();
+    inputs.each(
+        function () {
+            setChangeEvent($(this));
+            getOptions($(this));
+        });
 }
 
-Form.prototype.initializeFields = function () {
-    var fieldNames = $("select, textarea, input").map(function () { return $(this).attr("name"); }).get();
-    for (var i = 0, l = fieldNames.length; i < l; ++i) {
-        this.fields.push(new Field(fieldNames[i], $("[name='" + fieldNames[i] + "']").val()));
-        this.fields[i].formatValue();
-    }
-};
+function open() {
+    var con = getFormData("Connection").val();
+    var table = getFormData("Table").val();
+    var pk = getFormData("PrimaryKey").val();
+    var id = getFormData("ID").val();
 
-Form.prototype.open = function () {
-    ajaxPostJSONjQuery("scripts/php/Open.php", this, this.setData.bind(this), true);
-};
-
-Form.prototype.update = function () {
-    ajaxPostHTMLjQuery("scripts/php/Update.php", this, render, true);
-    //console.log("Updating form #" + this.ID);
-};
-
-Form.prototype.submit = function () {
-    ajaxPostHTMLjQuery("scripts/php/Submit.php", this, render, true);
-    //console.log("Submitting form #" + this.ID);
-};
-
-Form.prototype.getMaxID = function () {
-    ajaxPostJSONjQuery("scripts/php/getMaxID.php", this, this.setMaxID.bind(this), true);
-};
-
-Form.prototype.setMaxID = function (data) {
-    ++data[0];
-    this.setID(data[0]);
-};
-
-Form.prototype.setID = function (id){
-    getByName(this.primaryKey).val(id);
-    getByName(this.DOMName).attr("data-id", id);
-};
-
-Form.prototype.setData = function (data) {
-    this.rawObj = data;
-    this.rawObjToFields();
-    this.updateFields();
-    if (this.rawObj.length == 0) {
-        $("#update").hide();
-        $("#submit").show();
-        this.getMaxID();
-    } else {
-        $("#submit").hide();
-        $("#update").show();
-        this.setID(data[0][this.primaryKey]);
-    }
-};
-
-Form.prototype.rawObjToFields = function () {
-    for (col in this.rawObj[0]) {
-        for (var i = 0, l = this.fields.length; i < l; ++i) {
-            if (this.fields[i].name == col) {
-                this.fields[i].value = this.rawObj[0][col];
-                this.fields[i].formatValue();
-                break;
+    $.ajax({
+        url: "scripts/php/Open.php",
+        type: "POST",
+        dataType: "json",
+        data: {
+            Connection: con,
+            Table: table,
+            PrimaryKey: pk,
+            ID: id
+        },
+        success: function (data, status, xhr) {
+            if (status == "success" && xhr.readyState == 4) {
+                //console.log(data);
+                setData(data);
             }
-        }
-    }
-};
+        },
+        error: logError
+    });
+}
 
-Form.prototype.updateFields = function () {
-    //sort the fields in the correct order before updating them
-    this.fields.sort(function (a, b) { return a.order - b.order; });
-    //console.log(this.fields);
-    for (var i = 0, l = this.fields.length; i < l; ++i) {
-        this.fields[i].update();
-    }
-};
+function getNextID() {
+    var con = getFormData("Connection").val();
+    var table = getFormData("Table").val();
+    var pk = getFormData("PrimaryKey").val();
 
-//========================================================
+    $.ajax({
+        url: "scripts/php/getMaxID.php",
+        type: "POST",
+        dataType: "json",
+        data: {
+            Connection: con,
+            Table: table,
+            PrimaryKey: pk
+        },
+        success: function (data, status, xhr) {
+            if (status == "success" && xhr.readyState == 4) {
+                ++data;
+                setID(data);
+            }
+        },
+        error: logError
+    });
+}
 
-/*
-* FIELD CLASS
-* Models a single input (select, input, or textarea)
-* formats and updates the input value when its value is set
-*/
-function Field(name, value) {
-    try{
-        this.name = name;
-        this.value = value;
-        this.format = getByName(name).attr("data-format") || getByName(name).attr("type") || "text";
-        this.default = getByName(name).attr("data-default");
-        this.order = parseFloat(getByName(name).attr("data-order")) || Number.MAX_VALUE;
-        this.type = getByName(name).prop("tagName");
-        this.query = getByName(name).attr("data-query");
-        this.list = getByName(name).attr("data-list");
-        this.connection = "";
-        this.childNames = $("[data-order='" + (this.order + 0.1).toFixed(1) + "']").map(function () { return $(this).attr("name"); }).get();
+function setID(id) {
+    var pk = getFormData("PrimaryKey").val();
+    getByName(pk).val(id);
+    getFormData("ID").val(id);
+}
 
-        this.setChangeEvent();
-        if (this.type == "SELECT") {
-            this.getOptions();
-        }
-        //this.formatValue(); no longer formats value on initialization
-    }catch(e){
-        console.log(e.message);
-        console.log("Error initializing " + name);
-        console.log(getByName(name));
+function setData(data) {
+    //console.log(data);
+    if (data.length == 0) {
+        $("#submit").text("Submit");
+        $("form").attr("action", "scripts/php/Submit.php");
+        //TODO change form to be more specific
+        setDefaults();
+        getNextID();
+    } else {
+        dataToFields(data);
+        $("#submit").text("Update");
+        $("form").attr("action", "scripts/php/Update.php");
     }
 }
 
-Field.prototype.formatValue = function () {
-    //console.log("Original Value: " + this.value);
-    var valid = true;
+function setDefaults() {
+    //console.log("Called");
+    var inputs = getOrderedInputs();
+    inputs.each(
+        function () {
+            var def = $(this).attr("data-default");
+            if (def != undefined) {
+                $(this).val(def);
+                //console.log(def);
+            } else {
+                $(this).val("");
+            }
+        });
+}
 
-    if (this.value != undefined && this.value != null && this.value != "") {
-        try {
-            this.value = String(conversions[this.format](this.value));
-        } catch (e) {
-            valid = false;
-            console.log(e.message + ", format: " + this.format + ", value: " + this.value);
-        }
-    } else {
-        valid = false;
+function dataToFields(data) {
+    var inputs = getOrderedInputs();
+    inputs.each(
+        function () {
+            try {
+                var thisKey = $(this).attr("name"); //inputs[i].name;
+                var thisType = $(this).attr("type") || "text";
+                var value = formatValue(data[thisKey]["type"], thisType, data[thisKey]["value"]);
+                //console.log("Changing " + thisKey + " to " + value);
+                $(this).val(value).change();
+            } catch (e) {
+                try{
+                    //console.log(e.message + " (Name: " + thisKey + ", Value: " + value + ")");
+                } catch (e) {
+                    //console.log(e.message + " (Name: " + thisKey + ")");
+                }
+            }
+        });
+}
+
+function getOrderedInputs() {
+    var inputs = $("select, textarea, input").filter("[name]").not("[name*='FormData']");
+    inputs.sort(function (a, b) { return +a.getAttribute("data-order") - +b.getAttribute("data-order"); });
+    return inputs;
+}
+
+function formatValue(sqlType, htmlType, value) {
+    switch (sqlType) {
+        case "datetime":
+            switch (htmlType) {
+                case "date":
+                    value = value[0];
+                    break;
+                case "time":
+                    value = value[1];
+                    break;
+                default:
+                    value = value[0] + " " + value[1];
+                    break;
+            }
+            break;
+        case "varchar":
+        case "nvarchar":
+        case "text":
+        case "ntext":
+            break;
+        case "int":
+            value = parseInt(value);
+            break;
+        case "float":
+            value = parseFloat(value);
+            break;
+        case "bit":
+            value = Boolean(parseInt(value));
+            break;
     }
-    if (!valid) {
-        //console.log(this.value + " is not a valid value for the format " + this.format);
-        //console.log(this.name + " default is " + getByName(this.name).attr("data-default"));
-        if (this.default != undefined) {
-            //console.log("Set to default: " + this.default);
-            this.value = this.default;
-        } else {
-            this.value = "";
-        }
-    }
-    //console.log("New value :" + this.value);
-};
+    return value;
+}
 
-Field.prototype.update = function () {
-    $("[name='" + this.name + "']").val(this.value).change();
-    //console.log("set " + this.name + " to " + this.value);
-};
-
-Field.prototype.getOptions = function () {
-    if (this.list != undefined) {
-        var listObj = $.parseJSON(this.list);
+function getOptions(jqEl) {
+    //console.log(jqEl);
+    if (jqEl.attr("data-list") != undefined) {
+        var listObj = $.parseJSON(jqEl.attr("data-list"));
         var list = listObj["list"];
-        this.appendOptions(list);
-    } else if (this.query != undefined) {
-        //console.log(this.query);
-        // check if the query has been parsed to a string yet
-        if (typeof (this.query) == "string") {
-            this.query = $.parseJSON(this.query);
-        }
-        for (var i = 0, l = this.query.Params.length; i < l; ++i) {
+        appendOptions(jqEl, list);
+    } else if (jqEl.attr("data-query") != undefined) {
+        var query = $.parseJSON(jqEl.attr("data-query"));
+        for (var i = 0, l = query.Params.length; i < l; ++i) {
             //if the parameter is a reference (contains $)
-            if (String(this.query.Params[i]).indexOf("$") != -1) {
-                var thisParam = this.query.Params[i];
+            if (String(query.Params[i]).indexOf("$") != -1) {
+                var thisParam = query.Params[i];
                 //remove the $ from each side of the string
                 var refName = thisParam.substring(1, thisParam.length - 1);
-                //console.log(refName);
                 var refVal = $("[name='" + refName + "']").val();
-                this.query.Params[i] = refVal;
+                query.Params[i] = refVal;
             }
         }
-        //console.log(this.query.Params);
-        // the object passed to these functions must have a connection
-        // property defined, so we set it to the connection specified 
-        // in the query object
-        this.connection = this.query.connection;
-        ajaxPostJSONjQuery("scripts/php/Query.php", this, this.appendOptions.bind(this), false);
+        var qdata = {
+            Query: query,
+            fetchType: "NUM"
+        };
+        //console.log(qdata);
+        $.ajax({
+            url: "scripts/php/Query.php",
+            type: "POST",
+            async: false,
+            dataType: "json",
+            data: { "Object": JSON.stringify(qdata) },
+            context: jqEl,
+            success: function (data, status, xhr) {
+                if (status == "success" && xhr.readyState == 4) {
+                    appendOptions($(this), data);
+                }
+            },
+            error: logError
+        });
     }
-};
+}
 
-Field.prototype.appendOptions = function (list) {
-    //console.log(list);
-    getByName(this.name).html("<option value=''>" + this.name + "</option>");
+function appendOptions(jqEl, list) {
+    jqEl.html("<option value=''>" + jqEl.attr("name") + "</option>");
     for (var i = 0, l = list.length; i < l; ++i) {
-        getByName(this.name).append("<option value='" + list[i] + "'>" + list[i] + "</option>");
+        jqEl.append("<option value='" + list[i] + "'>" + list[i] + "</option>");
     }
-};
+}
 
 // set the change event so that any dependent elements (+0.1 in the order)
 // will update when this elements value changes
 // i.e. if an element with data-order 1.0 is changed
 // all elements with data-order 1.1 will update their values
-Field.prototype.setChangeEvent = function () {
-    if (this.childNames != undefined) {
-        for (var i = 0, l = this.childNames.length; i < l; ++i) {
-            getByName(this.name).change(
-                { jqEl: getByName(this.childNames[i]) },
-                function (event) {
-                    var el = event.data.jqEl;
-                    (new Field(el.attr("name"), el.attr("value"))).getOptions();
-                }
-            );
-        }
+function setChangeEvent(jqEl) {
+    var order = jqEl.attr("data-order");
+    if (order != undefined) {
+        var dependents = $("[data-order='" + (parseFloat(order) + 0.1).toFixed(1) + "']");
+        //console.log(dependents);
+        dependents.each(
+            function () {
+                jqEl.change(
+                    { jqEl: $(this) },
+                    function (event) {
+                        //console.log("Changing " + event.data.jqEl.attr("name"));
+                        getOptions(event.data.jqEl);
+                    });
+            });
     }
-};
+}
 
 
 // GLOBAL
 
-function userOpen(formName) {
+function userOpen() {
     var ID = prompt("Enter a form number");
-    var thisForm = new Form(formName);
-    thisForm.ID = ID;
-    getByName(thisForm.name).attr("data-id", thisForm.ID);
-    thisForm.open();
+    getFormData("ID").val(ID);
+    open();
 }
 
-function userUpdate(formName) {
-    var thisForm = new Form(formName);
-    thisForm.update();
+function getFormData(attr) {
+    return getByName("FormData[" + attr + "]");
 }
-
-function userSubmit(formName) {
-    var thisForm = new Form(formName);
-    thisForm.submit();
-}
-
-var conversions = {
-    "date":             function (val) { return ISODate(val).split("T")[0]; },
-    "time":             function (val) { return ISODate(val).split("T")[1].replace("Z", ""); },
-    "datetime":         function (val) { return ISODate(val); },
-    "datetime-local":   function (val) { return ISODate(val); },
-    "number":           function (val) { return parseFloat(val); },
-    "range":            function (val) { return parseFloat(val); },
-    "int":              function (val) { return parseInt(val); },
-    "float":            function (val) { return parseFloat(val); },
-    "bool":             function (val) { return Boolean(parseInt(this.value)); },
-    "text":             function (val) { return val; },
-    "password":         function (val) { return val; },
-    "hidden":           function (val) { return val; }
-};

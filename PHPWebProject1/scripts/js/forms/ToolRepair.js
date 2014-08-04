@@ -106,7 +106,7 @@
         bodyHTML += "</td>";
         bodyHTML += "</tr>";
         bodyHTML += "</table>";
-        $("[name='ToolRepair']").attr("data-email", bodyHTML);
+        $("[name='FormData[EmailBody]']").val(bodyHTML);
     }
     return true;
 }
@@ -120,5 +120,5 @@ function updateEmailContacts() {
     foremen["Zone_4"] = "haggerty@mayco-mi.com; sherbutte@njt-na.com; greer@mayco-mi.com";
     var zone = $("[name='Zone']").val();
     var foremenEmails = (foremen[zone] == undefined ? "" : "; " + foremen[zone]);
-    $("[name='ToolRepair']").attr("data-contacts", defaultContacts + foremenEmails);
+    $("[name='FormData[Contacts]']").val(defaultContacts + foremenEmails);
 }

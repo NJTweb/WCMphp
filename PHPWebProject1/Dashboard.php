@@ -4,7 +4,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="scripts/js/wcm/wcm.js" type="text/javascript"></script>
 	<script src="scripts/js/wcm/form.js" type="text/javascript"></script>
-    <script src="scripts/js/wcm/query.js" type="text/javascript"></script>
+    <!-- <script src="scripts/js/wcm/query.js" type="text/javascript"></script> -->
     <script src="scripts/js/wcm/issue.js" type="text/javascript"></script>
 
 	<meta charset="utf-8">
@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="css/dashboard.css">
 </head>
-<body onload="new Form('FilterIssues'); getAllIssues();">
+<body onload="getAllIssues();">
 	<nav id="left_nav">
 		<img id="logo" src="res/mayco.png" alt="Mayco International">
         <input type="hidden" name="formname" />

@@ -1,34 +1,48 @@
 <?php
+if(isset($_POST)){
 
+require_once("Utilities.php");
 
-require_once("ConInfo.php");
+//$test_data = '{"Query" : {"Query": "Plants", "Params" : []}, "fetchType" : "NUM"}';
 
-$obj = getObject($_POST["Object"]);
+$obj = json_decode($_POST["Object"]);
+//$obj = json_decode($test_data);
 
 $xml = simplexml_load_file("../../xml/queries.xml");
-foreach($xml->query as $query):
-    if($query["name"] == $obj->query->Query):
+foreach($xml->query as $query){
+    if($query["name"] == $obj->Query->Query){
         $queryStr = $query->qstring;  
         $conStr = $query->connection;
         break;
-    endif;
-endforeach;
+    }
+}
 
-$conn = getPDO($conStr);
+$conn = get_connection($conStr);
+if($conn){
+    $stmt = $conn->prepare($queryStr);
+}else{
+    echo "[]";
+    exit();
+}
 
-if(isset($obj->fetchType)):
+if(isset($obj->fetchType)){
     $fetchType = (($obj->fetchType == "ASSOC") ? PDO::FETCH_ASSOC : PDO::FETCH_NUM);
-else:
+}else{
     $fetchType = PDO::FETCH_NUM;
-endif;
+}
     
-$stmt = $conn->prepare($queryStr);
 
-if($stmt->execute($obj->query->Params)):
-    echo json_encode($stmt->fetchAll($fetchType));
-else:
-    $err = $stmt->errorInfo();
-    echo $err;
-endif;
+if($stmt->execute($obj->Query->Params)){
+    if($rows = $stmt->fetchAll($fetchType)){
+        echo json_encode($rows);
+    }else{
+        echo "[]";
+    }
+}else{
+    //$err = $stmt->errorInfo();
+    //echo $err;
+    echo "[]";
+}
 
+}
 ?>
