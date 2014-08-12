@@ -22,7 +22,7 @@
 
 <body onload="open()">
     <form name="EHS" enctype="multipart/form-data" method="post">
-          <input type="hidden" name="FormData[Name]" value="EHS" />
+        <input type="hidden" name="FormData[Name]" value="EHS" />
         <input type="hidden" name="FormData[Table]" value="EHS" />
         <input type="hidden" name="FormData[PrimaryKey]" value="ID" />
         <input type="hidden" name="FormData[ID]" value="-1" />

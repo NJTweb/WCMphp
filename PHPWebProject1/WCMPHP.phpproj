@@ -27,9 +27,7 @@
     <Compile Include="Dashboard.php" />
     <Compile Include="EHS.php" />
     <Compile Include="Form.php" />
-    <Compile Include="scripts\php\getMaxID.php" />
     <Compile Include="scripts\php\getParams.php" />
-    <Compile Include="scripts\php\Open.php" />
     <Compile Include="scripts\php\Query.php" />
     <Compile Include="scripts\php\Update.php" />
     <Compile Include="scripts\php\Submit.php" />
@@ -39,7 +37,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="css\" />
-    <Folder Include="uploads\" />
     <Folder Include="scripts\js\chart\" />
     <Folder Include="scripts\js\forms\" />
     <Folder Include="scripts\js\wcm\" />
@@ -61,6 +58,7 @@
     <Content Include="css\normalize.css" />
     <Content Include="css\SEWO.css" />
     <Content Include="css\WCC.css" />
+    <Content Include="Dashboard.html" />
     <Content Include="EWO.html" />
     <Content Include="PMTag.html" />
     <Content Include="QuickKaizen.html" />
@@ -68,9 +66,15 @@
     <Content Include="res\arrow_right.png" />
     <Content Include="res\bodychart.bmp" />
     <Content Include="res\BodyChart.png" />
+    <Content Include="res\btn_ehs.gif" />
+    <Content Include="res\btn_sewo.gif" />
+    <Content Include="res\btn_ua.gif" />
+    <Content Include="res\btn_ucan.gif" />
+    <Content Include="res\btn_wcc.gif" />
     <Content Include="res\download.png" />
     <Content Include="res\downloadgreen.png" />
     <Content Include="res\mayco.png" />
+    <Content Include="res\mayco_safety_header.jpg" />
     <Content Include="res\menubutton.png" />
     <Content Include="res\upload.png" />
     <Content Include="res\uploadgreen.png" />
@@ -78,7 +82,6 @@
     <Content Include="scripts\js\chart\chartFuncs.js" />
     <Content Include="scripts\js\forms\EWO.js" />
     <Content Include="scripts\js\wcm\form.js" />
-    <Content Include="scripts\js\wcm\images.js" />
     <Content Include="scripts\js\wcm\issue.js" />
     <Content Include="scripts\js\wcm\sketch.js" />
     <Content Include="scripts\js\forms\checklist.js" />
@@ -86,7 +89,7 @@
     <Content Include="SAFE.html" />
     <Content Include="scripts\js\wcm\wcm.js" />
     <Content Include="UCAN.html" />
-    <Content Include="UnsafeAct.html" />
+    <Content Include="UnsafeAct.php" />
     <Content Include="xml\connections.xml" />
     <Content Include="xml\ehslabels.xml" />
     <Content Include="xml\queries.xml" />
