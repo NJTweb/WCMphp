@@ -24,10 +24,12 @@
     <IncludeDebugInformation>false</IncludeDebugInformation>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Dashboard.php" />
+    <Compile Include="Issues.php" />
     <Compile Include="EHS.php" />
     <Compile Include="Form.php" />
+    <Compile Include="scripts\php\getMaxID.php" />
     <Compile Include="scripts\php\getParams.php" />
+    <Compile Include="scripts\php\Open.php" />
     <Compile Include="scripts\php\Query.php" />
     <Compile Include="scripts\php\Update.php" />
     <Compile Include="scripts\php\Submit.php" />

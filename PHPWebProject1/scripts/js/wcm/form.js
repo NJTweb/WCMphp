@@ -68,7 +68,7 @@ function getNextID() {
     $.ajax({
         url: "scripts/php/getMaxID.php",
         type: "POST",
-        dataType: "json",
+        dataType: "text",
         data: {
             Connection: con,
             Table: table,

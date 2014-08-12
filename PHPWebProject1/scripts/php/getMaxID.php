@@ -20,12 +20,17 @@ if($conn){
 if($stmt->execute()){
     if($row = $stmt->fetch(PDO::FETCH_NUM)){
         echo $row[0];
+        exit();
     }else{
         echo -1;
+        exit();
     }
 }else{
     echo -1;
+    exit();
 }
+
+echo 1;
 
 }
 
