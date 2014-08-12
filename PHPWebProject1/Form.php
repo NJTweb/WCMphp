@@ -8,8 +8,8 @@
     <script src="scripts/js/wcm/form.js"></script>
     
     <script src="scripts/js/forms/checklist.js"></script>
-    <script src="scripts/js/forms/ToolRepair.js"></script>
-    <script src="scripts/js/forms/EWO.js"></script>
+    <!-- <script src="scripts/js/forms/ToolRepair.js"></script>
+    <script src="scripts/js/forms/EWO.js"></script> -->
     <!-- <script src="scripts/js/wcm/images.js"></script> -->
 
     <link rel="stylesheet" href="css/Normalize.css" />
@@ -32,30 +32,29 @@
         <input type="hidden" name="DateTimeStarted" onchange="splitDateTimes()" />
         <input type="hidden" name="DateTimeCompleted" onchange="splitDateTimes()" />
         
-        <table>
-            
-<tr><td colspan="3"><h1>Development Form No. <input id="ID" type="text" name="ID" value="" style="width: auto; background-color: inherit;" readonly></h1></td></tr>
-<tr><td>
-<input type="date" id="dateocc" onchange="concatDateTimes()" /> <!-- date occurred -->
-<input type="time" id="timeocc" onchange="concatDateTimes()" />
-<input type="date" id="datestart" onchange="concatDateTimes()" /><!-- date started -->
-<input type="time" id="timestart" onchange="concatDateTimes()" />
-<input type="date" id="datecomp" onchange="concatDateTimes()" /><!-- date completed -->
-<input type="time" id="timecomp" onchange="concatDateTimes()" />
-<input type="text" name="ToolName" />
-<textarea name="Problems"></textarea>
-<select name="ToolNumber" data-query='{ "Query" : "Tools", "Params" : []}' data-con="Mattec" required></select>
-<select name="Plant" data-query='{ "Query": "Plants", "Params" : []}' data-order="1.0" required></select>
-<select name="Department" data-query='{ "Query" : "Departments", "Params" : ["Merrill"]}' data-order="1.0" required></select>
-<select name="Zone" data-query='{ "Query" : "Zones", "Params" : ["Merrill", "$Department$"]}' data-order="1.1" required></select>
-<select name="Machine" data-query='{ "Query" : "Machines", "Params" : ["Merrill", "$Department$", "$Zone$"]}' data-order="1.2"></select>
-<input type="text" name="ReportedBy" value="Thomason, Justin" />
-<input type="date" name="DateShipped" />
-<select name="RepairedLocation" data-list='{ "list" : ["Mayco","Mound"] }'></select>
-<input type="text" name="Notes" /> 
-<input type="date" name="DateReceived" />
-<select name="IsService" data-list='{ "list" : [true,false] }' data-default="false" data-format="bool"></select>
-</td></tr>
+        <table>           
+            <tr><td colspan="3"><h1>Development Form No. <input id="ID" type="text" name="ID" value="" style="width: auto; background-color: inherit;" readonly></h1></td></tr>
+            <tr><td>
+            <input type="date" id="dateocc" onchange="concatDateTimes()" /> <!-- date occurred -->
+            <input type="time" id="timeocc" onchange="concatDateTimes()" />
+            <input type="date" id="datestart" onchange="concatDateTimes()" /><!-- date started -->
+            <input type="time" id="timestart" onchange="concatDateTimes()" />
+            <input type="date" id="datecomp" onchange="concatDateTimes()" /><!-- date completed -->
+            <input type="time" id="timecomp" onchange="concatDateTimes()" />
+            <input type="text" name="ToolName" />
+            <textarea name="Problems"></textarea>
+            <select name="ToolNumber" data-query='{ "Query" : "Tools", "Params" : []}' data-con="Mattec" required></select>
+            <select name="Plant" data-query='{ "Query": "Plants", "Params" : []}' data-order="1.0" required></select>
+            <select name="Department" data-query='{ "Query" : "Departments", "Params" : ["Merrill"]}' data-order="1.0" required></select>
+            <select name="Zone" data-query='{ "Query" : "Zones", "Params" : ["Merrill", "$Department$"]}' data-order="1.1" required></select>
+            <select name="Machine" data-query='{ "Query" : "Machines", "Params" : ["Merrill", "$Department$", "$Zone$"]}' data-order="1.2"></select>
+            <input type="text" name="ReportedBy" value="Thomason, Justin" />
+            <input type="date" name="DateShipped" />
+            <select name="RepairedLocation" data-list='{ "list" : ["Mayco","Mound"] }'></select>
+            <input type="text" name="Notes" /> 
+            <input type="date" name="DateReceived" />
+            <select name="IsService" data-list='{ "list" : [true,false] }' data-default="false" data-format="bool"></select>
+            </td></tr>
             
 <?php
                 $xml = simplexml_load_file("xml/wcclabels.xml");
@@ -95,5 +94,6 @@
                 <button type="button" onclick="userOpen();">Open</button>
             </td>
         </table>
+        </form>
     </body>
 </html>

@@ -89,7 +89,6 @@
     <Content Include="SAFE.html" />
     <Content Include="scripts\js\wcm\wcm.js" />
     <Content Include="UCAN.html" />
-    <Content Include="UnsafeAct.php" />
     <Content Include="xml\connections.xml" />
     <Content Include="xml\ehslabels.xml" />
     <Content Include="xml\queries.xml" />

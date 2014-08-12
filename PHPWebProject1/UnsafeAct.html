@@ -8,10 +8,25 @@
     <script src="scripts/js/wcm/wcm.js"></script>
     <script src="scripts/js/wcm/form.js"></script>
 
-
-    <link rel="stylesheet" href="css/Normalize.css" />
-    <link rel="stylesheet" href="css/FormClasses.css" />
-    <link rel="stylesheet" href="css/h3normalize.css" />
+    <style>
+        input, select, textarea, label {
+            width: 100%;
+            height: 50px;
+        }
+        textarea {
+            height: 200px;
+        }
+        h2, h1 {
+            width: 100%;
+            font-family: Calibri;
+            text-align: center;
+        }
+        input[name='ID'] {
+            width: 10%;
+            margin-left: 45%;
+            margin-right: 454%;
+        }
+    </style>
 
     <title>Unsafe Act</title>
 </head>
@@ -25,64 +40,26 @@
         <input type="hidden" name="FormData[Connection]" value="Safety" />
         <input type="hidden" name="FormData[Contacts]" value="hooks@njt-na.com; phelps@njt-na.com; pittam@mayco-mi.com; paul@mayco-mi.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com" />
         <input type="hidden" name="FormData[EmailBody]" value="" />
-        <table>
-            <tr>
-                <td colspan="3" class="dkgrey whitetext"><h1>Unsafe Act Form</h1></td>
-                <td class="ltgrey"><h2>UA Number </h2><input id="ID" name="ID" type="text" value="" style="width: auto; background-color: inherit;" readonly /></td>
-            </tr>
-            <tr class="ltgrey">
-                <td><h3>Plant</h3></td>
-                <td><h3>Department</h3></td>
-                <td><h3>Zone</h3></td>
-                <td><h3>Shift</h3></td>
-            </tr>
-            <tr>
-                <td>
-                    <select name="Plant" data-query='{ "Query" : "Plants", "Params" : []}' data-order="1.0" required></select>
-                </td>
-                <td>
-                    <select name="Department" data-query='{ "Query" : "Departments", "Params" : ["$Plant$"]}' data-order="1.1" required></select>
-                </td>
-                <td>
-                    <select name="Zone" data-query='{ "Query" : "Zones", "Params" : ["$Plant$", "$Department$"]}' data-order="1.2" required></select>
-                </td>
-                <td>
-                    <select name="Shift" data-list='{ "list" : [1,2,3] }'></select>
-                </td>
-            </tr>
-            <tr class="ltgrey">
-                <td><h3>Type</h3></td>
-                <td><h3>Micro Type</h3></td>
-                <td><h3>Reviewed</h3></td>
-                <td><h3></h3></td>
-            </tr>
-            <tr>
-                <td>
-                    <select name="UAType" data-query='{ "Query" : "UATypes", "Params" : []}' data-order="2.0"></select>
-                </td>
-                <td>
-                    <select name="UATypeMicro" data-query='{ "Query" : "UAMicroTypes", "Params" : ["$UAType$"]}' data-order="2.1"></select>
-                </td>
-                <td>
-                    <select name="Reviewed" data-list='{ "list" : [true,false] }' data-default="false" data-format="bool"></select>
-                </td>
-                <td class="ltgrey"></td>
-            </tr>
-            <tr class="ltgrey">
-                <td colspan="4">Comments</td>
-            </tr>
-            <tr style="height: 200px;">
-                <td colspan="4">
-                    <textarea name="Comments"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <button type="submit" id="submit">Submit</button>
-                    <button type="button" onclick="location.reload();">Clear</button>
-                    <button type="button" onclick="userOpen();">Open</button>
-                </td>
-            </tr>
-        </table>
+        <h1>Unsafe Act Form</h1>
+        <h2>UA Number <input id="ID" name="ID" type="text" value="" style="font: inherit; width: auto; background-color: inherit;" readonly /></h2>
+        <label>Plant</label>
+        <select name="Plant" data-query='{ "Query" : "Plants", "Params" : []}' data-order="1.0" required></select>
+        <label>Department</label>
+        <select name="Department" data-query='{ "Query" : "Departments", "Params" : ["$Plant$"]}' data-order="1.1" required></select>
+        <label>Zone</label>
+        <select name="Zone" data-query='{ "Query" : "Zones", "Params" : ["$Plant$", "$Department$"]}' data-order="1.2" required></select>
+        <label>Shift</label>
+        <select name="Shift" data-list='{ "list" : [1,2,3] }'></select>
+        <label>Type</label>
+        <select name="UAType" data-query='{ "Query" : "UATypes", "Params" : []}' data-order="2.0"></select>
+        <label>Micro Type</label>
+        <select name="UATypeMicro" data-query='{ "Query" : "UAMicroTypes", "Params" : ["$UAType$"]}' data-order="2.1"></select>
+        <label>Reviewed</label>
+        <select name="Reviewed" data-list='{ "list" : [true,false] }' data-default="false" data-format="bool"></select>
+        <label>Comments</label>
+        <textarea name="Comments"></textarea>
+        <button type="submit" id="submit">Submit</button>
+        <button type="button" onclick="location.reload();">Clear</button>
+        <button type="button" onclick="userOpen();">Open</button>
     </form>
 </body>
