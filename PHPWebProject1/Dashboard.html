@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mayco Safety</title>
+    <style>
+        #container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        header img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 75%;
+            max-width: 600px;
+            min-width: 200px;
+        }
+
+        #btns {
+            max-width: 828px;
+            margin: auto;
+        }
+
+        .btn {
+            display: inline;
+            margin: auto;
+        }
+
+        .btn img {
+            width: 155px;
+        }
+
+        @media screen and (max-width: 809px) {
+            #container {
+                width: 550px;
+                margin: 0 auto;
+            }
+
+            .btn img {
+                width: 100px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            #container {
+                width: 550px;
+                margin: 0 auto;
+            }
+
+            .btn {
+                display: block;
+            }
+
+            .btn img {
+                width: 50%;
+                margin-left: 25%;
+                margin-right: 25%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <header><img src="res/mayco_safety_header.jpg" alt="Mayco Safety" /></header>
+        <section>
+            <div id="btns">
+                <div class="btn"><a href="SAFE.html"><img src="res/btn_sewo.gif"  alt="SEWO" /></a></div>
+                <div class="btn"><a href="WCC.php"><img src="res/btn_wcc.gif" alt="WCC" /></a></div>
+                <div class="btn"><a href="EHS.php"><img src="res/btn_ehs.gif" alt="EHS" /></a></div>
+                <div class="btn"><a href="UCAN.html"><img src="res/btn_ucan.gif" alt="UCAN" /></a></div>
+                <div class="btn"><a href="UnsafeAct.php"><img src="res/btn_ua.gif" alt="UNSAFE ACTS" /></a></div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
