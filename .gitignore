@@ -35,7 +35,4 @@ Icon
 .Spotlight-V100
 .Trashes
 
-*.jpg
-PHPWebProject1/uploads/TEST_4_0_installer_prefs.json
-PHPWebProject1/uploads/TEST_4_36_installation_status.xml
-PHPWebProject1/uploads/TEST_4_36_installer_prefs.json
+PHPWebProject1/uploads/*
