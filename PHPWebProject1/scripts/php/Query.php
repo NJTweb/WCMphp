@@ -3,7 +3,7 @@ if(isset($_POST)){
 
 require_once("Utilities.php");
 
-//$test_data = '{"Query" : {"Query": "Plants", "Params" : []}, "fetchType" : "NUM"}';
+//$test_data = '{"Query" : {"Query": "AuditsPerAuditor", "Params" : []}, "fetchType" : "ASSOC"}';
 
 $obj = json_decode($_POST["Object"]);
 //$obj = json_decode($test_data);

@@ -3,7 +3,7 @@ function getParams(query) {
         url: "scripts/php/getParams.php",
         type: "POST",
         dataType: "json",
-        data: { query: query },
+        data: { Query: query },
         success: function (data, status, xhr) {
             if (status == "success" && xhr.readyState == 4) {
                 renderParamInputs(data);
@@ -37,11 +37,21 @@ function chartData() {
 
     //ajaxPostJSONjQuery("scripts/php/Query.php", qry, renderChartData, true);
 
+    var qry = {
+        Query : {
+            Query: query,
+            Params: params
+        },
+        fetchType: "ASSOC"
+    }
+
+    console.log(qry);
+
     $.ajax({
         url: "scripts/php/Query.php",
         type: "POST",
         dataType: "json",
-        data: query,
+        data: {Object : JSON.stringify(qry)},
         success: function (data, status, xhr) {
             if (status == "success" && xhr.readyState == 4) {
                 renderChartData(data);
@@ -243,4 +253,5 @@ function arrIsAN(arr){
 
 function logError(xhr, status, error) {
     console.log(status + " : " + error);
+    console.log(this);
 }

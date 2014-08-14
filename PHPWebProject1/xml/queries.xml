@@ -177,4 +177,16 @@
     <connection>Mattec</connection>
     <qstring>SELECT * FROM HoursToNextPM</qstring>
   </query>
+  <query name="AuditsPerAuditor">
+    <connection>Safety</connection>
+    <qstring>SELECT AuditorName, COUNT(*) AS Audits FROM WCC GROUP BY AuditorName ORDER BY Audits DESC</qstring>
+  </query>
+  <query name="AuditsPerWorkCell">
+    <connection>Safety</connection>
+    <qstring>SELECT WorkCell, COUNT(*) AS Audits FROM WCC GROUP BY WorkCell ORDER BY Audits DESC</qstring>
+  </query>
+  <query name="AuditsPerZone">
+    <connection>Safety</connection>
+    <qstring>SELECT Department + ' ' + Zone AS DeptZone, COUNT(*) AS Audits FROM WCC GROUP BY Department, Zone ORDER BY Audits DESC</qstring>
+  </query>
 </queries>

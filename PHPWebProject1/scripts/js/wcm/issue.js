@@ -196,7 +196,8 @@ function getFilter() {
         Machine: getByName("machines").val(),
         Supervisor: getByName("supervisors").val(),
         Shift: parseInt(getByName("shifts").val()) || "",
-        Severity: getByName("severities").val()
+        Severity: getByName("severities").val(),
+        Category: getByName("categories").val()
     }
     console.log(filter);
     return filter;

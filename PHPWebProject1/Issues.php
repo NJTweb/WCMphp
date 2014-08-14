@@ -83,6 +83,10 @@
                         <td>
                             <select name="severities" data-list='{ "list" : ["Low","Medium","High"]}'></select>
                         </td>
+                        <td>Category:</td>
+                        <td>
+                            <select name="categories" data-list='{ "list" : ["Housekeeping","None","Crane","Ergonomics","Emergency Evacuation Routes/Equipment","Ladders","Chemical Usage & Storage","Forklift","Warehouse/PIT Drivers","Electrical","Material/Waste Handling","Respiratory Compliance","Welding","PPE","Continual Training","Timely Incident Reporting"]}'></select>
+                        </td>
                     </tr>
                     <tr>
                         <td><button type="button" onclick="getAllIssues()">Apply</button></td>

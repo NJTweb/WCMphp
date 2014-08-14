@@ -4,7 +4,6 @@
 		<title>Bar Chart</title>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
         <script src="scripts/js/wcm/wcm.js"></script>
-        <script src="scripts/js/wcm/query.js"></script>
         <script src="scripts/js/chart/chartFuncs.js"></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript">
@@ -21,6 +20,9 @@
             <option value="MachOEE">Machine OEE</option>
             <option value="MoldOEE">Tool OEE</option>
             <option value="PMDue">PM Due per Tool</option>
+            <option value="AuditsPerAuditor">Number of Audits by Auditor</option>
+            <option value="AuditsPerWorkCell">Number of Audits by Work Cell</option>
+            <option value="AuditsPerZone">Number of Audits by Zone</option>
         </select>
         <div id="ParamDiv"></div>
         <button onclick="chartData()">Chart</button>
