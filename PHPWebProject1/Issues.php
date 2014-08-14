@@ -13,7 +13,7 @@
 	<title>WCM Application Dashboard</title>
 
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
-	<link rel="stylesheet" type="text/css" href="css/dashboard.css">
+	<link rel="stylesheet" type="text/css" href="css/issues.css">
 </head>
 <body onload="getAllIssues();">
 	<nav id="left_nav">
