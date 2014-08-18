@@ -1,3 +1,29 @@
+<?php
+require_once("/scripts/php/Form.php");
+$id = isset($_GET["id"]) ? $_GET["id"] : -1;
+$f = new Form("Development Form","DevForm","ID",$id,"Safety","hooks@njt-na.com"," ");
+$f->open();
+$f->get_field_by_name("ID")->set_data("text","","",array(),null,INF,'style="width: auto; background-color: inherit;" readonly');
+$f->get_field_by_name("ToolName")->set_data("text");
+$f->get_field_by_name("Problems")->set_data("textarea");
+$f->get_field_by_name("ToolNumber")->set_data("select","","",array(),new Query("Tools",array(),PDO::FETCH_NUM));
+$f->get_field_by_name("Plant")->set_data("select","","",array(),new Query("Plants",array(),PDO::FETCH_NUM));
+$f->get_field_by_name("Department")->set_data("select","","",array(),new Query("Departments",array("_Plant_"),PDO::FETCH_NUM));
+$f->get_field_by_name("Zone")->set_data("select","","",array(),new Query("Zones",array("_Plant_", "_Department_"),PDO::FETCH_NUM));
+$f->get_field_by_name("Machine")->set_data("select","","",array(),new Query("Machines",array("_Plant_", "_Department_","_Zone_"),PDO::FETCH_NUM));
+$f->get_field_by_name("ReportedBy")->set_data("text","","Justin Thomason");
+$f->get_field_by_name("DateShipped")->set_data("date");
+$f->get_field_by_name("RepairedLocation")->set_data("select","","",array("Mayco","Mound"));
+$f->get_field_by_name("Notes")->set_data("text");
+$f->get_field_by_name("DateReceived")->set_data("date");
+$f->get_field_by_name("IsService")->set_data("select","bool","false",array("true","false"));
+$f->get_field_by_name("DateTimeOccurred")->set_data("hidden");
+$f->get_field_by_name("DateTimeStarted")->set_data("hidden");
+$f->get_field_by_name("DateTimeCompleted")->set_data("hidden");
+$f->get_field_by_name("FileURL1")->set_data("hidden", "", "", array(), null, 'class="fileURL"');
+$f->update_field_options();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +33,8 @@
     <script src="scripts/js/wcm/wcm.js"></script>
     <script src="scripts/js/wcm/form.js"></script>
     
+    <script src="scripts/js/forms/EWO.js"></script> 
     <script src="scripts/js/forms/checklist.js"></script>
-    <!-- <script src="scripts/js/forms/ToolRepair.js"></script>
-    <script src="scripts/js/forms/EWO.js"></script> -->
-    <!-- <script src="scripts/js/wcm/images.js"></script> -->
 
     <link rel="stylesheet" href="css/Normalize.css" />
     <link rel="stylesheet" href="css/Checklist.css" />
@@ -18,81 +42,49 @@
 
     <title>WCM Safety Checklist</title>
 </head>
-<body onload="open()">
+<body onload="splitDateTimes()">
     <form name="Test" enctype="multipart/form-data" method="post">
-        <input type="hidden" name="FormData[Name]" value="TEST" />
-        <input type="hidden" name="FormData[Table]" value="DevForm" />
-        <input type="hidden" name="FormData[PrimaryKey]" value="ID" />
-        <input type="hidden" name="FormData[ID]" value="-1" />
-        <input type="hidden" name="FormData[Connection]" value="Safety" />
-        <input type="hidden" name="FormData[Contacts]" value="hooks@njt-na.com; marshallja@jvisusallc.com; gwilloughby@mayco-mi.com" />
-        <input type="hidden" name="FormData[EmailBody]" value="" />
         
-        <input type="hidden" name="DateTimeOccurred" onchange="splitDateTimes()" />
-        <input type="hidden" name="DateTimeStarted" onchange="splitDateTimes()" />
-        <input type="hidden" name="DateTimeCompleted" onchange="splitDateTimes()" />
+        <?php
+        echo $f->get_field_by_name("DateTimeOccurred")->to_html();
+        echo $f->get_field_by_name("DateTimeStarted")->to_html();
+        echo $f->get_field_by_name("DateTimeCompleted")->to_html();
+        ?>
         
         <table>           
-            <tr><td colspan="3"><h1>Development Form No. <input id="ID" type="text" name="ID" value="" style="width: auto; background-color: inherit;" readonly></h1></td></tr>
+            <tr><td colspan="3"><h1>Development Form No. <?php echo $f->get_field_by_name("ID")->to_html(); ?></h1></td></tr>
             <tr><td>
             <input type="date" id="dateocc" onchange="concatDateTimes()" /> <!-- date occurred -->
             <input type="time" id="timeocc" onchange="concatDateTimes()" />
-            <input type="date" id="datestart" onchange="concatDateTimes()" /><!-- date started -->
+            <input type="date" id="datestart" onchange="concatDateTimes()" /> <!-- date started -->
             <input type="time" id="timestart" onchange="concatDateTimes()" />
-            <input type="date" id="datecomp" onchange="concatDateTimes()" /><!-- date completed -->
+            <input type="date" id="datecomp" onchange="concatDateTimes()" /> <!-- date completed -->
             <input type="time" id="timecomp" onchange="concatDateTimes()" />
-            <input type="text" name="ToolName" />
-            <textarea name="Problems"></textarea>
-            <select name="ToolNumber" data-query='{ "Query" : "Tools", "Params" : []}' data-con="Mattec" required></select>
-            <select name="Plant" data-query='{ "Query": "Plants", "Params" : []}' data-order="1.0" required></select>
-            <select name="Department" data-query='{ "Query" : "Departments", "Params" : ["Merrill"]}' data-order="1.0" required></select>
-            <select name="Zone" data-query='{ "Query" : "Zones", "Params" : ["Merrill", "$Department$"]}' data-order="1.1" required></select>
-            <select name="Machine" data-query='{ "Query" : "Machines", "Params" : ["Merrill", "$Department$", "$Zone$"]}' data-order="1.2"></select>
-            <input type="text" name="ReportedBy" value="Thomason, Justin" />
-            <input type="date" name="DateShipped" />
-            <select name="RepairedLocation" data-list='{ "list" : ["Mayco","Mound"] }'></select>
-            <input type="text" name="Notes" /> 
-            <input type="date" name="DateReceived" />
-            <select name="IsService" data-list='{ "list" : [true,false] }' data-default="false" data-format="bool"></select>
-            </td></tr>
-            
-<?php
-                $xml = simplexml_load_file("xml/wcclabels.xml");
-                $i = 0;
-                foreach($xml->group as $groupValues):
-                    foreach($groupValues as $type => $text):
-                        if($type == "header"):
-            ?>
-            <tr class="header"><td colspan="3"><h3><?php echo $text; ?></h3></td></tr>
             <?php
-                        else:
-                            $i+=1;
+            echo $f->get_field_by_name("ToolName")->to_html();
+            echo $f->get_field_by_name("Problems")->to_html();
+            echo $f->get_field_by_name("ToolNumber")->to_html();
+            echo $f->get_field_by_name("Plant")->to_html();
+            echo $f->get_field_by_name("Department")->to_html();
+            echo $f->get_field_by_name("Zone")->to_html();
+            echo $f->get_field_by_name("Machine")->to_html();
+            echo $f->get_field_by_name("ReportedBy")->to_html();
+            echo $f->get_field_by_name("DateShipped")->to_html();
+            echo $f->get_field_by_name("RepairedLocation")->to_html();
+            echo $f->get_field_by_name("Notes")->to_html();
+            echo $f->get_field_by_name("DateReceived")->to_html();
+            echo $f->get_field_by_name("IsService")->to_html();
             ?>
+            <input type="file" />
+            <?php echo $f->get_field_by_name("FileURL1")->to_html(); ?>
+            </td></tr>
             <tr>
                 <td>
-                    <span><?php echo $i.". ".$text; ?></span>
-                </td>
-                <td>
-                    <label for="file<?php echo $i; ?>">
-                        <img id="uploadimg<?php echo $i; ?>" src="res/upload.png" alt="Upload">
-                    </label>
-                    <input type="file" name="file[]" id="file<?php echo $i; ?>" onchange="changeImage($(this), $('#uploadimg<?php echo $i; ?>')); ">
-                    <!-- <input type="hidden" id="FileURL<?php //echo $i; ?>" value="" /> -->
-                </td>
-                <td>
-                    <select name="Compliant<?php echo $i; ?>" data-list='{"list" : ["Satisfactory","Unsafe Condition","Unsafe Act","Both"]}' data-default="Satisfactory" required></select>
+                    <button type="button" onclick="(new Form())<?php echo $f->has_record ? ".update()" : ".submit()"; ?>"><?php echo $f->has_record ? "Update" : "Submit"; ?></button>
+                    <button type="button" onclick="location.href = getNoParamsURL();">Clear</button>
+                    <button type="button" onclick="(new Form()).open();">Open</button>
                 </td>
             </tr>
-            <?php
-                        endif;
-                    endforeach;
-                endforeach;
-            ?>
-            <td>
-                <button type="submit" id="submit">Submit</button>
-                <button type="button" onclick="location.reload();">Clear</button>
-                <button type="button" onclick="userOpen();">Open</button>
-            </td>
         </table>
         </form>
     </body>

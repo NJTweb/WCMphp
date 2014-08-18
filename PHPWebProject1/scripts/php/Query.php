@@ -1,48 +1,48 @@
 <?php
-if(isset($_POST)){
-
-require_once("Utilities.php");
-
-//$test_data = '{"Query" : {"Query": "AuditsPerAuditor", "Params" : []}, "fetchType" : "ASSOC"}';
-
-$obj = json_decode($_POST["Object"]);
-//$obj = json_decode($test_data);
-
-$xml = simplexml_load_file("../../xml/queries.xml");
-foreach($xml->query as $query){
-    if($query["name"] == $obj->Query->Query){
-        $queryStr = $query->qstring;  
-        $conStr = $query->connection;
-        break;
-    }
-}
-
-$conn = get_connection($conStr);
-if($conn){
-    $stmt = $conn->prepare($queryStr);
-}else{
-    echo "[]";
-    exit();
-}
-
-if(isset($obj->fetchType)){
-    $fetchType = (($obj->fetchType == "ASSOC") ? PDO::FETCH_ASSOC : PDO::FETCH_NUM);
-}else{
-    $fetchType = PDO::FETCH_NUM;
-}
+class Query{
+    private $name;
+    private $fetch_type;
+    public $params;        // params hold actual values with placeholders replaced
+    public $placeholders;  // placeholders hold original values for parameters
     
-
-if($stmt->execute($obj->Query->Params)){
-    if($rows = $stmt->fetchAll($fetchType)){
-        echo json_encode($rows);
-    }else{
-        echo "[]";
+    public function __construct($name, $params, $fetch_type = PDO::FETCH_NUM){
+        $this->name = $name;
+        $this->params = $params;
+        $this->placeholders = $params;
+        $this->fetch_type = $fetch_type;
     }
-}else{
-    //$err = $stmt->errorInfo();
-    //echo $err;
-    echo "[]";
-}
+    
+    public function execute(){
 
+        $xml = simplexml_load_file("http://192.9.200.62/xml/queries.xml");
+        $query = $xml->xpath("/queries/query[@name='".$this->name."']");
+        $query_string = $query[0]->qstring;  
+        $connection_string = $query[0]->connection;
+        
+        $query_string = ms_escape_string($query_string);
+        $conn = get_connection($connection_string);
+        if($conn){
+            $stmt = $conn->prepare($query_string);
+        }else{
+            return array();
+            exit();
+        }
+        
+        if($stmt->execute($this->params)){
+            if($rows = $stmt->fetchAll($this->fetch_type)){
+                if($this->fetch_type == PDO::FETCH_NUM){
+                    $first_of_each = function($n){
+                        return $n[0];
+                    };
+                    $filtered = array_map($first_of_each, $rows);
+                    return $filtered;
+                }
+            }else{
+                return array();
+            }
+        }else{
+            return array();
+        }
+    }
 }
 ?>

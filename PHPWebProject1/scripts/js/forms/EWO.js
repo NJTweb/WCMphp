@@ -1,7 +1,7 @@
 ﻿function concatDateTimes() {
-    $("[name='DateTimeOccurred']").val($("#dateocc").val() + " " + $("#timeocc").val());
-    $("[name='DateTimeStarted']").val($("#datestart").val() + " " + $("#timestart").val());
-    $("[name='DateTimeCompleted']").val($("#datecomp").val() + " " + $("#timecomp").val());
+    $("[name='DateTimeOccurred']").val($("#dateocc").val() + " " + $("#timeocc").val()).change();
+    $("[name='DateTimeStarted']").val($("#datestart").val() + " " + $("#timestart").val()).change();
+    $("[name='DateTimeCompleted']").val($("#datecomp").val() + " " + $("#timecomp").val()).change();
     //console.log($("[name='DateTimeOccurred']").val());
     //console.log($("[name='DateTimeStarted']").val());
     //console.log($("[name='DateTimeCompleted']").val());

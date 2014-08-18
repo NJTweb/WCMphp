@@ -1,6 +1,13 @@
+function download(filename, text) {
+    var pom = document.createElement('a');
+    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    pom.setAttribute('download', filename);
+    pom.click();
+}
+
 function getParams(query) {
     $.ajax({
-        url: "scripts/php/getParams.php",
+        url: "../scripts/php/getParams.php",
         type: "POST",
         dataType: "json",
         data: { Query: query },
@@ -48,7 +55,7 @@ function chartData() {
     console.log(qry);
 
     $.ajax({
-        url: "scripts/php/Query.php",
+        url: "../scripts/php/Query.php",
         type: "POST",
         dataType: "json",
         data: {Object : JSON.stringify(qry)},
@@ -67,8 +74,6 @@ function randomRGB(){
 }
 
 function renderChartData(data) {
-
-    getByName("Data").val("<pre>" + JSON.stringify(data, null, "\t") + "</pre>");
 
     switch (Object.keys(data[0]).length) {
         case 2:
@@ -103,10 +108,19 @@ function renderBarChart(data) {
     //console.log(dataTable);
 
     var options = {
-        isStacked: false
+        isStacked: false,
+        title: $("[name='Query'] option:selected").text()
     };
 
     var chart = new google.visualization.ColumnChart(document.getElementById("chartDiv"));
+
+    var csv = google.visualization.dataTableToCsv(dataTable);
+    getByName("Data").val(csv);
+
+    google.visualization.events.addListener(chart, 'ready', function () {
+        document.getElementById('print').innerHTML = '<a href="' + chart.getImageURI() + '">Printable version</a>';
+    });
+
     chart.draw(dataTable, options);
 }
 
@@ -203,10 +217,19 @@ function renderStackedChart(data) {
     var chartData = dataTable;
 
     var options = {
-        isStacked: true
+        isStacked: true,
+        title: $("[name='Query'] option:selected").text()
     };
 
     var chart = new google.visualization.ColumnChart(document.getElementById("chartDiv"));
+
+    var csv = google.visualization.dataTableToCsv(dataTable);
+    getByName("Data").val(csv);
+
+    google.visualization.events.addListener(chart, 'ready', function () {
+        document.getElementById('print').innerHTML = '<a href="' + chart.getImageURI() + '">Printable Chart</a>';
+    });
+
     chart.draw(chartData, options);
 }
 

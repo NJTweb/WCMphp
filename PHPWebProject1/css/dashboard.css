@@ -1,46 +1,61 @@
 ﻿
-        header img {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 75%;
-            max-width: 600px;
-        }
+header img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+    max-width: 400px;
+}
 
-        #btns {
-            max-width: 828px;
-            margin: auto;
-        }
+#btns {
+    max-width: 400px;
+    margin: auto;
+}
 
-        .btn {
-            display: inline;
-            margin: auto;
-        }
+.btn {
+    float: left;
+    margin: auto;
+    padding: 10px;
+}
 
-        .btn img {
-            width: 155px;
-        }
+.btn img {
+    width: 180px;
+}
 
-        @media screen and (max-width: 809px) {
-            header img {
-                width: 90%;
-            }
-            .btn img {
-                width: 100px;
-            }
-        }
+.reporting img{
+    display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        @media screen and (max-width: 600px) {
-            header img {
-                width: 90%;
-            }
-            .btn {
-                display: block;
-            }
+@media screen and (max-width: 809px) {
+    header img {
+        width: 90%;
+    }
 
-            .btn img {
-                width: 50%;
-                margin-left: 25%;
-                margin-right: 25%;
-            }
-        }
+    #btns {
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .btn {
+        float: left;
+        margin: auto;
+        padding: 10px;
+    }
+
+    .btn img {
+        width: 180px;
+    }
+
+    .reporting img{
+        display: block;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-width: 600px) {
+}
